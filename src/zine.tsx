@@ -1,15 +1,14 @@
-import { createRoot } from 'react-dom/client';
 declare var GazeCloudAPI: any;
 
-// Render your React component instead
-const appElement = document.getElementById('app');
-if (appElement) {
-    const root = createRoot(appElement);
-    root.render(<h1>Hello, world</h1>);
-} else {
-    console.error("App element not found");
-}
+import { createRoot } from 'react-dom/client';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import Box from '@mui/material/Box';
 
+
+// Globa Zine-App State
 const states = {
     PRE_CALIBRATION: 0,
     CALIBRATION_COMPLETE: 1,
@@ -18,6 +17,86 @@ const states = {
     ERROR: 2,
 };
 var state = 0;
+
+
+
+const images = [
+    'public/doom.png',
+    'public/doom.png',
+    'public/doom.png',
+    'public/doom.png',
+    'public/doom.png',
+    'public/doom.png',
+    'public/doom.png',
+    'public/doom.png',
+    'public/doom.png',
+];
+
+const BetterGrid = () => {
+    const handleMouseOver = (index: number) => {
+        const card = document.getElementById(`card-${index}`);
+        if (card) {
+            card.style.transform = 'scale(0.95)';
+        }
+        console.log(`Mouse over card ${index + 1}`);
+    };
+
+    const handleMouseOut = (index: number) => {
+        const card = document.getElementById(`card-${index}`);
+        if (card) {
+            card.style.transform = 'scale(1)';
+        }
+    };
+
+    return (
+        <Grid container spacing={2}>
+            {images.map((image, index) => (
+                <Grid item key={index} xs={4} style={{ padding: '8px' }}>
+                    <Card
+                        id={`card-${index}`}
+                        onMouseOver={() => handleMouseOver(index)}
+                        onMouseOut={() => handleMouseOut(index)}
+                        style={{ transition: 'transform 0.2s' }}
+                    >
+                        <CardMedia
+                            component="img"
+                            image={image}
+                            alt={`Image ${index + 1}`}
+                        />
+                    </Card>
+                </Grid>
+            ))}
+        </Grid>
+    )
+}
+
+const App = () => {
+    return (
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            width="80%"
+            maxWidth="800px"
+            height="80vh"
+            margin="0 auto"
+            overflow="hidden"
+        >
+            <BetterGrid />
+        </Box>
+    );
+};
+
+
+// Render React component
+const appElement = document.getElementById('app');
+if (appElement) {
+    const root = createRoot(appElement);
+    root.render(<App />);
+} else {
+    console.error("App element not found");
+}
+
 
 function PlotGaze(GazeData: any) {
 
