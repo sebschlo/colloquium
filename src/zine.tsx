@@ -1,12 +1,8 @@
 declare var GazeCloudAPI: any;
 
 import { createRoot } from 'react-dom/client';
-import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import Box from '@mui/material/Box';
+import { useState, useEffect } from 'react';
+import { Button, Grid, Card, CardMedia, Box, Typography, Paper } from '@mui/material';
 
 // Globa Zine-App State
 const states = {
@@ -14,9 +10,8 @@ const states = {
     CALIBRATION_COMPLETE: 1,
     TRAINING_COMPLETE: 2,
     REVIEW: 3,
-    ERROR: 2,
+    ERROR: -1,
 };
-var state = 0;
 
 class Character {
     img: string;
@@ -72,7 +67,59 @@ async function generateImage(description: string): Promise<string> {
     }
 }
 
-const BetterGrid = ({ chars, onImageClick }: { chars: Character[], onImageClick: (index: number) => void }) => {
+const PreCalibration = () => {
+    return (
+        <Box sx={{ padding: 2 }}>
+            <Typography variant="h4" gutterBottom>
+                Welcome to the Zine!
+            </Typography>
+
+            <Typography variant="body1" gutterBottom>
+                Eye tracking calibration is required for this interactive experience. Please press start and follow the instructions.
+            </Typography>
+
+            <Grid container spacing={2} sx={{ marginBottom: 2 }}>
+                <Grid item>
+                    <Button variant="contained" color="primary" onClick={() => GazeCloudAPI.StartEyeTracking()}>
+                        Start
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="contained" color="secondary" onClick={() => GazeCloudAPI.StopEyeTracking()}>
+                        Stop
+                    </Button>
+                </Grid>
+            </Grid>
+
+            <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
+                <Typography variant="body1" gutterBottom>
+                    Real-Time Result:
+                </Typography>
+                <Typography variant="body2" id="GazeData" gutterBottom></Typography>
+                <Typography variant="body2" id="HeadPhoseData" gutterBottom></Typography>
+                <Typography variant="body2" id="HeadRotData" gutterBottom></Typography>
+            </Paper>
+
+            <div
+                id="gaze"
+                style={{
+                    position: 'absolute',
+                    display: 'none',
+                    width: 100,
+                    height: 100,
+                    borderRadius: '50%',
+                    border: 'solid 2px rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 0 100px 3px rgba(125, 125, 125, 0.5)',
+                    pointerEvents: 'none',
+                    zIndex: 999999,
+                }}
+            ></div>
+        </Box>
+    );
+}
+
+
+const CharacterGrid = ({ chars, onImageClick }: { chars: Character[], onImageClick: (index: number) => void }) => {
     const handleMouseOver = (index: number) => {
         const card = document.getElementById(`card-${index}`);
         if (card) {
@@ -111,9 +158,20 @@ const BetterGrid = ({ chars, onImageClick }: { chars: Character[], onImageClick:
     )
 }
 
+const TrolleyProblem = () => {
+    return (
+        <div>
+            <h1>Trolley Problem</h1>
+            <p>Imagine you are the driver of a trolley...</p>
+            {/* Add more content and interaction for the trolley problem here */}
+        </div>
+    );
+}
+
 const App = () => {
     const [characters, setCharacters] = useState<Character[]>(initialCharacters);
     const [queue, setQueue] = useState<number[]>([]);
+    const [appState, setAppState] = useState<number>(states.TRAINING_COMPLETE);
 
     // Process image replacement Queue
     useEffect(() => {
@@ -139,6 +197,12 @@ const App = () => {
         setQueue(prevQueue => [...prevQueue, index]);
     };
 
+    useEffect(() => {
+        if (appState === states.CALIBRATION_COMPLETE) {
+            setQueue([]);
+        }
+    }, [appState]);
+
     return (
         <Box
             display="flex"
@@ -150,7 +214,11 @@ const App = () => {
             margin="0 auto"
             overflow="hidden"
         >
-            <BetterGrid chars={characters} onImageClick={handleImageClick} />
+            {appState === states.PRE_CALIBRATION && <PreCalibration />}
+            {appState === states.CALIBRATION_COMPLETE && <CharacterGrid chars={characters} onImageClick={handleImageClick} />}
+            {appState === states.TRAINING_COMPLETE &&  <TrolleyProblem />}
+            {appState === states.REVIEW && <div>Review State</div>}
+            {appState === states.ERROR && <div>Error State</div>}
         </Box>
     );
 };
@@ -208,7 +276,7 @@ window.addEventListener("load", function () {
     if (typeof GazeCloudAPI !== 'undefined') {
         GazeCloudAPI.OnCalibrationComplete = function () {
             console.log('gaze Calibration Complete')
-            state = states.CALIBRATION_COMPLETE;
+            setAppState(states.CALIBRATION_COMPLETE);
         }
         GazeCloudAPI.OnCamDenied = function () { console.log('camera  access denied') }
         GazeCloudAPI.OnError = function (msg: any) { console.log('err: ' + msg) }
