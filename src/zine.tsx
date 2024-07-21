@@ -218,8 +218,9 @@ const App = () => {
     const [queue, setQueue] = useState<number[]>([]);
     const [appState, setAppState] = useState<number>(states.REVIEW);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
-    const [savedCharacters, setSavedCharacters] = useState<number[]>([1, 1, 1, 1, 1]);
-    const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([1,1, 1, 1, 1]);
+    const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
+    const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
+    const [aiJustifications, setAiJustifications] = useState<string[]>([]);
     const [clickMode, setClickMode] = useState<boolean>(false);
 
 
@@ -270,6 +271,7 @@ const App = () => {
 
         const respDec = await response.json();
         setAiSaveDecisions(respDec.decisions.map((d: { decision: number }) => d.decision));
+        setAiJustifications(respDec.justifications.map((d: { justification: string }) => d.justification));
     }
 
     const handleTrainingClick = (index: number) => {
@@ -386,7 +388,12 @@ const App = () => {
             {appState === states.CALIBRATION && <PreCalibration onStop={handleCalibrationOptOut} />}
             {appState === states.TRAINING && <CharacterGrid chars={characters} onImageClick={handleTrainingClick} clickMode={clickMode} />}
             {appState === states.TROLLEY && <TrolleyProblem characterSaved={handleTrolleyClick} onComplete={handleTrolleyComplete} />}
-            {appState === states.REVIEW && <Review characters={charactersData} trolleyPairings={trolleyProblemCharacterPairings} decisions={savedCharacters} aiDecisions={aiSaveDecisions} />}
+            {appState === states.REVIEW
+            && <Review characters={charactersData}
+                    trolleyPairings={trolleyProblemCharacterPairings}
+                    decisions={savedCharacters} 
+                    aiDecisions={aiSaveDecisions}
+                    justifications={aiJustifications}/>}
             {appState === states.ERROR && <div>Error!</div>}
         </Box>
     );
