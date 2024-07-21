@@ -209,7 +209,7 @@ const App = () => {
     const [appState, setAppState] = useState<number>(states.REVIEW);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
     const [savedCharacters, setSavedCharacters] = useState<number[]>([0, 0, 0, 0, 0]);
-    const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
+    const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([1, 0, 1, 0, 1]);
 
 
     async function generateImage(description: string): Promise<string> {
@@ -221,11 +221,11 @@ const App = () => {
                 },
                 body: JSON.stringify({ description })
             });
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
+
             const data = await response.json();
             console.log('received from openai: ', data)
             console.log('received image: ', data.image)
@@ -235,17 +235,17 @@ const App = () => {
             return '';
         }
     }
-    
+
     async function generateTrolleyProblemAgent() {
-    
+
         const description: string = clickedCharacters.map(character => character.generateDisplayDescription()).join(' ');
-    
+
         const scenarios = trolleyProblemCharacterPairings.map(pair => {
             const char1 = charactersData[pair[0]];
             const char2 = charactersData[pair[1]];
             return `A trolley is coming and there are two tracks it can take, and both have a character standing on it. Based on the types of characters you genrally like, who would you save between ${char1.generateDisplayDescription().replace('.', '')} and ${char2.generateDisplayDescription().replace('.', '')}? It doesn't matter if the characters don't match your predilections exactly, pick the most similar.`;
         });
-    
+
         const response = await fetch('http://localhost:3000/trolley-problem', {
             method: 'POST',
             headers: {
@@ -254,7 +254,7 @@ const App = () => {
             body: JSON.stringify({
                 description: description,
                 scenarios: scenarios
-             })
+            })
         });
     }
 
@@ -262,7 +262,7 @@ const App = () => {
         const clickedCharacter = characters[index];
 
         console.log('clicked character: ', clickedCharacter)
-        
+
         // Keep track of clicked characters in state, ensuring no duplicates
         setClickedCharacters(prevClickedCharacters => {
             return [...prevClickedCharacters, clickedCharacter];
@@ -275,8 +275,8 @@ const App = () => {
 
         const matchingCharacters = charactersData.filter((char: { adjective: string; profession: string; species: string; id: number; }) =>
             (char.adjective === clickedCharacter.adjective ||
-            char.profession === clickedCharacter.profession ||
-            char.species === clickedCharacter.species) &&
+                char.profession === clickedCharacter.profession ||
+                char.species === clickedCharacter.species) &&
             char.id !== clickedCharacter.id
         );
 
@@ -290,7 +290,7 @@ const App = () => {
                 newCharacters[replaceIndex] = replacementCharacter;
                 return newCharacters;
             });
-        } 
+        }
         setQueue(prevQueue => [...prevQueue, index]);
     };
 
@@ -337,7 +337,7 @@ const App = () => {
         <Box
             display="flex"
             justifyContent="center"
-            alignItems="center"
+            alignItems="flex-start"
             width="80%"
             maxWidth="800px"
             height="80vh"
@@ -347,7 +347,7 @@ const App = () => {
             {appState === states.CALIBRATION && <PreCalibration />}
             {appState === states.TRAINING && <CharacterGrid chars={characters} onImageClick={handleTrainingClick} />}
             {appState === states.TROLLEY && <TrolleyProblem characterSaved={handleTrolleyClick} onComplete={() => setAppState(states.REVIEW)} />}
-            {appState === states.REVIEW && <Review characters={charactersData} trolleyPairings={trolleyProblemCharacterPairings} decisions={savedCharacters} />}
+            {appState === states.REVIEW && <Review characters={charactersData} trolleyPairings={trolleyProblemCharacterPairings} decisions={savedCharacters} aiDecisions={aiSaveDecisions} />}
             {appState === states.ERROR && <div>Error!</div>}
         </Box>
     );
