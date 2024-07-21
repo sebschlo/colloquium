@@ -19,20 +19,23 @@ const TrolleyProblemUI = ({
     onCharacterPress 
 }: { 
     characters: Character[], 
-    onCharacterPress: (character: Character) => void 
+    onCharacterPress: (character: number) => void 
 }) => {
     const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
 
-    const handleCharacterClick = (character: Character) => {
+    const handleCharacterClick = (character: number) => {
         onCharacterPress(character);
     };
 
     return (
-        <Stack justifyContent="center" alignItems="center" spacing={14} sx={{ width: 600 }}>
-            {characters.map((character) => (
+        <Stack justifyContent="center" alignItems="center" spacing={8} sx={{ width: 600 }}>
+            <Typography variant="h4" align="center" gutterBottom>
+                Who would you save from the trolley?
+            </Typography>
+            {characters.map((character, index) => (
                 <Card
                     key={character.id}
-                    onClick={() => handleCharacterClick(character)}
+                    onClick={() => handleCharacterClick(index)}
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                     sx={{ display: 'flex' }}
