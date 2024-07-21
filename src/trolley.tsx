@@ -19,12 +19,10 @@ const TrolleyProblemUI = ({
     onCharacterPress 
 }: { 
     characters: Character[], 
-    onCharacterPress: (character: number) => void 
+    onCharacterPress: (character: Character, index: number) => void 
 }) => {
-    const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
-
-    const handleCharacterClick = (character: number) => {
-        onCharacterPress(character);
+    const handleCharacterClick = (character: Character, index: number) => {
+        onCharacterPress(character, index);
     };
 
     return (
@@ -35,7 +33,7 @@ const TrolleyProblemUI = ({
             {characters.map((character, index) => (
                 <Card
                     key={character.id}
-                    onClick={() => handleCharacterClick(index)}
+                    onClick={() => handleCharacterClick(character, index)}
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                     sx={{ display: 'flex' }}

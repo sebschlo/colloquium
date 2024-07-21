@@ -16,7 +16,7 @@ const states = {
     ERROR: -1,
 };
 
-const generateNewImages = false;
+const generateNewImages = true;
 
 export class Character {
     id: number;
@@ -49,7 +49,11 @@ const charactersData = charactersJSON.characters.map((char: any) =>
 
 
 
-const PreCalibration = () => {
+const PreCalibration = ({ onStop }: { onStop: () => void }) => {
+    function stopCalibration() {
+        GazeCloudAPI.StopEyeTracking();
+        onStop()
+    }
     return (
         <Box sx={{ padding: 2 }}>
             <Typography variant="h4" gutterBottom>
@@ -67,20 +71,20 @@ const PreCalibration = () => {
                     </Button>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="secondary" onClick={() => GazeCloudAPI.StopEyeTracking()}>
-                        Stop
+                    <Button variant="contained" color="secondary" onClick={stopCalibration}>
+                        Proceed without eye tracking
                     </Button>
                 </Grid>
             </Grid>
 
-            <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
+            {/* <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
                 <Typography variant="body1" gutterBottom>
                     Real-Time Result:
                 </Typography>
                 <Typography variant="body2" id="GazeData" gutterBottom></Typography>
                 <Typography variant="body2" id="HeadPhoseData" gutterBottom></Typography>
                 <Typography variant="body2" id="HeadRotData" gutterBottom></Typography>
-            </Paper>
+            </Paper> */}
 
             <div
                 id="gaze"
@@ -177,8 +181,8 @@ const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (chara
         }
     }, [currentPairIndex]);
 
-    function characterSelected(character: Character) {
-        characterSaved(character);
+    function characterSelected(character: Character, index: number) {
+        characterSaved(character.id);
         if (currentPairIndex < trolleyProblemCharacterPairings.length - 1) {
             setCurrentPairIndex(currentPairIndex + 1);
         } else {
@@ -206,10 +210,10 @@ const App = () => {
     // STATES
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.REVIEW);
+    const [appState, setAppState] = useState<number>(states.CALIBRATION);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
-    const [savedCharacters, setSavedCharacters] = useState<number[]>([0, 0, 0, 0, 0]);
-    const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([1, 0, 1, 0, 1]);
+    const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
+    const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
 
 
     async function generateImage(description: string): Promise<string> {
@@ -256,6 +260,9 @@ const App = () => {
                 scenarios: scenarios
             })
         });
+
+        const respDec = await response.json();
+        setAiSaveDecisions(respDec.decisions.map((d: { decision: number }) => d.decision));
     }
 
     const handleTrainingClick = (index: number) => {
@@ -268,9 +275,11 @@ const App = () => {
             return [...prevClickedCharacters, clickedCharacter];
         });
 
+        // Training complete, transition to next phase
         if (clickedCharacters.length > 10) {
             setAppState(states.TROLLEY);
             generateTrolleyProblemAgent();
+            setQueue([]); // stop generating new images
         }
 
         const matchingCharacters = charactersData.filter((char: { adjective: string; profession: string; species: string; id: number; }) =>
@@ -326,12 +335,21 @@ const App = () => {
         return () => clearInterval(interval);
     }, [queue]);
 
-    // Clear queue if we move out of training phase
+    // Process eye gaze
     useEffect(() => {
-        if (appState === states.TRAINING) {
-            setQueue([]);
+        if (typeof GazeCloudAPI !== 'undefined') {
+            GazeCloudAPI.OnCalibrationComplete = function () {
+                console.log('gaze Calibration Complete')
+                setAppState(states.TRAINING);
+            }
+            GazeCloudAPI.OnCamDenied = function () { console.log('camera  access denied') }
+            GazeCloudAPI.OnError = function (msg: any) { console.log('err: ' + msg) }
+            GazeCloudAPI.UseClickRecalibration = false;
+            GazeCloudAPI.OnResult = PlotGaze;
+        } else {
+            console.error("GazeCloudAPI is not defined");
         }
-    }, [appState]);
+    }, []);
 
     return (
         <Box
@@ -344,7 +362,7 @@ const App = () => {
             margin="0 auto"
             overflow="hidden"
         >
-            {appState === states.CALIBRATION && <PreCalibration />}
+            {appState === states.CALIBRATION && <PreCalibration onStop={() => setAppState(states.TRAINING)} />}
             {appState === states.TRAINING && <CharacterGrid chars={characters} onImageClick={handleTrainingClick} />}
             {appState === states.TROLLEY && <TrolleyProblem characterSaved={handleTrolleyClick} onComplete={() => setAppState(states.REVIEW)} />}
             {appState === states.REVIEW && <Review characters={charactersData} trolleyPairings={trolleyProblemCharacterPairings} decisions={savedCharacters} aiDecisions={aiSaveDecisions} />}
@@ -401,18 +419,3 @@ function PlotGaze(GazeData: any) {
     }
 }
 
-//////set callbacks/////////
-window.addEventListener("load", function () {
-    if (typeof GazeCloudAPI !== 'undefined') {
-        GazeCloudAPI.OnCalibrationComplete = function () {
-            console.log('gaze Calibration Complete')
-            setAppState(states.TRAINING);
-        }
-        GazeCloudAPI.OnCamDenied = function () { console.log('camera  access denied') }
-        GazeCloudAPI.OnError = function (msg: any) { console.log('err: ' + msg) }
-        GazeCloudAPI.UseClickRecalibration = false;
-        GazeCloudAPI.OnResult = PlotGaze;
-    } else {
-        console.error("GazeCloudAPI is not defined");
-    }
-});

@@ -24,7 +24,7 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions }: ReviewP
         const savedIndex = decisions[i] ? pair[1] : pair[0];
         return characters[pair.find(index => index !== savedIndex)!];
     });
-    const text = showText ? 'AI decisions made on your behalf' : 'Your conscious decisions';
+    const text = showText ? 'What AI decided for you...' : 'Your conscious decisions';
     return (
         <Box sx={{ width: '100%', padding: 2 }}>
             <Typography variant="h3" align="center" sx={{ marginBottom: 2 }}>
@@ -35,19 +35,21 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions }: ReviewP
                     <Typography variant="h6">You saved</Typography>
                 </Grid>
                 {savedCharacters.map((character, index) => (
-                    <Grid item xs={2} key={index}>
-                        <Card>
+                    <Grid item xs key={index} wrap="nowrap">
+                        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                             <CardMedia
                                 component="img"
                                 image={character.img}
                                 alt={`Saved Character ${index + 1}`}
-                                sx={{ height: 100, width: 100, filter: !showText || (showText && aiDecisions[index]) ? 'none' : 'grayscale(100%)' }}
+                                sx={{ height: 100, filter: !showText || (showText && aiDecisions[index]) ? 'none' : 'grayscale(100%)' }}
                             />
-                            <Typography variant="body2" align="center">
-                                {character.adjective}<br />
-                                {character.species}<br />
-                                {character.profession}
-                            </Typography>
+                            <CardContent sx={{ flexGrow: 1 }}>
+                                <Typography variant="body2" align="center">
+                                    {character.adjective}<br />
+                                    {character.species}<br />
+                                    {character.profession}
+                                </Typography>
+                            </CardContent>
                         </Card>
                     </Grid>
                 ))}
@@ -56,13 +58,13 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions }: ReviewP
                 </Grid>
 
                 {killedCharacters.map((character, index) => (
-                    <Grid item xs={2} key={index}>
+                    <Grid item xs key={index} wrap="nowrap">
                         <Card>
                             <CardMedia
                                 component="img"
                                 image={character.img}
                                 alt={`Killed Character ${index + 1}`}
-                                sx={{ height: 100, width: 100, filter: !showText || (showText && aiDecisions[index]) ? 'grayscale(100%)' : 'none' }}
+                                sx={{ height: 100, filter: !showText || (showText && aiDecisions[index]) ? 'grayscale(100%)' : 'none' }}
                             />
                             <CardContent>
                                 <Typography variant="body2" align="center">
