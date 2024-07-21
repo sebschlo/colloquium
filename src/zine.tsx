@@ -2,7 +2,7 @@ declare var GazeCloudAPI: any;
 
 import { createRoot } from 'react-dom/client';
 import { useState, useEffect } from 'react';
-import { Button, Grid, Card, CardMedia, Box, Typography, Paper } from '@mui/material';
+import { Button, Grid, Card, CardMedia, Box, Typography, Paper, Stack } from '@mui/material';
 import charactersJSON from '../public/characters.json';
 import TrolleyProblemUI from './trolley';
 import Review from './review';
@@ -105,7 +105,7 @@ const PreCalibration = ({ onStop }: { onStop: () => void }) => {
 }
 
 
-const CharacterGrid = ({ chars, onImageClick }: { chars: Character[], onImageClick: (index: number) => void }) => {
+const CharacterGrid = ({ chars, onImageClick, clickMode }: { chars: Character[], onImageClick: (index: number) => void, clickMode: boolean}) => {
     const handleMouseOver = (index: number) => {
         const card = document.getElementById(`card-${index}`);
         if (card) {
@@ -122,25 +122,31 @@ const CharacterGrid = ({ chars, onImageClick }: { chars: Character[], onImageCli
     };
 
     return (
-        <Grid container spacing={2}>
-            {chars.map((char, index) => (
-                <Grid item key={index} xs={4} style={{ padding: '8px' }}>
-                    <Card
-                        id={`card-${index}`}
-                        onMouseOver={() => handleMouseOver(index)}
-                        onMouseOut={() => handleMouseOut(index)}
-                        onClick={() => onImageClick(index)}
-                        style={{ transition: 'transform 0.2s' }}
-                    >
-                        <CardMedia
-                            component="img"
-                            image={char.img}
-                            alt={`Image ${index + 1}`}
-                        />
-                    </Card>
-                </Grid>
-            ))}
-        </Grid>
+        <Stack spacing={1}>
+            {clickMode && <Typography variant="body1" gutterBottom align="center">
+                Pick your favorite characters.
+            </Typography>}
+            <Grid container spacing={2}>
+
+                {chars.map((char, index) => (
+                    <Grid item key={index} xs={4} style={{ padding: '8px' }}>
+                        <Card
+                            id={`card-${index}`}
+                            onMouseOver={() => handleMouseOver(index)}
+                            onMouseOut={() => handleMouseOut(index)}
+                            onClick={() => onImageClick(index)}
+                            style={{ transition: 'transform 0.2s' }}
+                        >
+                            <CardMedia
+                                component="img"
+                                image={char.img}
+                                alt={`Image ${index + 1}`}
+                            />
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </Stack>
     )
 }
 
@@ -214,6 +220,7 @@ const App = () => {
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
     const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
     const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
+    const [clickMode, setClickMode] = useState<boolean>(false);
 
 
     async function generateImage(description: string): Promise<string> {
@@ -351,6 +358,15 @@ const App = () => {
         }
     }, []);
 
+    function handleCalibrationOptOut() {
+        setAppState(states.TRAINING);
+        setClickMode(true);
+    }
+
+    function handleTrolleyComplete() {
+        setAppState(states.REVIEW);
+    }
+
     return (
         <Box
             display="flex"
@@ -362,9 +378,9 @@ const App = () => {
             margin="0 auto"
             overflow="hidden"
         >
-            {appState === states.CALIBRATION && <PreCalibration onStop={() => setAppState(states.TRAINING)} />}
-            {appState === states.TRAINING && <CharacterGrid chars={characters} onImageClick={handleTrainingClick} />}
-            {appState === states.TROLLEY && <TrolleyProblem characterSaved={handleTrolleyClick} onComplete={() => setAppState(states.REVIEW)} />}
+            {appState === states.CALIBRATION && <PreCalibration onStop={handleCalibrationOptOut} />}
+            {appState === states.TRAINING && <CharacterGrid chars={characters} onImageClick={handleTrainingClick} clickMode={clickMode} />}
+            {appState === states.TROLLEY && <TrolleyProblem characterSaved={handleTrolleyClick} onComplete={handleTrolleyComplete} />}
             {appState === states.REVIEW && <Review characters={charactersData} trolleyPairings={trolleyProblemCharacterPairings} decisions={savedCharacters} aiDecisions={aiSaveDecisions} />}
             {appState === states.ERROR && <div>Error!</div>}
         </Box>
