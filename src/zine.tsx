@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { useState, useEffect } from 'react';
 import { Button, Grid, Card, CardMedia, Box, Typography, Paper, Stack } from '@mui/material';
 import charactersJSON from '../public/characters.json';
+import trolleyCharactersJSON from '../public/trolley_characters.json';
 import TrolleyProblemUI from './trolley';
 import Review from './review';
 
@@ -47,6 +48,9 @@ const charactersData = charactersJSON.characters.map((char: any) =>
     new Character(char.id, char.img, char.adjective, char.profession, char.species)
 );
 
+const trolleyCharactersData = trolleyCharactersJSON.map((char: any) =>
+    new Character(char.id, char.img, char.adjective, char.profession, char.species)
+);
 
 
 const PreCalibration = ({ onStop }: { onStop: () => void }) => {
@@ -191,7 +195,7 @@ const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (chara
     }, [currentPairIndex]);
 
     function characterSelected(character: Character, index: number) {
-        characterSaved(character.id);
+        characterSaved(index);
         if (currentPairIndex < trolleyProblemCharacterPairings.length - 1) {
             setCurrentPairIndex(currentPairIndex + 1);
         } else {
@@ -219,7 +223,7 @@ const App = () => {
     // STATES
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.CALIBRATION);
+    const [appState, setAppState] = useState<number>(states.TROLLEY);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
     const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
     const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
@@ -273,8 +277,9 @@ const App = () => {
         });
 
         const respDec = await response.json();
+        console.log(respDec)
         setAiSaveDecisions(respDec.decisions.map((d: { decision: number }) => d.decision));
-        setAiJustifications(respDec.justifications.map((d: { justification: string }) => d.justification));
+        setAiJustifications(respDec.decisions.map((d: { justification: any; }) => d.justification));
     }
 
     const handleTrainingClick = (index: number) => {
