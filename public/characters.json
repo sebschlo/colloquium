@@ -2,252 +2,252 @@
     "characters": [
         {
             "id": 1,
-            "img": "public/a-careless-reptilian-soldier-in-a-dating-sim-style.png",
+            "img": "a-careless-reptilian-soldier-in-a-dating-sim-style.png",
             "adjective": "careless",
             "profession": "soldier",
             "species": "reptilian"
         },
         {
             "id": 2,
-            "img": "public/a-funny-rhino-pilot-in-a-dating-sim-style-backgrou.png",
+            "img": "a-funny-rhino-pilot-in-a-dating-sim-style-backgrou.png",
             "adjective": "funny",
             "profession": "pilot",
             "species": "rhino"
         },
         {
             "id": 3,
-            "img": "public/a-loyal-yeti-dancer-in-a-dating-sim-style-backgrou.png",
+            "img": "a-loyal-yeti-dancer-in-a-dating-sim-style-backgrou.png",
             "adjective": "loyal",
             "profession": "dancer",
             "species": "yeti"
         },
         {
             "id": 4,
-            "img": "public/a-mean-slug-nanny-in-a-dating-sim-style-background.png",
+            "img": "a-mean-slug-nanny-in-a-dating-sim-style-background.png",
             "adjective": "mean",
             "profession": "nanny",
             "species": "slug"
         },
         {
             "id": 5,
-            "img": "public/a-messy-griffin-spy-in-a-dating-sim-style-backgrou.png",
+            "img": "a-messy-griffin-spy-in-a-dating-sim-style-backgrou.png",
             "adjective": "messy",
             "profession": "spy",
             "species": "griffin"
         },
         {
             "id": 6,
-            "img": "public/a-peaceful-bobcat-model-in-a-dating-sim-style-back.png",
+            "img": "a-peaceful-bobcat-model-in-a-dating-sim-style-back.png",
             "adjective": "peaceful",
             "profession": "model",
             "species": "bobcat"
         },
         {
             "id": 7,
-            "img": "public/a-prideful-fly-lawyer-in-a-dating-sim-style-backgr.png",
+            "img": "a-prideful-fly-lawyer-in-a-dating-sim-style-backgr.png",
             "adjective": "prideful",
             "profession": "lawyer",
             "species": "fly"
         },
         {
             "id": 8,
-            "img": "public/a-sensitive-shark-manager-in-a-dating-sim-style-ba.png",
+            "img": "a-sensitive-shark-manager-in-a-dating-sim-style-ba.png",
             "adjective": "sensitive",
             "profession": "manager",
             "species": "shark"
         },
         {
             "id": 9,
-            "img": "public/a-silent-zombie-nurse-in-a-dating-sim-style-backgr.png",
+            "img": "a-silent-zombie-nurse-in-a-dating-sim-style-backgr.png",
             "adjective": "silent",
             "profession": "nurse",
             "species": "zombie"
         },
         {
             "id": 10,
-            "img": "public/a-brave-eel-dancer--in-a-dating-sim-style-backgrou.png",
+            "img": "a-brave-eel-dancer--in-a-dating-sim-style-backgrou.png",
             "adjective": "brave",
             "profession": "dancer",
             "species": "eel"
         },
         {
             "id": 11,
-            "img": "public/a-honest-zombie-pilot----in-a-dating-sim-style-bac.png",
+            "img": "a-honest-zombie-pilot----in-a-dating-sim-style-bac.png",
             "adjective": "honest",
             "profession": "pilot",
             "species": "zombie"
         },
         {
             "id": 12,
-            "img": "public/a-patient-reptilian--actor--in-a-dating-sim-style-.png",
+            "img": "a-patient-reptilian--actor--in-a-dating-sim-style-.png",
             "adjective": "patient",
             "profession": "actor",
             "species": "reptilian"
         },
         {
             "id": 13,
-            "img": "public/a-timid-spider-hairdresser--in-a-dating-sim-style-.png",
+            "img": "a-timid-spider-hairdresser--in-a-dating-sim-style-.png",
             "adjective": "timid",
             "profession": "hairdresser",
             "species": "spider"
         },
         {
             "id": 14,
-            "img": "public/a-kind-demon-model--in-a-dating-sim-style-backgrou.png",
+            "img": "a-kind-demon-model--in-a-dating-sim-style-backgrou.png",
             "adjective": "kind",
             "profession": "model",
             "species": "demon"
         },
         {
             "id": 15,
-            "img": "public/a-cowardly--skeleton-soldier---in-a-dating-sim-sty.png",
+            "img": "a-cowardly--skeleton-soldier---in-a-dating-sim-sty.png",
             "adjective": "cowardly",
             "profession": "soldier",
             "species": "skeleton"
         },
         {
             "id": 16,
-            "img": "public/a-elegant-hippo-nurse--in-a-dating-sim-style-backg.png",
+            "img": "a-elegant-hippo-nurse--in-a-dating-sim-style-backg.png",
             "adjective": "elegant",
             "profession": "nurse",
             "species": "hippo"
         },
         {
             "id": 17,
-            "img": "public/a-messy-cockroach-police--in-a-dating-sim-style-ba.png",
+            "img": "a-messy-cockroach-police--in-a-dating-sim-style-ba.png",
             "adjective": "messy",
             "profession": "police",
             "species": "cockroach"
         },
         {
             "id": 18,
-            "img": "public/a-humorous-chupacabra-banker---in-a-dating-sim-sty.png",
+            "img": "a-humorous-chupacabra-banker---in-a-dating-sim-sty.png",
             "adjective": "humorous",
             "profession": "banker",
             "species": "chupacabra"
         },
         {
             "id": 19,
-            "img": "public/a-sincere-woodpecker-scientist--in-a-dating-sim-st.png",
+            "img": "a-sincere-woodpecker-scientist--in-a-dating-sim-st.png",
             "adjective": "sincere",
             "profession": "scientist",
             "species": "woodpecker"
         },
         {
             "id": 20,
-            "img": "public/a-serious-demon-manager--in-a-dating-sim-style-bac.png",
+            "img": "a-serious-demon-manager--in-a-dating-sim-style-bac.png",
             "adjective": "serious",
             "profession": "manager",
             "species": "demon"
         },
         {
             "id": 21,
-            "img": "public/a-diligent-donkey-lawyer--in-a-dating-sim-style-ba.png",
+            "img": "a-diligent-donkey-lawyer--in-a-dating-sim-style-ba.png",
             "adjective": "diligent",
             "profession": "lawyer",
             "species": "donkey"
         },
         {
             "id": 22,
-            "img": "public/a-submissive-beetle-firefighter--in-a-dating-sim-s.png",
+            "img": "a-submissive-beetle-firefighter--in-a-dating-sim-s.png",
             "adjective": "submissive",
             "profession": "firefighter",
             "species": "beetle"
         },
         {
             "id": 23,
-            "img": "public/a-mean-slug-electrician--in-a-dating-sim-style-bac.png",
+            "img": "a-mean-slug-electrician--in-a-dating-sim-style-bac.png",
             "adjective": "mean",
             "profession": "electrician",
             "species": "slug"
         },
         {
             "id": 24,
-            "img": "public/a-honest-golem-designer--in-a-dating-sim-style-bac.png",
+            "img": "a-honest-golem-designer--in-a-dating-sim-style-bac.png",
             "adjective": "honest",
             "profession": "designer",
             "species": "golem"
         },
         {
             "id": 25,
-            "img": "public/a-creative-spider-teacher--in-a-dating-sim-style-b.png",
+            "img": "a-creative-spider-teacher--in-a-dating-sim-style-b.png",
             "adjective": "creative",
             "profession": "teacher",
             "species": "spider"
         },
         {
             "id": 26,
-            "img": "public/a-brave-giraffe-journalist--in-a-dating-sim-style-.png",
+            "img": "a-brave-giraffe-journalist--in-a-dating-sim-style-.png",
             "adjective": "brave",
             "profession": "journalist",
             "species": "giraffe"
         },
         {
             "id": 27,
-            "img": "public/a-loyal-yeti-dancer---in-a-dating-sim-style-backgr.png",
+            "img": "a-loyal-yeti-dancer---in-a-dating-sim-style-backgr.png",
             "adjective": "loyal",
             "profession": "dancer",
             "species": "yeti"
         },
         {
             "id": 28,
-            "img": "public/a-cowardly-golem-dj---in-a-dating-sim-style-backgr.png",
+            "img": "a-cowardly-golem-dj---in-a-dating-sim-style-backgr.png",
             "adjective": "cowardly",
             "profession": "dj",
             "species": "golem"
         },
         {
             "id": 29,
-            "img": "public/a-silent-zombie-nurse-in-a-dating-sim-style-backgr.png",
+            "img": "a-silent-zombie-nurse-in-a-dating-sim-style-backgr.png",
             "adjective": "silent",
             "profession": "nurse",
             "species": "zombie"
         },
         {
             "id": 30,
-            "img": "public/a-elegant-skeleton-actor---in-a-dating-sim-style-b.png",
+            "img": "a-elegant-skeleton-actor---in-a-dating-sim-style-b.png",
             "adjective": "elegant",
             "profession": "actor",
             "species": "skeleton"
         },
         {
             "id": 31,
-            "img": "public/a-kind-demon-ceo---in-a-dating-sim-style-backgroun.png",
+            "img": "a-kind-demon-ceo---in-a-dating-sim-style-backgroun.png",
             "adjective": "kind",
             "profession": "ceo",
             "species": "demon"
         },
         {
             "id": 32,
-            "img": "public/a-ignorant-giraffe-cleaner---in-a-dating-sim-style.png",
+            "img": "a-ignorant-giraffe-cleaner---in-a-dating-sim-style.png",
             "adjective": "ignorant",
             "profession": "cleaner",
             "species": "giraffe"
         },
         {
             "id": 33,
-            "img": "public/a-pessimistic-chupacabra-cook----in-a-dating-sim-s.png",
+            "img": "a-pessimistic-chupacabra-cook----in-a-dating-sim-s.png",
             "adjective": "pessimistic",
             "profession": "cook",
             "species": "chupacabra"
         },
         {
             "id": 34,
-            "img": "public/a-patient-orangutan-mathmatician---in-a-dating-sim.png",
+            "img": "a-patient-orangutan-mathmatician---in-a-dating-sim.png",
             "adjective": "patient",
             "profession": "mathmatician",
             "species": "orangutan"
         },
         {
             "id": 35,
-            "img": "public/a-impatient-woodpecker-builder--in-a-dating-sim-st.png",
+            "img": "a-impatient-woodpecker-builder--in-a-dating-sim-st.png",
             "adjective": "impatient",
             "profession": "builder",
             "species": "woodpecker"
         },
         {
             "id": 36,
-            "img": "public/a-cruel-angel-philosopher---in-a-dating-sim-style-.png",
+            "img": "a-cruel-angel-philosopher---in-a-dating-sim-style-.png",
             "adjective": "cruel",
             "profession": "philosopher",
             "species": "angel"

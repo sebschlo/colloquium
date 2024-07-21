@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { useState, useEffect } from 'react';
 import { Button, Grid, Card, CardMedia, Box, Typography, Paper } from '@mui/material';
 import charactersJSON from '../public/characters.json';
+import TrolleyProblemUI from './trolley';
 
 // Globa Zine-App State
 const states = {
@@ -14,7 +15,7 @@ const states = {
     ERROR: -1,
 };
 
-class Character {
+export class Character {
     id: number;
     img: string;
     adjective: string;
@@ -31,6 +32,10 @@ class Character {
 
     generateDescription(): string {
         return `A ${this.adjective} ${this.species} who works as a ${this.profession} in a dating-sim-style background in 8-bit.`;
+    }
+
+    generateDisplayDescription(): string {
+        return `A ${this.adjective} ${this.species} who works as a ${this.profession}.`;
     }
 }
 
@@ -155,14 +160,33 @@ const CharacterGrid = ({ chars, onImageClick }: { chars: Character[], onImageCli
 }
 
 const TrolleyProblem = () => {
+    const [state, setState] = useState<'INITIAL' | 'FLASH_TEXT' | 'FINAL_CONTENT'>('FINAL_CONTENT');
+
+    useEffect(() => {
+        if (state === 'INITIAL') {
+            const timer1 = setTimeout(() => {
+                setState('FLASH_TEXT');
+                console.log('FLASH_TEXT')
+            }, 2000);
+
+            const timer2 = setTimeout(() => {
+                setState('FINAL_CONTENT');
+                console.log('FINAL_CONTENT')
+            }, 4000);
+        }
+    }, [state]);
+
     return (
         <div>
-            <h1>Trolley Problem</h1>
-            <p>Imagine you are the driver of a trolley...</p>
-            {/* Add more content and interaction for the trolley problem here */}
+            {state === 'INITIAL' && <h1>A runaway train interrupts your session.</h1>}
+            {state === 'FLASH_TEXT' && <h1>Quick! Decide who to save...</h1>}
+            {state === 'FINAL_CONTENT' && <TrolleyProblemUI characters={charactersData.slice(0, 2)} onCharacterPress={function (character: Character): void {
+                throw new Error('Function not implemented.');
+            } } />}
         </div>
     );
 }
+
 
 const App = () => {
     const getRandomCharacters = (data: Character[], count: number) => {
@@ -171,7 +195,7 @@ const App = () => {
     };
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.CALIBRATION_COMPLETE);
+    const [appState, setAppState] = useState<number>(states.TRAINING_COMPLETE);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
 
     // Process image replacement Queue
