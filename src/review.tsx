@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Grid, Card, CardMedia, Typography, Box, CardContent, IconButton, Backdrop, CircularProgress, Popover } from '@mui/material';
+import { Grid, Card, CardMedia, Typography, Box, CardContent, IconButton, Backdrop, CircularProgress, Popover, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { Character } from './zine';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -15,11 +15,12 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions, justifica
     const [showText, setShowText] = useState(false);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [popoverContent, setPopoverContent] = useState<string>('');
-    const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+    const [openModal, setOpenModal] = useState(false); // New state for modal
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowText(true);
+            setOpenModal(true); // Open modal when timer fires
         }, 3000);
         return () => clearTimeout(timer);
     }, []);
@@ -33,6 +34,10 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions, justifica
     const handlePopoverClose = () => {
         setAnchorEl(null);
         setPopoverContent('');
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
     };
 
     const savedCharacters = trolleyPairings.map((pair, i) => characters[pair[decisions[i]]]);
@@ -68,7 +73,6 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions, justifica
                                     onMouseEnter={(event) => {
                                         if (showText && !Boolean(aiDecisions[index])) handlePopoverOpen(event, justifications[index]);
                                     }}
-                                    // onMouseLeave={handlePopoverClose}
                                 >
                                     <CardMedia
                                         component="img"
@@ -98,7 +102,6 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions, justifica
                                     onMouseEnter={(event) => {
                                         if (showText && Boolean(aiDecisions[index])) handlePopoverOpen(event, justifications[index]);
                                     }}
-                                    // onMouseLeave={handlePopoverClose}
                                 >
                                     <CardMedia
                                         component="img"
@@ -152,6 +155,24 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions, justifica
                             <Typography>{popoverContent}</Typography>
                         </Box>
                     </Popover>
+                    <Dialog
+                        open={openModal}
+                        onClose={handleCloseModal}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"Attention!"}</DialogTitle>
+                        <DialogContent>
+                            <Typography id="alert-dialog-description">
+                                While you were selecting your decisions to the trolley problem, an AI trained on your predilections recorded at the beginning of this exercise was asked to decide on your behalf as well. The cards with the blue outline indcate the characters the AI saved. Hover over them to see its justification. Take note of how your conscious and subconscious-AI-biased decisions differ!
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseModal} color="primary" autoFocus>
+                                Review Discrepancies
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </>
             )}
         </Box>
