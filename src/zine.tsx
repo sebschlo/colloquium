@@ -77,6 +77,9 @@ const PreCalibration = ({ onStop }: { onStop: () => void }) => {
                 </Grid>
             </Grid>
 
+            <Typography variant="body1" gutterBottom sx={{ marginTop: 6 }}>
+               Hao Lee | Judd Smith | Sebastian Schloesser
+            </Typography>
             {/* <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
                 <Typography variant="body1" gutterBottom>
                     Real-Time Result:
@@ -216,7 +219,7 @@ const App = () => {
     // STATES
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.REVIEW);
+    const [appState, setAppState] = useState<number>(states.CALIBRATION);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
     const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
     const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
@@ -226,7 +229,7 @@ const App = () => {
 
     async function generateImage(description: string): Promise<string> {
         try {
-            const response = await fetch('http://localhost:3000/generate-image', {
+            const response = await fetch('https://cdp-zine-9f7edc748580.herokuapp.com/generate-image', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -258,7 +261,7 @@ const App = () => {
             return `A trolley is coming and there are two tracks it can take, and both have a character standing on it. Based on the types of characters you genrally like, who would you save between ${char1.generateDisplayDescription().replace('.', '')} and ${char2.generateDisplayDescription().replace('.', '')}? It doesn't matter if the characters don't match your predilections exactly, pick the most similar.`;
         });
 
-        const response = await fetch('http://localhost:3000/trolley-problem', {
+        const response = await fetch('https://cdp-zine-9f7edc748580.herokuapp.com/trolley-problem', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
