@@ -55,7 +55,7 @@ const PreCalibration = ({ onStop }: { onStop: () => void }) => {
         onStop()
     }
     return (
-        <Box sx={{ padding: 2 }}>
+        <Box sx={{ padding: 6 }}>
             <Typography variant="h4" gutterBottom>
                 Welcome to the Zine!
             </Typography>
@@ -64,7 +64,7 @@ const PreCalibration = ({ onStop }: { onStop: () => void }) => {
                 Eye tracking calibration is required for this interactive experience. Please press start and follow the instructions.
             </Typography>
 
-            <Grid container spacing={2} sx={{ marginBottom: 2 }}>
+            <Grid container spacing={2} sx={{ marginTop: 3 }}>
                 <Grid item>
                     <Button variant="contained" color="primary" onClick={() => GazeCloudAPI.StartEyeTracking()}>
                         Start
@@ -170,12 +170,12 @@ const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (chara
             const timer1 = setTimeout(() => {
                 setState('FLASH_TEXT');
                 console.log('FLASH_TEXT');
-            }, 2000);
+            }, 3000);
 
             const timer2 = setTimeout(() => {
                 setState('FINAL_CONTENT');
                 console.log('FINAL_CONTENT');
-            }, 4000);
+            }, 6000);
         }
     }, [state]);
 
@@ -199,8 +199,8 @@ const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (chara
 
     return (
         <div>
-            {state === 'INITIAL' && <h1>A runaway train interrupts your session.</h1>}
-            {state === 'FLASH_TEXT' && <h1>Quick! Decide who to save...</h1>}
+            {state === 'INITIAL' && <Typography variant="h1">A runaway train interrupts your session.</Typography>}
+            {state === 'FLASH_TEXT' && <Typography variant="h1">Quick! Decide who to save...</Typography>}
             {state === 'FINAL_CONTENT' && <TrolleyProblemUI characters={shownCharacters} onCharacterPress={characterSelected} />}
         </div>
     );
@@ -216,10 +216,10 @@ const App = () => {
     // STATES
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.CALIBRATION);
+    const [appState, setAppState] = useState<number>(states.REVIEW);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
-    const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
-    const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
+    const [savedCharacters, setSavedCharacters] = useState<number[]>([1, 1, 1, 1, 1]);
+    const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([1,1, 1, 1, 1]);
     const [clickMode, setClickMode] = useState<boolean>(false);
 
 
@@ -275,7 +275,7 @@ const App = () => {
     const handleTrainingClick = (index: number) => {
         const clickedCharacter = characters[index];
 
-        console.log('clicked character: ', clickedCharacter)
+        console.log('clicked character: ', clickedCharacter, '  index: ', index)
 
         // Keep track of clicked characters in state, ensuring no duplicates
         setClickedCharacters(prevClickedCharacters => {
@@ -287,13 +287,15 @@ const App = () => {
             setAppState(states.TROLLEY);
             generateTrolleyProblemAgent();
             setQueue([]); // stop generating new images
+            return
         }
 
-        const matchingCharacters = charactersData.filter((char: { adjective: string; profession: string; species: string; id: number; }) =>
+        const matchingCharacters = charactersData.filter((char: Character) =>
             (char.adjective === clickedCharacter.adjective ||
                 char.profession === clickedCharacter.profession ||
                 char.species === clickedCharacter.species) &&
-            char.id !== clickedCharacter.id
+            char.id !== clickedCharacter.id &&
+            !characters.some(existingChar => existingChar.id === char.id)
         );
 
         if (matchingCharacters.length > 0) {
@@ -302,7 +304,10 @@ const App = () => {
 
             setCharacters(prevCharacters => {
                 const newCharacters = [...prevCharacters];
-                const replaceIndex = (index + 1) % newCharacters.length;
+                let replaceIndex;
+                do {
+                    replaceIndex = Math.floor(Math.random() * newCharacters.length);
+                } while (replaceIndex === index);
                 newCharacters[replaceIndex] = replacementCharacter;
                 return newCharacters;
             });
