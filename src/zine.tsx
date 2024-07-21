@@ -3,6 +3,7 @@ declare var GazeCloudAPI: any;
 import { createRoot } from 'react-dom/client';
 import { useState, useEffect } from 'react';
 import { Button, Grid, Card, CardMedia, Box, Typography, Paper } from '@mui/material';
+import charactersJSON from '../public/characters.json';
 
 // Globa Zine-App State
 const states = {
@@ -14,12 +15,14 @@ const states = {
 };
 
 class Character {
+    id: number;
     img: string;
     adjective: string;
     profession: string;
     species: string;
 
-    constructor(img: string, adjective: string, profession: string, species: string) {
+    constructor(id: number, img: string, adjective: string, profession: string, species: string) {
+        this.id = id;
         this.img = img;
         this.adjective = adjective;
         this.profession = profession;
@@ -31,17 +34,10 @@ class Character {
     }
 }
 
-const initialCharacters = [
-    new Character("public/a-careless-reptilian-soldier-in-a-dating-sim-style.png", "careless", "soldier", "reptilian"),
-    new Character("a-funny-rhino-pilot-in-a-dating-sim-style-backgrou.png", "funny", "pilot", "rhino"),
-    new Character("public/a-loyal-yeti-dancer-in-a-dating-sim-style-backgrou.png", "loyal", "dancer", "yeti"),
-    new Character("public/a-mean-slug-nanny-in-a-dating-sim-style-background.png", "mean", "nanny", "slug"),
-    new Character("a-messy-griffin-spy-in-a-dating-sim-style-backgrou.png", "messy", "griffin", "spy"),
-    new Character("public/a-peaceful-bobcat-model-in-a-dating-sim-style-back.png", "epaceful", "model", "bobcat"),
-    new Character("a-prideful-fly-lawyer-in-a-dating-sim-style-backgr.png", "prideful", "lawyer", "fly"),
-    new Character("public/a-sensitive-shark-manager-in-a-dating-sim-style-ba.png", "sensitive", "shark", "manager"),
-    new Character("public/a-silent-zombie-nurse-in-a-dating-sim-style-backgr.png", "silent", "nurse", "zombie")
-];
+
+const charactersData = charactersJSON.characters.map((char: any) =>
+    new Character(char.id, char.img, char.adjective, char.profession, char.species)
+);
 
 async function generateImage(description: string): Promise<string> {
     try {
@@ -125,7 +121,7 @@ const CharacterGrid = ({ chars, onImageClick }: { chars: Character[], onImageCli
         if (card) {
             card.style.transform = 'scale(0.95)';
         }
-        console.log(`Mouse over card ${index + 1}`);
+        // console.log(`Mouse over card ${index + 1}`);
     };
 
     const handleMouseOut = (index: number) => {
@@ -169,9 +165,14 @@ const TrolleyProblem = () => {
 }
 
 const App = () => {
-    const [characters, setCharacters] = useState<Character[]>(initialCharacters);
+    const getRandomCharacters = (data: Character[], count: number) => {
+        const startIndex = Math.floor(Math.random() * (data.length - count + 1));
+        return data.slice(startIndex, startIndex + count);
+    };
+    const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.TRAINING_COMPLETE);
+    const [appState, setAppState] = useState<number>(states.CALIBRATION_COMPLETE);
+    const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
 
     // Process image replacement Queue
     useEffect(() => {
@@ -180,9 +181,15 @@ const App = () => {
                 const index = queue[0];
                 const url = await generateImage(characters[index].generateDescription());
                 if (url) {
+                    // Add the new character to our inventory
+                    const newChar = new Character(charactersData.length, url, characters[index].adjective, characters[index].profession, characters[index].species);
+                    console.log('creating new character: ', newChar)
+                    charactersData.push(newChar)
                     setCharacters(prevCharacters => {
+                        // Replace at the next index with the new one
                         const newCharacters = [...prevCharacters];
-                        newCharacters[index] = new Character(url, characters[index].adjective, characters[index].profession, characters[index].species);
+                        const replaceIndex = (index + 2) % newCharacters.length;
+                        newCharacters[replaceIndex] = newChar;
                         return newCharacters;
                     });
                 }
@@ -193,10 +200,38 @@ const App = () => {
         return () => clearInterval(interval);
     }, [queue]);
 
+
+
     const handleImageClick = (index: number) => {
+        const clickedCharacter = characters[index];
+        
+        // Keep track of clicked characters in state, ensuring no duplicates
+        setClickedCharacters(prevClickedCharacters => {
+            return [...prevClickedCharacters, clickedCharacter];
+        });
+
+        const matchingCharacters = charactersData.filter((char: { adjective: string; profession: string; species: string; id: number; }) =>
+            (char.adjective === clickedCharacter.adjective ||
+            char.profession === clickedCharacter.profession ||
+            char.species === clickedCharacter.species) &&
+            char.id !== clickedCharacter.id
+        );
+
+        if (matchingCharacters.length > 0) {
+            const randomIndex = Math.floor(Math.random() * matchingCharacters.length);
+            const replacementCharacter = matchingCharacters[randomIndex];
+
+            setCharacters(prevCharacters => {
+                const newCharacters = [...prevCharacters];
+                const replaceIndex = (index + 1) % newCharacters.length;
+                newCharacters[replaceIndex] = replacementCharacter;
+                return newCharacters;
+            });
+        } 
         setQueue(prevQueue => [...prevQueue, index]);
     };
 
+    // Clear queue if we move out of training phase
     useEffect(() => {
         if (appState === states.CALIBRATION_COMPLETE) {
             setQueue([]);
@@ -216,7 +251,7 @@ const App = () => {
         >
             {appState === states.PRE_CALIBRATION && <PreCalibration />}
             {appState === states.CALIBRATION_COMPLETE && <CharacterGrid chars={characters} onImageClick={handleImageClick} />}
-            {appState === states.TRAINING_COMPLETE &&  <TrolleyProblem />}
+            {appState === states.TRAINING_COMPLETE && <TrolleyProblem />}
             {appState === states.REVIEW && <div>Review State</div>}
             {appState === states.ERROR && <div>Error State</div>}
         </Box>
