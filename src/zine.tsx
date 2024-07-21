@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Button, Grid, Card, CardMedia, Box, Typography, Paper } from '@mui/material';
 import charactersJSON from '../public/characters.json';
 import TrolleyProblemUI from './trolley';
+import Review from './review';
 
 // Globa Zine-App State
 const states = {
@@ -140,7 +141,7 @@ const CharacterGrid = ({ chars, onImageClick }: { chars: Character[], onImageCli
 }
 
 
-const trolleyProblemCharacterPairings = [
+const trolleyProblemCharacterPairings: [number, number][] = [
     [0, 1],
     [2, 3],
     [4, 5],
@@ -148,7 +149,7 @@ const trolleyProblemCharacterPairings = [
     [8, 9],
 ];
 
-const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (character: Character) => void, onComplete: () => void }) => {
+const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (character: number) => void, onComplete: () => void }) => {
     const [state, setState] = useState<'INITIAL' | 'FLASH_TEXT' | 'FINAL_CONTENT'>('INITIAL');
     const [currentPairIndex, setCurrentPairIndex] = useState<number>(0);
     const [shownCharacters, setShownCharacters] = useState<Character[]>([]);
@@ -205,9 +206,9 @@ const App = () => {
     // STATES
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.TRAINING);
+    const [appState, setAppState] = useState<number>(states.REVIEW);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
-    const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
+    const [savedCharacters, setSavedCharacters] = useState<number[]>([0, 0, 0, 0, 0]);
     const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
 
 
@@ -346,7 +347,7 @@ const App = () => {
             {appState === states.CALIBRATION && <PreCalibration />}
             {appState === states.TRAINING && <CharacterGrid chars={characters} onImageClick={handleTrainingClick} />}
             {appState === states.TROLLEY && <TrolleyProblem characterSaved={handleTrolleyClick} onComplete={() => setAppState(states.REVIEW)} />}
-            {appState === states.REVIEW && <div>Review State</div>}
+            {appState === states.REVIEW && <Review characters={charactersData} trolleyPairings={trolleyProblemCharacterPairings} decisions={savedCharacters} />}
             {appState === states.ERROR && <div>Error!</div>}
         </Box>
     );
