@@ -119,7 +119,7 @@ const Review = ({ characters, trolleyPairings, decisions, aiDecisions, justifica
                                 </Card>
                             </Grid>
                         ))}
-                        {showText && <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 2, marginLeft: 2 }}>
+                        {showText && <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 2, marginLeft: 2, minWidth: '800px' }}>
                             <Box sx={{ width: 20, height: 20, backgroundColor: 'blue', marginRight: 1 }} />
                             <Typography sx={{ color: 'blue'  }}>
                                 = Who the AI decided to save on your behalf

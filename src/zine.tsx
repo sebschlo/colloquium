@@ -25,13 +25,15 @@ export class Character {
     adjective: string;
     profession: string;
     species: string;
+    description?: string;
 
-    constructor(id: number, img: string, adjective: string, profession: string, species: string) {
+    constructor(id: number, img: string, adjective: string, profession: string, species: string, description?: string) {
         this.id = id;
         this.img = img;
         this.adjective = adjective;
         this.profession = profession;
         this.species = species;
+        this.description = description;
     }
 
     generateDescription(): string {
@@ -49,7 +51,7 @@ const charactersData = charactersJSON.characters.map((char: any) =>
 );
 
 const trolleyCharactersData = trolleyCharactersJSON.map((char: any) =>
-    new Character(char.id, char.img, char.adjective, char.profession, char.species)
+    new Character(char.id, char.img, char.adjective, char.profession, char.species, char.description)
 );
 
 
@@ -126,7 +128,7 @@ const CharacterGrid = ({ chars, onImageClick, clickMode }: { chars: Character[],
     };
 
     return (
-        <Stack spacing={1}>
+        <Stack spacing={1} sx={{ maxWidth: '800px' }}>
             {clickMode && <Typography variant="body1" gutterBottom align="center">
                 Pick your favorite characters.
             </Typography>}
@@ -156,14 +158,14 @@ const CharacterGrid = ({ chars, onImageClick, clickMode }: { chars: Character[],
 
 
 const trolleyProblemCharacterPairings: [number, number][] = [
-    [0, 1],
-    [2, 3],
-    [4, 5],
-    [6, 7],
-    [8, 9],
-    [10, 11],
-    [12, 13],
     [14, 15],
+    [12, 13],
+    [10, 11],
+    [8, 9],
+    [6, 7],
+    [4, 5],
+    [2, 3],
+    [0, 1],
 ];
 
 const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (character: number) => void, onComplete: () => void }) => {
@@ -223,7 +225,7 @@ const App = () => {
     // STATES
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.CALIBRATION);
+    const [appState, setAppState] = useState<number>(states.TROLLEY);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
     const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
     const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
@@ -262,24 +264,31 @@ const App = () => {
         const scenarios = trolleyProblemCharacterPairings.map(pair => {
             const char1 = charactersData[pair[0]];
             const char2 = charactersData[pair[1]];
-            return `A trolley is coming and there are two tracks it can take, and both have a character standing on it. Based on the types of characters you genrally like, who would you save between ${char1.generateDisplayDescription().replace('.', '')} and ${char2.generateDisplayDescription().replace('.', '')}? It doesn't matter if the characters don't match your predilections exactly, pick the most similar.`;
+            return `A trolley is coming and there are two tracks it can take, and both have a character standing on it. Based on the types of characters you generally like, who would you save between ${char1.generateDisplayDescription().replace('.', '')} and ${char2.generateDisplayDescription().replace('.', '')}? It doesn't matter if the characters don't match your predilections exactly, pick the most similar.`;
         });
 
-        const response = await fetch('https://cdp-zine-9f7edc748580.herokuapp.com/trolley-problem', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                description: description,
-                scenarios: scenarios
-            })
-        });
+        const fetchScenario = async (scenario: string) => {
+            const response = await fetch('https://cdp-zine-9f7edc748580.herokuapp.com/trolley-problem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    description: description,
+                    scenarios: [scenario]
+                })
+            });
 
-        const respDec = await response.json();
-        console.log(respDec)
-        setAiSaveDecisions(respDec.decisions.map((d: { decision: number }) => d.decision));
-        setAiJustifications(respDec.decisions.map((d: { justification: any; }) => d.justification));
+            return response.json();
+        };
+
+        const responses = await Promise.all(scenarios.map(fetchScenario));
+
+        const decisions = responses.flatMap(resp => resp.decisions.map((d: { decision: number }) => d.decision));
+        const justifications = responses.flatMap(resp => resp.decisions.map((d: { justification: any }) => d.justification));
+
+        setAiSaveDecisions(decisions);
+        setAiJustifications(justifications);
     }
 
     const handleTrainingClick = (index: number) => {
@@ -455,7 +464,6 @@ const App = () => {
             justifyContent="center"
             alignItems="flex-start"
             width="80%"
-            maxWidth="800px"
             height="80vh"
             margin="0 auto"
             overflow="hidden"
@@ -464,7 +472,7 @@ const App = () => {
             {appState === states.TRAINING && <CharacterGrid chars={characters} onImageClick={handleTrainingClick} clickMode={clickMode} />}
             {appState === states.TROLLEY && <TrolleyProblem characterSaved={handleTrolleyClick} onComplete={handleTrolleyComplete} />}
             {appState === states.REVIEW
-            && <Review characters={charactersData}
+            && <Review characters={trolleyCharactersData}
                     trolleyPairings={trolleyProblemCharacterPairings}
                     decisions={savedCharacters} 
                     aiDecisions={aiSaveDecisions}

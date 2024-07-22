@@ -59,7 +59,7 @@ const TrolleyProblemUI = ({
                             <Grid item xs={7}>
                                 <CardContent>
                                     <Typography variant="h5" align="left">
-                                        {character.generateDisplayDescription()}
+                                        {character.description}
                                     </Typography>
                                 </CardContent>
                             </Grid>
@@ -68,7 +68,7 @@ const TrolleyProblemUI = ({
                                     component="img"
                                     image={character.img}
                                     alt={`Character ${character.id}`}
-                                    sx={{ height: 256, width: 256 }}
+                                    sx={{ height: '100%', width: '100%', objectFit: 'cover' }}
                                 />
                             </Grid>
                         </Grid>
