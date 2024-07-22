@@ -225,7 +225,7 @@ const App = () => {
     // STATES
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.TROLLEY);
+    const [appState, setAppState] = useState<number>(states.CALIBRATION);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
     const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
     const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
