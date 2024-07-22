@@ -58,6 +58,11 @@ const PreCalibration = ({ onStop }: { onStop: () => void }) => {
         GazeCloudAPI.StopEyeTracking();
         onStop()
     }
+
+    function startCalibration() {
+        GazeCloudAPI.StartEyeTracking();
+    }
+
     return (
         <Box sx={{ padding: 6 }}>
             <Typography variant="h4" gutterBottom>
@@ -70,7 +75,7 @@ const PreCalibration = ({ onStop }: { onStop: () => void }) => {
 
             <Grid container spacing={2} sx={{ marginTop: 3 }}>
                 <Grid item>
-                    <Button variant="contained" color="primary" onClick={() => GazeCloudAPI.StartEyeTracking()}>
+                    <Button variant="contained" color="primary" onClick={startCalibration}>
                         Start
                     </Button>
                 </Grid>
@@ -84,14 +89,6 @@ const PreCalibration = ({ onStop }: { onStop: () => void }) => {
             <Typography variant="body1" gutterBottom sx={{ marginTop: 6 }}>
                Hao Lee | Judd Smith | Sebastian Schloesser
             </Typography>
-            {/* <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-                <Typography variant="body1" gutterBottom>
-                    Real-Time Result:
-                </Typography>
-                <Typography variant="body2" id="GazeData" gutterBottom></Typography>
-                <Typography variant="body2" id="HeadPhoseData" gutterBottom></Typography>
-                <Typography variant="body2" id="HeadRotData" gutterBottom></Typography>
-            </Paper> */}
 
             <div
                 id="gaze"
@@ -223,7 +220,7 @@ const App = () => {
     // STATES
     const [characters, setCharacters] = useState<Character[]>(getRandomCharacters(charactersData, 9));
     const [queue, setQueue] = useState<number[]>([]);
-    const [appState, setAppState] = useState<number>(states.TROLLEY);
+    const [appState, setAppState] = useState<number>(states.CALIBRATION);
     const [clickedCharacters, setClickedCharacters] = useState<Character[]>([]);
     const [savedCharacters, setSavedCharacters] = useState<number[]>([]);
     const [aiSaveDecisions, setAiSaveDecisions] = useState<number[]>([]);
@@ -255,9 +252,9 @@ const App = () => {
         }
     }
 
-    async function generateTrolleyProblemAgent() {
+    async function generateTrolleyProblemAgent(clickedChars: Character[]) {
 
-        const description: string = clickedCharacters.map(character => character.generateDisplayDescription()).join(' ');
+        const description: string = clickedChars.map(character => character.generateDisplayDescription()).join(' ');
 
         const scenarios = trolleyProblemCharacterPairings.map(pair => {
             const char1 = charactersData[pair[0]];
@@ -289,13 +286,16 @@ const App = () => {
 
         // Keep track of clicked characters in state, ensuring no duplicates
         setClickedCharacters(prevClickedCharacters => {
-            return [...prevClickedCharacters, clickedCharacter];
+            if (!prevClickedCharacters.some(char => char.id === clickedCharacter.id)) {
+                return [...prevClickedCharacters, clickedCharacter];
+            }
+            return prevClickedCharacters;
         });
 
         // Training complete, transition to next phase
         if (clickedCharacters.length > 10) {
             setAppState(states.TROLLEY);
-            generateTrolleyProblemAgent();
+            generateTrolleyProblemAgent(clickedCharacters);
             setQueue([]); // stop generating new images
             return
         }
@@ -309,6 +309,7 @@ const App = () => {
         );
 
         if (matchingCharacters.length > 0) {
+            console.log('matching characters: ', matchingCharacters)
             const randomIndex = Math.floor(Math.random() * matchingCharacters.length);
             const replacementCharacter = matchingCharacters[randomIndex];
 
@@ -328,6 +329,56 @@ const App = () => {
     function handleTrolleyClick(character: number) {
         console.log('character pressed: ', character)
         setSavedCharacters([...savedCharacters, character]);
+    }
+
+    const [gazeStartTime, setGazeStartTime] = useState<{ [key: number]: number }>({});
+
+    function handleCardGaze(index: number) {
+        const currentTime = Date.now();
+        setGazeStartTime(prevGazeStartTime => {
+            const newGazeStartTime = { ...prevGazeStartTime };
+            if (!newGazeStartTime[index]) {
+                newGazeStartTime[index] = currentTime;
+            } else {
+                const gazeDuration = currentTime - newGazeStartTime[index];
+                if (gazeDuration > 300) {
+                    handleTrainingClick(index);
+                    delete newGazeStartTime[index]; // Reset the gaze start time after triggering
+                }
+            }
+            return newGazeStartTime;
+        });
+    }
+
+    function PlotGaze(GazeData: any) {
+        /*
+            GazeData.state // 0: valid gaze data; -1 : face tracking lost, 1 : gaze uncalibrated
+            GazeData.docX // gaze x in document coordinates
+            GazeData.docY // gaze y in document cordinates
+            GazeData.time // timestamp
+        */
+        
+        const x = GazeData.docX;
+        const y = GazeData.docY;
+        // console.log('Gaze coordinates:', x, y);
+
+        if (GazeData.state === 0) {
+            const cards = document.querySelectorAll('.MuiCard-root');
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+                    card.style.transform = 'scale(0.9)';
+                    handleCardGaze(index);
+                } else {
+                    card.style.transform = 'scale(1)';
+                    setGazeStartTime(prevGazeStartTime => {
+                        const newGazeStartTime = { ...prevGazeStartTime };
+                        delete newGazeStartTime[index]; // Reset the gaze start time if gaze is not over the card
+                        return newGazeStartTime;
+                    });
+                }
+            });
+        }
     }
 
     // Process image replacement Queue
@@ -363,16 +414,29 @@ const App = () => {
             GazeCloudAPI.OnCalibrationComplete = function () {
                 console.log('gaze Calibration Complete')
                 setAppState(states.TRAINING);
+                setTimeout(() => {
+                    setClickedCharacters((prevClickedCharacters) => {
+                        console.log('55 seconds have passed, triggering function');
+                        console.log('selected: ', prevClickedCharacters);
+                        setAppState(states.TROLLEY);
+                        generateTrolleyProblemAgent(prevClickedCharacters);
+                        setQueue([]); // stop generating new images
+                        GazeCloudAPI.StopEyeTracking();
+                        return prevClickedCharacters;
+                    });
+                }, 55000);
             }
             GazeCloudAPI.OnCamDenied = function () { console.log('camera  access denied') }
             GazeCloudAPI.OnError = function (msg: any) { console.log('err: ' + msg) }
             GazeCloudAPI.UseClickRecalibration = false;
             GazeCloudAPI.OnResult = PlotGaze;
+
         } else {
             console.error("GazeCloudAPI is not defined");
         }
     }, []);
 
+    
     function handleCalibrationOptOut() {
         setAppState(states.TRAINING);
         setClickMode(true);
@@ -416,42 +480,3 @@ if (appElement) {
 } else {
     console.error("App element not found");
 }
-
-
-function PlotGaze(GazeData: any) {
-    /*
-        GazeData.state // 0: valid gaze data; -1 : face tracking lost, 1 : gaze uncalibrated
-        GazeData.docX // gaze x in document coordinates
-        GazeData.docY // gaze y in document cordinates
-        GazeData.time // timestamp
-    */
-    const gazeDataElement = document.getElementById("GazeData");
-    const headPhoseDataElement = document.getElementById("HeadPhoseData");
-    const headRotDataElement = document.getElementById("HeadRotData");
-    const gazeElement = document.getElementById("gaze");
-
-    if (gazeDataElement && headPhoseDataElement && headRotDataElement && gazeElement) {
-        gazeDataElement.innerHTML = "GazeX: " + GazeData.GazeX + " GazeY: " + GazeData.GazeY;
-        headPhoseDataElement.innerHTML = " HeadX: " + GazeData.HeadX + " HeadY: " + GazeData.HeadY + " HeadZ: " + GazeData.HeadZ;
-        headRotDataElement.innerHTML = " Yaw: " + GazeData.HeadYaw + " Pitch: " + GazeData.HeadPitch + " Roll: " + GazeData.HeadRoll;
-
-        var x = GazeData.docX;
-        var y = GazeData.docY;
-
-        x -= gazeElement.clientWidth / 2;
-        y -= gazeElement.clientHeight / 2;
-
-        gazeElement.style.left = x + "px";
-        gazeElement.style.top = y + "px";
-
-        if (GazeData.state != 0) {
-            if (gazeElement.style.display == 'block')
-                gazeElement.style.display = 'none';
-        }
-        else {
-            if (gazeElement.style.display == 'none')
-                gazeElement.style.display = 'block';
-        }
-    }
-}
-

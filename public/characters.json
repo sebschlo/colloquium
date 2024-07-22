@@ -184,69 +184,55 @@
         },
         {
             "id": 26,
-            "img": "a-loyal-yeti-dancer---in-a-dating-sim-style-backgr.png",
-            "adjective": "loyal",
-            "profession": "dancer",
-            "species": "yeti"
-        },
-        {
-            "id": 27,
             "img": "a-cowardly-golem-dj---in-a-dating-sim-style-backgr.png",
             "adjective": "cowardly",
             "profession": "dj",
             "species": "golem"
         },
         {
-            "id": 28,
-            "img": "a-silent-zombie-nurse-in-a-dating-sim-style-backgr.png",
-            "adjective": "silent",
-            "profession": "nurse",
-            "species": "zombie"
-        },
-        {
-            "id": 29,
+            "id": 27,
             "img": "a-elegant-skeleton-actor---in-a-dating-sim-style-b.png",
             "adjective": "elegant",
             "profession": "actor",
             "species": "skeleton"
         },
         {
-            "id": 30,
+            "id": 28,
             "img": "a-kind-demon-ceo---in-a-dating-sim-style-backgroun.png",
             "adjective": "kind",
             "profession": "ceo",
             "species": "demon"
         },
         {
-            "id": 31,
+            "id": 29,
             "img": "a-ignorant-giraffe-cleaner---in-a-dating-sim-style.png",
             "adjective": "ignorant",
             "profession": "cleaner",
             "species": "giraffe"
         },
         {
-            "id": 32,
+            "id": 30,
             "img": "a-pessimistic-chupacabra-cook----in-a-dating-sim-s.png",
             "adjective": "pessimistic",
             "profession": "cook",
             "species": "chupacabra"
         },
         {
-            "id": 33,
+            "id": 31,
             "img": "a-patient-orangutan-mathmatician---in-a-dating-sim.png",
             "adjective": "patient",
             "profession": "mathmatician",
             "species": "orangutan"
         },
         {
-            "id": 34,
+            "id": 32,
             "img": "a-impatient-woodpecker-builder--in-a-dating-sim-st.png",
             "adjective": "impatient",
             "profession": "builder",
             "species": "woodpecker"
         },
         {
-            "id": 35,
+            "id": 33,
             "img": "a-cruel-angel-philosopher---in-a-dating-sim-style-.png",
             "adjective": "cruel",
             "profession": "philosopher",
