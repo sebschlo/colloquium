@@ -161,6 +161,9 @@ const trolleyProblemCharacterPairings: [number, number][] = [
     [4, 5],
     [6, 7],
     [8, 9],
+    [10, 11],
+    [12, 13],
+    [14, 15],
 ];
 
 const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (character: number) => void, onComplete: () => void }) => {
@@ -187,7 +190,7 @@ const TrolleyProblem = ({ characterSaved, onComplete }: { characterSaved: (chara
     useEffect(() => {
         if (currentPairIndex < trolleyProblemCharacterPairings.length) {
             const pair = trolleyProblemCharacterPairings[currentPairIndex];
-            setShownCharacters([charactersData[pair[0]], charactersData[pair[1]]]);
+            setShownCharacters([trolleyCharactersData[pair[0]], trolleyCharactersData[pair[1]]]);
         }
     }, [currentPairIndex]);
 

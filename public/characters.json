@@ -2,241 +2,255 @@
     "characters": [
         {
             "id": 0,
-            "img": "a-careless-reptilian-soldier-in-a-dating-sim-style.png",
-            "adjective": "careless",
-            "profession": "soldier",
-            "species": "reptilian"
+            "img": "Trolley Problem_Character_01@0.75x.png",
+            "adjective": "pretty",
+            "profession": "student",
+            "species": "fairy"
         },
         {
             "id": 1,
-            "img": "a-funny-rhino-pilot-in-a-dating-sim-style-backgrou.png",
-            "adjective": "funny",
-            "profession": "pilot",
-            "species": "rhino"
+            "img": "Trolley Problem_Character_02@0.75x.png",
+            "adjective": "sad",
+            "profession": "office worker",
+            "species": "donkey"
         },
         {
             "id": 2,
-            "img": "a-loyal-yeti-dancer-in-a-dating-sim-style-backgrou.png",
-            "adjective": "loyal",
-            "profession": "dancer",
-            "species": "yeti"
+            "img": "Trolley Problem_Character_03@0.75x.png",
+            "adjective": "wholesome",
+            "profession": "painter",
+            "species": "hippo"
         },
         {
             "id": 3,
-            "img": "a-mean-slug-nanny-in-a-dating-sim-style-background.png",
-            "adjective": "mean",
-            "profession": "nanny",
-            "species": "slug"
+            "img": "Trolley Problem_Character_04@0.75x.png",
+            "adjective": "sexy",
+            "profession": "model",
+            "species": "crocodile"
         },
         {
             "id": 4,
-            "img": "a-messy-griffin-spy-in-a-dating-sim-style-backgrou.png",
-            "adjective": "messy",
-            "profession": "spy",
-            "species": "griffin"
+            "img": "Trolley Problem_Character_05@0.75x.png",
+            "adjective": "care-free",
+            "profession": "manager",
+            "species": "chair-person"
         },
         {
             "id": 5,
-            "img": "a-peaceful-bobcat-model-in-a-dating-sim-style-back.png",
-            "adjective": "peaceful",
-            "profession": "model",
-            "species": "bobcat"
+            "img": "Trolley Problem_Character_06@0.75x.png",
+            "adjective": "serious",
+            "profession": "bouncer",
+            "species": "robot"
         },
         {
             "id": 6,
-            "img": "a-prideful-fly-lawyer-in-a-dating-sim-style-backgr.png",
-            "adjective": "prideful",
-            "profession": "lawyer",
-            "species": "fly"
+            "img": "Trolley Problem_Character_07@0.75x.png",
+            "adjective": "grumpy",
+            "profession": "police",
+            "species": "cockroach"
         },
         {
             "id": 7,
-            "img": "a-sensitive-shark-manager-in-a-dating-sim-style-ba.png",
-            "adjective": "sensitive",
-            "profession": "manager",
-            "species": "shark"
+            "img": "Trolley Problem_Character_08@0.75x.png",
+            "adjective": "professional",
+            "profession": "agent",
+            "species": "beetle"
         },
         {
             "id": 8,
-            "img": "a-silent-zombie-nurse-in-a-dating-sim-style-backgr.png",
-            "adjective": "silent",
-            "profession": "nurse",
-            "species": "zombie"
+            "img": "Trolley Problem_Character_09@0.75x.png",
+            "adjective": "happy-go-lucky",
+            "profession": "comedian",
+            "species": "banana-person"
         },
         {
             "id": 9,
-            "img": "a-brave-eel-dancer--in-a-dating-sim-style-backgrou.png",
-            "adjective": "brave",
-            "profession": "dancer",
-            "species": "eel"
+            "img": "Trolley Problem_Character_10@0.75x.png",
+            "adjective": "kind",
+            "profession": "teacher",
+            "species": "shark"
         },
         {
             "id": 10,
-            "img": "a-honest-zombie-pilot----in-a-dating-sim-style-bac.png",
-            "adjective": "honest",
-            "profession": "pilot",
-            "species": "zombie"
+            "img": "Trolley Problem_Character_11@0.75x.png",
+            "adjective": "talented",
+            "profession": "chef",
+            "species": "wolf"
         },
         {
             "id": 11,
-            "img": "a-patient-reptilian--actor--in-a-dating-sim-style-.png",
-            "adjective": "patient",
-            "profession": "actor",
-            "species": "reptilian"
+            "img": "Trolley Problem_Character_12@0.75x.png",
+            "adjective": "emotionless",
+            "profession": "counselor",
+            "species": "angel"
         },
         {
             "id": 12,
-            "img": "a-timid-spider-hairdresser--in-a-dating-sim-style-.png",
-            "adjective": "timid",
-            "profession": "hairdresser",
-            "species": "spider"
+            "img": "Trolley Problem_Character_13@0.75x.png",
+            "adjective": "pretty",
+            "profession": "dancer",
+            "species": "reptilian"
         },
         {
             "id": 13,
-            "img": "a-kind-demon-model--in-a-dating-sim-style-backgrou.png",
-            "adjective": "kind",
-            "profession": "model",
-            "species": "demon"
+            "img": "Trolley Problem_Character_14@0.75x.png",
+            "adjective": "warm",
+            "profession": "president",
+            "species": "giraffe"
         },
         {
             "id": 14,
-            "img": "a-cowardly--skeleton-soldier---in-a-dating-sim-sty.png",
-            "adjective": "cowardly",
+            "img": "Trolley Problem_Character_15@0.75x.png",
+            "adjective": "deadly",
             "profession": "soldier",
             "species": "skeleton"
         },
         {
             "id": 15,
-            "img": "a-elegant-hippo-nurse--in-a-dating-sim-style-backg.png",
-            "adjective": "elegant",
+            "img": "Trolley Problem_Character_16@0.75x.png",
+            "adjective": "ambitious",
             "profession": "nurse",
             "species": "hippo"
         },
         {
             "id": 16,
-            "img": "a-messy-cockroach-police--in-a-dating-sim-style-ba.png",
-            "adjective": "messy",
+            "img": "Trolley Problem_Character_17@0.75x.png",
+            "adjective": "joyful",
+            "profession": "construction worker",
+            "species": "woodpecker"
+        },
+        {
+            "id": 17,
+            "img": "Trolley Problem_Character_18@0.75x.png",
+            "adjective": "intelligent",
+            "profession": "pilot",
+            "species": "zombie"
+        },
+        {
+            "id": 18,
+            "img": "Trolley Problem_Character_19@0.75x.png",
+            "adjective": "modest",
+            "profession": "gardner",
+            "species": "giraffe"
+        },
+        {
+            "id": 19,
+            "img": "Trolley Problem_Character_20@0.75x.png",
+            "adjective": "diligent",
+            "profession": "lawyer",
+            "species": "devil"
+        },
+        {
+            "id": 20,
+            "img": "Trolley Problem_Character_21@0.75x.png",
+            "adjective": "sincere",
+            "profession": "nanny",
+            "species": "slug"
+        },
+        {
+            "id": 21,
+            "img": "Trolley Problem_Character_22@0.75x.png",
+            "adjective": "wise",
             "profession": "police",
             "species": "cockroach"
         },
         {
-            "id": 17,
-            "img": "a-humorous-chupacabra-banker---in-a-dating-sim-sty.png",
-            "adjective": "humorous",
-            "profession": "banker",
-            "species": "chupacabra"
-        },
-        {
-            "id": 18,
-            "img": "a-sincere-woodpecker-scientist--in-a-dating-sim-st.png",
-            "adjective": "sincere",
-            "profession": "scientist",
-            "species": "woodpecker"
-        },
-        {
-            "id": 19,
-            "img": "a-serious-demon-manager--in-a-dating-sim-style-bac.png",
-            "adjective": "serious",
-            "profession": "manager",
-            "species": "demon"
-        },
-        {
-            "id": 20,
-            "img": "a-diligent-donkey-lawyer--in-a-dating-sim-style-ba.png",
-            "adjective": "diligent",
-            "profession": "lawyer",
-            "species": "donkey"
-        },
-        {
-            "id": 21,
-            "img": "a-submissive-beetle-firefighter--in-a-dating-sim-s.png",
-            "adjective": "submissive",
-            "profession": "firefighter",
-            "species": "beetle"
-        },
-        {
             "id": 22,
-            "img": "a-mean-slug-electrician--in-a-dating-sim-style-bac.png",
-            "adjective": "mean",
-            "profession": "electrician",
-            "species": "slug"
+            "img": "Trolley Problem_Character_23@0.75x.png",
+            "adjective": "zealous",
+            "profession": "scholar",
+            "species": "monkey"
         },
         {
             "id": 23,
-            "img": "a-honest-golem-designer--in-a-dating-sim-style-bac.png",
-            "adjective": "honest",
-            "profession": "designer",
-            "species": "golem"
+            "img": "Trolley Problem_Character_24@0.75x.png",
+            "adjective": "alluring",
+            "profession": "youtuber",
+            "species": "bobcat"
         },
         {
             "id": 24,
-            "img": "a-creative-spider-teacher--in-a-dating-sim-style-b.png",
-            "adjective": "creative",
+            "img": "Trolley Problem_Character_25@0.75x.png",
+            "adjective": "handsome",
             "profession": "teacher",
-            "species": "spider"
+            "species": "devil"
         },
         {
             "id": 25,
-            "img": "a-brave-giraffe-journalist--in-a-dating-sim-style-.png",
-            "adjective": "brave",
-            "profession": "journalist",
-            "species": "giraffe"
-        },
-        {
-            "id": 26,
-            "img": "a-cowardly-golem-dj---in-a-dating-sim-style-backgr.png",
-            "adjective": "cowardly",
-            "profession": "dj",
-            "species": "golem"
-        },
-        {
-            "id": 27,
-            "img": "a-elegant-skeleton-actor---in-a-dating-sim-style-b.png",
-            "adjective": "elegant",
-            "profession": "actor",
-            "species": "skeleton"
-        },
-        {
-            "id": 28,
-            "img": "a-kind-demon-ceo---in-a-dating-sim-style-backgroun.png",
-            "adjective": "kind",
-            "profession": "ceo",
-            "species": "demon"
-        },
-        {
-            "id": 29,
-            "img": "a-ignorant-giraffe-cleaner---in-a-dating-sim-style.png",
-            "adjective": "ignorant",
-            "profession": "cleaner",
-            "species": "giraffe"
-        },
-        {
-            "id": 30,
-            "img": "a-pessimistic-chupacabra-cook----in-a-dating-sim-s.png",
-            "adjective": "pessimistic",
-            "profession": "cook",
-            "species": "chupacabra"
-        },
-        {
-            "id": 31,
-            "img": "a-patient-orangutan-mathmatician---in-a-dating-sim.png",
+            "img": "Trolley Problem_Character_26@0.75x.png",
             "adjective": "patient",
-            "profession": "mathmatician",
-            "species": "orangutan"
-        },
-        {
-            "id": 32,
-            "img": "a-impatient-woodpecker-builder--in-a-dating-sim-st.png",
-            "adjective": "impatient",
-            "profession": "builder",
+            "profession": "pharmacist",
             "species": "woodpecker"
         },
         {
+            "id": 26,
+            "img": "Trolley Problem_Character_27@0.75x.png",
+            "adjective": "understanding",
+            "profession": "educator",
+            "species": "spider"
+        },
+        {
+            "id": 27,
+            "img": "Trolley Problem_Character_28@0.75x.png",
+            "adjective": "brave",
+            "profession": "stock trader",
+            "species": "fairy"
+        },
+        {
+            "id": 28,
+            "img": "Trolley Problem_Character_29@0.75x.png",
+            "adjective": "loyal",
+            "profession": "scout",
+            "species": "mechanical knight"
+        },
+        {
+            "id": 29,
+            "img": "Trolley Problem_Character_30@0.75x.png",
+            "adjective": "alert",
+            "profession": "marine",
+            "species": "robot dog"
+        },
+        {
+            "id": 30,
+            "img": "Trolley Problem_Character_31@0.75x.png",
+            "adjective": "nurturing",
+            "profession": "healer",
+            "species": "dryad"
+        },
+        {
+            "id": 31,
+            "img": "Trolley Problem_Character_32@0.75x.png",
+            "adjective": "courageous",
+            "profession": "student",
+            "species": "pineapple man"
+        },
+        {
+            "id": 32,
+            "img": "Trolley Problem_Character_33@0.75x.png",
+            "adjective": "loud",
+            "profession": "comedian",
+            "species": "pelican"
+        },
+        {
             "id": 33,
-            "img": "a-cruel-angel-philosopher---in-a-dating-sim-style-.png",
-            "adjective": "cruel",
-            "profession": "philosopher",
-            "species": "angel"
+            "img": "Trolley Problem_Character_34@0.75x.png",
+            "adjective": "screaming",
+            "profession": "announcer",
+            "species": "zombie"
+        },
+        {
+            "id": 34,
+            "img": "Trolley Problem_Character_35@0.75x.png",
+            "adjective": "cute",
+            "profession": "psychiatrist",
+            "species": "puppy"
+        },
+        {
+            "id": 35,
+            "img": "Trolley Problem_Character_36@0.75x.png",
+            "adjective": "weird",
+            "profession": "inventor",
+            "species": "octopus"
         }
     ]
 }
