@@ -12,6 +12,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         zine: resolve(__dirname, 'zine.html'),
+        map: resolve(__dirname, 'top_20_places_map.html')
       },
     },
   },

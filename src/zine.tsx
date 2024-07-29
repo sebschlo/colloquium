@@ -72,7 +72,7 @@ const PreCalibration = ({ onStop }: { onStop: () => void }) => {
             </Typography>
 
             <Typography variant="body1" gutterBottom>
-                Eye tracking calibration is required for this interactive experience. Please press start and follow the instructions.
+                Eye tracking calibration is required for this interactive experience. Please press start, give webcam permission to the site, and once you see your face, click on the bullseye to begin.
             </Typography>
 
             <Grid container spacing={2} sx={{ marginTop: 3 }}>
