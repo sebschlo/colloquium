@@ -73,16 +73,17 @@ export default function Scroll() {
         const panels = gsap.utils.toArray(".horizontal-panel", container)
         const totalPanels = panels.length;
 
-        gsap.to(panels, {
-          xPercent: -100 * (totalPanels - 1),
-          scrollTrigger: {
-            trigger: container,
-            pin: true,
-            scrub: 1,
-            end: () => "+=" + (container.offsetWidth - innerWidth),
-            markers: true
-          }
-        });
+        // gsap.to(panels, {
+        //   xPercent: -100 * (totalPanels - 1),
+        //   scrollTrigger: {
+        //     trigger: container,
+        //     pin: true,
+        //     scrub: 1,
+        //     end: () => "+=" + (container.offsetWidth - innerWidth),
+        //     pinSpacing: container.offsetWidth,
+        //     markers: true
+        //   }
+        // });
 
         // // Add the horizontal scroll animation to the timeline
         // tl.to(container, {
@@ -118,7 +119,7 @@ export default function Scroll() {
       </nav>
       <div id="panels-container" ref={panelsContainer}>
         {panels.map((panel, index) => (
-          <section key={index} className="panel" id={panel.href.substring(1)}>
+          <section key={index} className="panel flex-center column" id={panel.href.substring(1)}>
             {!panel.horizontal && (
               <div className="content">
                 <h1>{panel.title}</h1>
@@ -128,7 +129,7 @@ export default function Scroll() {
             {panel.horizontal && (
               <div className="horizontal-container" style={{ width: `${100 * panel.horizontal.length}%`}}>
                 {panel.horizontal?.map((hPanel, hIndex) => (
-                  <article key={hIndex} className="panel">
+                  <article key={hIndex} className="horizontal-panel panel flex-center column">
                     <div className="content">
                       <h3>{hPanel.title}</h3>
                       <h4>{hPanel.subtitle}</h4>
