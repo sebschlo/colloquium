@@ -23,17 +23,18 @@ export default function Scroll() {
       ]
     },
     { title: 'Panel 3', subtitle: 'Subtitle 3', href: "#panel3" },
-    {
-      title: 'Panel 4', subtitle: 'Subtitle 4', href: "#panel4", horizontal: [
-        { title: 'H1', subtitle: 'Horizontal 1' },
-        { title: 'H2', subtitle: 'Horizontal 2' },
-        { title: 'H3', subtitle: 'Horizontal 3' },
-        { title: 'H4', subtitle: 'Horizontal 4' },
-        { title: 'H5', subtitle: 'Horizontal 5' },
-      ]
-    },
-    { title: 'Panel 5', subtitle: 'Subtitle 5', href: "#panel4" },
-  ];
+    { title: 'Panel 6', subtitle: 'Subtitle 3', href: "#panel6" },]
+  // {
+  //   title: 'Panel 4', subtitle: 'Subtitle 4', href: "#panel4", horizontal: [
+  //     { title: 'H1', subtitle: 'Horizontal 1' },
+  //     { title: 'H2', subtitle: 'Horizontal 2' },
+  //     { title: 'H3', subtitle: 'Horizontal 3' },
+  //     { title: 'H4', subtitle: 'Horizontal 4' },
+  //     { title: 'H5', subtitle: 'Horizontal 5' },
+  //   ]
+  // },
+  //   { title: 'Panel 5', subtitle: 'Subtitle 5', href: "#panel4" },
+  // ];
 
   useGSAP(
     () => {
@@ -44,54 +45,51 @@ export default function Scroll() {
 
       let scrollFunc = ScrollTrigger.getScrollFunc(window);
 
-      document.querySelectorAll(".anchor").forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          let targetElem = document.querySelector(e.target.getAttribute("href")),
-            y = targetElem;
-          if (targetElem && panelsContainer.isSameNode(targetElem.parentElement)) {
-            let totalScroll = tween.scrollTrigger.end - tween.scrollTrigger.start,
-              totalMovement = (panels.length - 1) * targetElem.offsetWidth;
-            y = Math.round(tween.scrollTrigger.start + (targetElem.offsetLeft / totalMovement) * totalScroll);
-          }
-          gsap.to(window, {
-            scrollTo: {
-              y: y,
-              autoKill: false
-            },
-            onStart: () => scrollFunc.cacheID = Math.random(),
-            onUpdate: ScrollTrigger.update,
-            duration: 1
-          });
-        });
-      });
-
-
+      // document.querySelectorAll(".anchor").forEach(anchor => {
+      //   anchor.addEventListener("click", function (e) {
+      //     e.preventDefault();
+      //     let targetElem = document.querySelector(e.target.getAttribute("href")),
+      //       y = targetElem;
+      //     if (targetElem && panelsContainer.isSameNode(targetElem.parentElement)) {
+      //       let totalScroll = tween.scrollTrigger.end - tween.scrollTrigger.start,
+      //         totalMovement = (panels.length - 1) * targetElem.offsetWidth;
+      //       y = Math.round(tween.scrollTrigger.start + (targetElem.offsetLeft / totalMovement) * totalScroll);
+      //     }
+      //     gsap.to(window, {
+      //       scrollTo: {
+      //         y: y,
+      //         autoKill: false
+      //       },
+      //       onStart: () => scrollFunc.cacheID = Math.random(),
+      //       onUpdate: ScrollTrigger.update,
+      //       duration: 1
+      //     });
+      //   });
+      // });
 
       /* Panels */
       const horizontalContainers = gsap.utils.toArray(".horizontal-container");
       horizontalContainers.forEach((container) => {
         const panels = gsap.utils.toArray(".horizontal-panel", container)
-        const totalPanels = panels.length + 1;
+        const totalPanels = panels.length;
 
-        // Create a timeline for the horizontal scroll
-        const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: container,
-              start: "top top",
-              end: () => `+=${window.innerHeight * totalPanels}`,
-              pin: true,
-              scrub: 1,
-              // anticipatePin: 1,
-              pinSpacing: false
-            }
-          });
+        gsap.to(panels, {
+          xPercent: -100 * (totalPanels - 1),
+          scrollTrigger: {
+            trigger: container,
+            pin: true,
+            scrub: 1,
+            end: () => "+=" + (container.offsetWidth - innerWidth),
+            markers: true
+          }
+        });
 
-          // Add the horizontal scroll animation to the timeline
-          tl.to(container, {
-            xPercent: () => -100 * (totalPanels - 1),
-            ease: "none"
-          });
+        // // Add the horizontal scroll animation to the timeline
+        // tl.to(container, {
+        //   xPercent: () => -100 * (totalPanels), // Adjusted xPercent value
+        //   ease: "none",
+        //   marker: true,
+        // });
 
         // // Add snap points
         // ScrollTrigger.create({
@@ -120,20 +118,22 @@ export default function Scroll() {
       </nav>
       <div id="panels-container" ref={panelsContainer}>
         {panels.map((panel, index) => (
-          <section key={index} className="panel flex-center column" id={panel.href.substring(1)}>
+          <section key={index} className="panel" id={panel.href.substring(1)}>
             {!panel.horizontal && (
-              <>
+              <div className="content">
                 <h1>{panel.title}</h1>
                 <h2>{panel.subtitle}</h2>
-              </>
+              </div>
             )}
             {panel.horizontal && (
-              <div className="horizontal-container" style={{ width: `${100 * panel.horizontal.length}%` }}>
+              <div className="horizontal-container" style={{ width: `${100 * panel.horizontal.length}%`}}>
                 {panel.horizontal?.map((hPanel, hIndex) => (
-                  <div key={hIndex} className="horizontal-panel panel flex-center column">
-                    <h3>{hPanel.title}</h3>
-                    <h4>{hPanel.subtitle}</h4>
-                  </div>
+                  <article key={hIndex} className="panel">
+                    <div className="content">
+                      <h3>{hPanel.title}</h3>
+                      <h4>{hPanel.subtitle}</h4>
+                    </div>
+                  </article>
                 ))}
               </div>
             )}
