@@ -8,7 +8,6 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
 
 export default function Scroll() {
 
-  const panelsContainer = useRef();
   const menu = useRef()
 
   const panels = [
@@ -23,18 +22,18 @@ export default function Scroll() {
       ]
     },
     { title: 'Panel 3', subtitle: 'Subtitle 3', href: "#panel3" },
-    { title: 'Panel 6', subtitle: 'Subtitle 3', href: "#panel6" },]
-  // {
-  //   title: 'Panel 4', subtitle: 'Subtitle 4', href: "#panel4", horizontal: [
-  //     { title: 'H1', subtitle: 'Horizontal 1' },
-  //     { title: 'H2', subtitle: 'Horizontal 2' },
-  //     { title: 'H3', subtitle: 'Horizontal 3' },
-  //     { title: 'H4', subtitle: 'Horizontal 4' },
-  //     { title: 'H5', subtitle: 'Horizontal 5' },
-  //   ]
-  // },
-  //   { title: 'Panel 5', subtitle: 'Subtitle 5', href: "#panel4" },
-  // ];
+    { title: 'Panel 4', subtitle: 'Subtitle 4', href: "#panel4" },
+    {
+      title: 'Panel 5', subtitle: 'Subtitle 5', href: "#panel5", horizontal: [
+        { title: 'H1', subtitle: 'Horizontal 1' },
+        { title: 'H2', subtitle: 'Horizontal 2' },
+        { title: 'H3', subtitle: 'Horizontal 3' },
+        { title: 'H4', subtitle: 'Horizontal 4' },
+        { title: 'H5', subtitle: 'Horizontal 5' },
+      ]
+    },
+    { title: 'Panel 6', subtitle: 'Subtitle 6', href: "#panel6" },
+  ];
 
   useGSAP(
     () => {
@@ -65,22 +64,22 @@ export default function Scroll() {
       const horizontalContainers = gsap.utils.toArray(".horizontal-container");
       horizontalContainers.forEach((container) => {
         const panels = gsap.utils.toArray(".panel", container)
-        const totalPanels = panels.length;
+        console.log(container.offsetWidth)
 
-        gsap.to(panels, {
-          xPercent: -100 * (totalPanels - 1),
+        gsap.to(container, {
+          xPercent: -100,
           scrollTrigger: {
             trigger: container,
             pin: true,
             scrub: 1,
-            end: () => "+=" + (container.offsetWidth - innerWidth),
-            // pinSpacing: container.offsetWidth,
-            markers: true
+            start: "top top",
+            end: () => "+=" + (container.width), // Adjusted end value
+            markers: true,
+            pinSpacing: true
           }
         });
       });
-
-    }, { scope: panelsContainer }
+    },
   )
 
   return (
@@ -93,7 +92,7 @@ export default function Scroll() {
         ))}
       </nav>
 
-      <div id="panels-container" ref={panelsContainer}>
+      <div id="panels-container">
         {panels.map((panel, index) => (
           <section key={index} className="panel" id={panel.href.substring(1)}>
             {!panel.horizontal && (
@@ -103,7 +102,7 @@ export default function Scroll() {
               </div>
             )}
             {panel.horizontal && (
-              <div className="horizontal-container" style={{ width: `${100 * panel.horizontal.length}%`}}>
+              <div className="horizontal-container" style={{ width: `${100 * panel.horizontal.length}%` }}>
                 {panel.horizontal?.map((hPanel, hIndex) => (
                   <article key={hIndex} className="panel">
                     <div className="content">

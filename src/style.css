@@ -21,6 +21,7 @@ h2 {
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  border: 1px solid #000;
 }
 
 .content {
@@ -41,9 +42,11 @@ h2 {
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
   padding: 0;
+  margin: 0;
   overflow: hidden;
   background-color: #ddd;
 }
+
 .horizontal-container .panel {
   position: relative;
   width: 100%;
