@@ -37,28 +37,24 @@ export default function Scroll() {
 
   useGSAP(
     () => {
+      const panelsContainer = document.getElementById("panels-container");
+
       /* Main navigation */
-      // document.querySelectorAll(".anchor").forEach(anchor => {
-      //   anchor.addEventListener("click", function (e) {
-      //     e.preventDefault();
-      //     let targetElem = document.querySelector(e.target.getAttribute("href")),
-      //       y = targetElem;
-      //     if (targetElem && panelsContainer.isSameNode(targetElem.parentElement)) {
-      //       let totalScroll = tween.scrollTrigger.end - tween.scrollTrigger.start,
-      //         totalMovement = (panels.length - 1) * targetElem.offsetWidth;
-      //       y = Math.round(tween.scrollTrigger.start + (targetElem.offsetLeft / totalMovement) * totalScroll);
-      //     }
-      //     gsap.to(window, {
-      //       scrollTo: {
-      //         y: y,
-      //         autoKill: false
-      //       },
-      //       onStart: () => scrollFunc.cacheID = Math.random(),
-      //       onUpdate: ScrollTrigger.update,
-      //       duration: 1
-      //     });
-      //   });
-      // });
+      document.querySelectorAll(".anchor").forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          let targetElem = document.querySelector(e.target.getAttribute("href")),
+            y = targetElem    
+          gsap.to(window, {
+            scrollTo: {
+              y: y,
+              autoKill: false
+            },
+            onUpdate: ScrollTrigger.update,
+            duration: 1
+          });
+        });
+      });
 
       /* Panels */
       const horizontalContainers = gsap.utils.toArray(".carousel");
@@ -71,7 +67,6 @@ export default function Scroll() {
             pin: true,
             scrub: 1,
             end: () => "+=" + (container.offsetWidth),
-            markers: true,
             pinSpacing: true,
           }
         });
@@ -99,7 +94,7 @@ export default function Scroll() {
               </div>
             )}
             {panel.horizontal && (
-              <div className="carousel" style={{ width: `${100 * panel.horizontal.length}%`}}>
+              <div className="carousel" style={{ width: `${100 * panel.horizontal.length}%` }}>
                 <div className="horizontal-container">
                   {panel.horizontal?.map((hPanel, hIndex) => (
                     <article key={hIndex} className="panel">

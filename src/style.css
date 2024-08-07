@@ -21,10 +21,10 @@ h2 {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  border: 1px solid #000;
 }
 
 .content {
+  padding: 100px;
   width: 100%;
   height: 100%;
   justify-content: center;
@@ -56,7 +56,6 @@ h2 {
   display: flex;
   color: #333;
   text-align: left;
-  border-right: 1px solid #f00;
 }
 
 #anchor-nav {
