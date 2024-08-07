@@ -61,21 +61,18 @@ export default function Scroll() {
       // });
 
       /* Panels */
-      const horizontalContainers = gsap.utils.toArray(".horizontal-container");
+      const horizontalContainers = gsap.utils.toArray(".carousel");
       horizontalContainers.forEach((container) => {
         const panels = gsap.utils.toArray(".panel", container)
-        console.log(container.offsetWidth)
-
-        gsap.to(container, {
-          xPercent: -100,
+        gsap.to(panels, {
+          xPercent: -100 * (panels.length),
           scrollTrigger: {
             trigger: container,
             pin: true,
             scrub: 1,
-            start: "top top",
-            end: () => "+=" + (container.width), // Adjusted end value
+            end: () => "+=" + (container.offsetWidth),
             markers: true,
-            pinSpacing: true
+            pinSpacing: true,
           }
         });
       });
@@ -102,15 +99,17 @@ export default function Scroll() {
               </div>
             )}
             {panel.horizontal && (
-              <div className="horizontal-container" style={{ width: `${100 * panel.horizontal.length}%` }}>
-                {panel.horizontal?.map((hPanel, hIndex) => (
-                  <article key={hIndex} className="panel">
-                    <div className="content">
-                      <h3>{hPanel.title}</h3>
-                      <h4>{hPanel.subtitle}</h4>
-                    </div>
-                  </article>
-                ))}
+              <div className="carousel" style={{ width: `${100 * panel.horizontal.length}%`}}>
+                <div className="horizontal-container">
+                  {panel.horizontal?.map((hPanel, hIndex) => (
+                    <article key={hIndex} className="panel">
+                      <div className="content">
+                        <h3>{hPanel.title}</h3>
+                        <h4>{hPanel.subtitle}</h4>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             )}
           </section>
