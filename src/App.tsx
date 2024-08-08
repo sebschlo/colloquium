@@ -20,7 +20,6 @@ export default function Scroll() {
       <div className="model-viewer">
         <h1>Panel 1</h1>
         <model-viewer
-          // autoplay
           ref={modelViewerRef}
           alt="Buildings"
           src="public/light_wells.gltf"
@@ -28,7 +27,13 @@ export default function Scroll() {
           exposure="1"
           shadow-softness="0.5"
           camera-orbit="-10deg 30deg 3000m"
-        ></model-viewer>
+        >
+          <div slot="hotspot-1" data-surface="1 0 130 133 138 0.489 0.306 0.204">
+            <div className="hotspot">
+              <p>Calculated Light Well Areas</p>
+            </div>
+          </div>
+        </model-viewer>
       </div>
     )
   }
@@ -149,6 +154,14 @@ export default function Scroll() {
               const rotation = progress * 120; // Adjust rotation as needed
               modelViewerRef.current.setAttribute('camera-orbit', `${rotation}deg 20deg 3000m`);
             }
+          }
+        });
+
+        // Add click event listener to the model viewer
+        modelViewerRef.current.addEventListener('click', (event) => {
+          const hotspotId = modelViewerRef.current.surfaceFromPoint(event.clientX, event.clientY);
+          if (hotspotId) {
+            console.log(`Hotspot ID: ${hotspotId}`);
           }
         });
       }
