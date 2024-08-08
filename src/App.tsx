@@ -14,6 +14,32 @@ export default function Scroll() {
   const modelViewerRef = useRef(null);
   const headerRef = useRef(null);
 
+  const scrollToHash = (hash) => {
+    if (hash) {
+      const targetElem = document.querySelector(hash);
+      if (targetElem) {
+        gsap.to(window, {
+          scrollTo: {
+            y: targetElem,
+            autoKill: false
+          },
+          duration: 1,
+          onComplete: () => {
+            window.location.hash = hash; // Update the URL hash
+          }
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    scrollToHash(window.location.hash);
+    window.addEventListener('hashchange', () => scrollToHash(window.location.hash));
+    return () => {
+      window.removeEventListener('hashchange', () => scrollToHash(window.location.hash));
+    };
+  }, []);
+
   const IntroPanel: React.FC = () => {
     
     useEffect(() => {
@@ -183,25 +209,6 @@ export default function Scroll() {
 
   useGSAP(
     () => {
-      const panelsContainer = document.getElementById("panels-container");
-
-      /* Main navigation */
-      document.querySelectorAll(".anchor").forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          let targetElem = document.querySelector(e.target.getAttribute("href")),
-            y = targetElem
-          gsap.to(window, {
-            scrollTo: {
-              y: y,
-              autoKill: false
-            },
-            onUpdate: ScrollTrigger.update,
-            duration: 1
-          });
-        });
-      });
-
       /* Panels */
       const horizontalContainers = gsap.utils.toArray(".carousel");
       horizontalContainers.forEach((container) => {
@@ -264,7 +271,15 @@ export default function Scroll() {
     <div>
       <nav id="anchor-nav">
         {panels.map((panel, index) => (
-          <a href={panel.href} key={panel.href} className="anchor">
+          <a
+            href={panel.href}
+            key={panel.href}
+            className="anchor"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToHash(panel.href);
+            }}
+          >
             {panel.title}
           </a>
         ))}
