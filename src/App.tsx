@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/all';
@@ -7,6 +7,7 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
 
 export default function Scroll() {
+  const modelViewerRef = useRef(null);
 
   const IntroPanel: React.FC = () => {
     return (
@@ -19,18 +20,15 @@ export default function Scroll() {
       <div className="model-viewer">
         <h1>Panel 1</h1>
         <model-viewer
+          // autoplay
+          ref={modelViewerRef}
           alt="Buildings"
-          src="public/buildings.gltf"
-          ar
-          camera-controls
-          touch-action="pan-y"
+          src="public/light_wells.gltf"
           style={{ width: '100%', height: '100%' }}
-          environment-image=""
-          exposure="1.5"
+          exposure="1"
           shadow-softness="0.5"
-          camera-orbit="-20deg 75deg 2m"
-        >
-        </model-viewer>
+          camera-orbit="-10deg 30deg 3000m"
+        ></model-viewer>
       </div>
     )
   }
@@ -134,6 +132,26 @@ export default function Scroll() {
           }
         });
       });
+
+      /* Model Viewer Camera Rotation */
+      if (modelViewerRef.current) {
+        gsap.to(modelViewerRef.current, {
+          scrollTrigger: {
+            trigger: modelViewerRef.current,
+            start: "top center",
+            end: "bottom bottom",
+            scrub: true,
+            onEnter: () => {
+              modelViewerRef.current.play({repetitions: 1}); // Play the animation
+            },
+            onUpdate: (self) => {
+              const progress = self.progress;
+              const rotation = progress * 120; // Adjust rotation as needed
+              modelViewerRef.current.setAttribute('camera-orbit', `${rotation}deg 20deg 3000m`);
+            }
+          }
+        });
+      }
     },
   )
 
