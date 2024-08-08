@@ -16,8 +16,21 @@ export default function Scroll() {
 
   const Panel1: React.FC = () => {
     return (
-      <div>
+      <div className="model-viewer">
         <h1>Panel 1</h1>
+        <model-viewer
+          alt="Buildings"
+          src="public/buildings.gltf"
+          ar
+          camera-controls
+          touch-action="pan-y"
+          style={{ width: '100%', height: '100%' }}
+          environment-image=""
+          exposure="1.5"
+          shadow-softness="0.5"
+          camera-orbit="-20deg 75deg 2m"
+        >
+        </model-viewer>
       </div>
     )
   }
@@ -60,6 +73,7 @@ export default function Scroll() {
 
   const panels = [
     { title: 'Panel 1', href: "#intro", component: IntroPanel },
+    { title: 'Panel 2', subtitle: 'Subtitle 3', href: "#panel3", component: Panel1 },
     {
       title: 'Panel 2',
       href: "#panel2",
@@ -71,7 +85,6 @@ export default function Scroll() {
         { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },
       ]
     },
-    { title: 'Panel 3', subtitle: 'Subtitle 3', href: "#panel3", component: Panel3 },
     { title: 'Panel 4', subtitle: 'Subtitle 4', href: "#panel4", component: Panel4 },
     {
       title: 'Panel 5', subtitle: 'Subtitle 5', href: "#panel5", horizontal: [
@@ -152,7 +165,7 @@ export default function Scroll() {
                       return (
                         <article key={hIndex} className="panel">
                           <div className="content">
-                            <HComponent title={hPanel.title}/>
+                            <HComponent title={hPanel.title} />
                           </div>
                         </article>
                       )
