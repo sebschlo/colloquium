@@ -4,6 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
 
+
+import SystemPanel from './SystemPanel';
+
+
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
 
 export default function Scroll() {
@@ -17,11 +21,10 @@ export default function Scroll() {
         <h2>GSAPP CDP 2023-4 Colloquium I</h2>
         <h3>Sebastian Schloesser</h3>
       </>
-
     )
   }
 
-  const UrbanScaleMetric: React.FC = () => {
+  const UrbanMetricPanel: React.FC = () => {
     return (
       <div className="model-viewer">
         <h1>Panel 1</h1>
@@ -44,29 +47,85 @@ export default function Scroll() {
     )
   }
 
-  const Panel3: React.FC = () => {
+  const MethodsPanel: React.FC = () => {
     return (
       <div>
-        <h1>Panel 3</h1>
-        <p>Subtitle 3</p>
+        <h2>Developing Methods</h2>
+        <br></br>
+        <hr></hr>
+        <br></br>
+        <p>In order to tackle this problem space in the Fall and Spring, I dedicated this term to exploring new methods in order to build a foundation. My aim was to learn new tools specifically focused on spatial design and analysis, to learn visual communication, and to build the conceptual foundation of my practice.</p>
       </div>
     )
   }
 
-  const Panel4: React.FC = () => {
+
+  const MethodAPanel: React.FC = () => {
     return (
       <div>
-        <h1>Panel 4</h1>
-        <p>Subtitle 4</p>
+        <h2>Design Computation and Visual Storytelling</h2>
+        <br></br>
+        <h1>Reinventing the Row Home</h1>
+        <hr></hr>
+        <br></br>
+        <p></p>
       </div>
     )
   }
 
-  const Panel6: React.FC = () => {
+
+  const MethodBPanel: React.FC = () => {
     return (
       <div>
-        <h1>Panel 6</h1>
-        <p>Subtitle 6</p>
+        <h2>Automated Data Collection and Predictive Analysis</h2>
+        <br></br>
+        <hr></hr>
+        <br></br>
+        <h3>A Data Manifesto</h3>
+        <p>
+          Collecting data can be an immensely tedious task. Whenever possible, I believe it is essential to leverage automated, continuous collection. The data I’m using have been collected for years in the background without effort from my part. Of course, they afford a utilitarian view of myself as a commodity to be advertised to, but this doesn’t prevent the reclaiming of it for the gleaning of alternative insights.
+        </p>
+        <br></br>
+        <p>
+          When the hypothesis in question is too broad and complex, I believe taking an individual case perspective can help illuminate the key levers of the system. In this case, the environmental cost of online shopping vs. brick-and-mortar is impossible to calculate. The nature of this problem is collective at heart, and one person won’t influence the whole. However, we make decisions on a daily basis, that in aggregate do matter. How else can we guide our choices other than by analyzing our particular situation with the data at hand?
+        </p>
+      </div>
+    )
+  }
+
+  const MethodCPanel: React.FC = () => {
+    return (
+      <div className="full">
+        <h1>The Trolley Problem</h1>
+        <h2>Generative AI Zine</h2>
+        <a href="/zine.html" style={{ position: 'relative', display: 'inline-block' }}>
+          <img src="TrainBG.png" style={{ transition: 'box-shadow 0.3s' }} alt="Train Background" />
+          <span style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '4em',
+            color: 'rgb(255, 255, 255)',
+            textShadow: '2px 2px 40px rgba(0, 0, 0, 0.9)',
+            backgroundColor: 'black',
+            padding: '10px'
+          }}>
+            Click to Play
+          </span>
+        </a>
+      </div>
+    )
+  }
+
+  const PracticePanel: React.FC = () => {
+    return (
+      <div>
+        <h2>Combining into a Practice</h2>
+        <br></br>
+        <hr></hr>
+        <br></br>
+        <p>Inspect the world for opportunities, build tools and visualizations to understand and communicate it, design solutions to address core problem.</p>
       </div>
     )
   }
@@ -82,31 +141,32 @@ export default function Scroll() {
 
   const panels = [
     { title: '1. Intro', href: "#intro", component: IntroPanel },
-    { title: '2. The System', href: "#system", component: IntroPanel },
-    { title: '3. Methods', subtitle: 'Subtitle 3', href: "#methods", component: UrbanScaleMetric },
-    {
-      title: '3A. Reinventing the Row',
-      href: "#row",
-      horizontal: [
-        { title: 'H1', subtitle: 'Horizontal 1', component: HPanel },
-        { title: 'Developing an Urban Scale Metric', component: HPanel },
-        { title: 'H3', subtitle: 'Horizontal 3', component: HPanel },
-        { title: 'H4', subtitle: 'Horizontal 4', component: HPanel },
-        { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },
-      ]
-    },
-    { title: '3B. Auto-Collection', subtitle: 'Subtitle 4', href: "#collection", component: Panel4 },
+    { title: '2. The System', href: "#system", component: UrbanMetricPanel },
+    { title: '3. Methods', subtitle: 'Subtitle 3', href: "#methods", component: MethodsPanel },
     {
       title: '3C. Interactive Reflection', subtitle: 'Subtitle 5', href: "#reflection", horizontal: [
-        { title: 'H1', subtitle: 'Horizontal 1', component: HPanel },
+        { title: 'H1', subtitle: 'Horizontal 1', component: MethodCPanel },
         { title: 'H2', subtitle: 'Horizontal 2', component: HPanel },
         { title: 'H3', subtitle: 'Horizontal 3', component: HPanel },
         { title: 'H4', subtitle: 'Horizontal 4', component: HPanel },
         { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },
       ]
     },
-    { title: '4. Practice', subtitle: 'Subtitle 6', href: "#practice", component: Panel6 },
-    { title: '5. Archive', subtitle: 'Subtitle 6', href: "#archvie", component: Panel6 },
+    {
+      title: '3A. Reinventing the Row',
+      href: "#row",
+      horizontal: [
+        { title: 'H1', subtitle: 'Horizontal 1', component: MethodAPanel },
+        { title: 'Developing an Urban Scale Metric', component: UrbanMetricPanel },
+        { title: 'H3', subtitle: 'Horizontal 3', component: HPanel },
+        { title: 'H4', subtitle: 'Horizontal 4', component: HPanel },
+        { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },
+      ]
+    },
+    { title: '3B. Auto-Collection', subtitle: 'Subtitle 4', href: "#collection", component: MethodBPanel },
+
+    { title: '4. Practice', subtitle: 'Subtitle 6', href: "#practice", component: PracticePanel },
+    { title: '5. Archive', subtitle: 'Subtitle 6', href: "#archvie", component: UrbanMetricPanel },
   ];
 
   useGSAP(
@@ -179,7 +239,8 @@ export default function Scroll() {
             trigger: headerRef.current,
             pin: true,
             end: "bottom top",
-            pinSpacing: 'margin'
+            pinSpacing: 'margin',
+            // markers: true
           }
         })
       }
@@ -197,24 +258,24 @@ export default function Scroll() {
       </nav>
 
       <div id="panels-container">
-        <header class="header-container" ref={headerRef}>
-          <div class="header-context">
-            <div class="h2">
-              <a class="fade" href="https://www.arch.columbia.edu/programs/15-m-s-computational-design-practices"
+        <header className="header-container" ref={headerRef}>
+          <div className="header-context">
+            <div className="h2">
+              <a className="fade" href="https://www.arch.columbia.edu/programs/15-m-s-computational-design-practices"
                 target="_blank">Columbia GSAPP</a>
             </div>
           </div>
 
-          <div class="header-title">
-            <div class="h1">
-              <a class="fade" href="/">Computational Design Practices</a>
+          <div className="header-title">
+            <div className="h1">
+              <a className="fade" href="/">Computational Design Practices</a>
             </div>
-            <div class="h2">GSAPP CDP 2023-4 Colloquium I</div>
+            <div className="h2">GSAPP CDP 2023-4 Colloquium I</div>
           </div>
 
-          <div class="header-nav">
-            <div class="h2">
-              <a class="fade" href="/about">About</a>
+          <div className="header-nav">
+            <div className="h2">
+              <a className="fade" href="/about">About</a>
             </div>
           </div>
         </header>

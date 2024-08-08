@@ -1,4 +1,4 @@
-/* Most of these styles could be removed but are for the demo to look better */
+@import url('non.geist');
 
 html,
 body {
@@ -6,14 +6,21 @@ body {
   padding: 0;
   height: 100%;
   font-weight: 300;
+  font-family: 'Geist Variable' !important;
 }
+
 body {
   overflow-x: hidden;
 }
 
 h1,
-h2 {
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-align: center;
+  font-family: 'Geist Variable' !important;
 }
 
 .panel {
@@ -25,7 +32,7 @@ h2 {
 }
 
 .content {
-  padding: 100px;
+  padding: 170px;
   width: 100%;
   height: 100vh;
   justify-content: center;
@@ -67,6 +74,10 @@ h2 {
   z-index: 100;
   display: flex;
   flex-direction: column;
+  width: 150px;
+  gap: 0.25rem;
+  line-height: 1.5rem;
+  text-indent: -5%;
 }
 
 .anchor {
@@ -75,8 +86,9 @@ h2 {
   padding: 5px;
 }
 
+.anchor:hover,
 .anchor.active {
-  font-weight: bold;
+  color:#333;
 }
 
 .model-viewer {
@@ -95,4 +107,13 @@ h2 {
 
 .header-container {
   padding: 20px;
+  padding-bottom: 0;
+}
+
+.center-icon {
+  width: 100% !important;
+}
+
+.message-paper {
+  padding: 30px;
 }
