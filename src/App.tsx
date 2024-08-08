@@ -8,14 +8,20 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
 
 export default function Scroll() {
   const modelViewerRef = useRef(null);
+  const headerRef = useRef(null);
 
   const IntroPanel: React.FC = () => {
     return (
-      <h1>Intro</h1>
+      <>
+        <h1>Inverting Spatial Interfaces</h1>
+        <h2>GSAPP CDP 2023-4 Colloquium I</h2>
+        <h3>Sebastian Schloesser</h3>
+      </>
+
     )
   }
 
-  const Panel1: React.FC = () => {
+  const UrbanScaleMetric: React.FC = () => {
     return (
       <div className="model-viewer">
         <h1>Panel 1</h1>
@@ -75,22 +81,23 @@ export default function Scroll() {
   }
 
   const panels = [
-    { title: 'Panel 1', href: "#intro", component: IntroPanel },
-    { title: 'Panel 2', subtitle: 'Subtitle 3', href: "#panel3", component: Panel1 },
+    { title: '1. Intro', href: "#intro", component: IntroPanel },
+    { title: '2. The System', href: "#system", component: IntroPanel },
+    { title: '3. Methods', subtitle: 'Subtitle 3', href: "#methods", component: UrbanScaleMetric },
     {
-      title: 'Panel 2',
-      href: "#panel2",
+      title: '3A. Reinventing the Row',
+      href: "#row",
       horizontal: [
         { title: 'H1', subtitle: 'Horizontal 1', component: HPanel },
-        { title: 'H2', subtitle: 'Horizontal 2', component: HPanel },
+        { title: 'Developing an Urban Scale Metric', component: HPanel },
         { title: 'H3', subtitle: 'Horizontal 3', component: HPanel },
         { title: 'H4', subtitle: 'Horizontal 4', component: HPanel },
         { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },
       ]
     },
-    { title: 'Panel 4', subtitle: 'Subtitle 4', href: "#panel4", component: Panel4 },
+    { title: '3B. Auto-Collection', subtitle: 'Subtitle 4', href: "#collection", component: Panel4 },
     {
-      title: 'Panel 5', subtitle: 'Subtitle 5', href: "#panel5", horizontal: [
+      title: '3C. Interactive Reflection', subtitle: 'Subtitle 5', href: "#reflection", horizontal: [
         { title: 'H1', subtitle: 'Horizontal 1', component: HPanel },
         { title: 'H2', subtitle: 'Horizontal 2', component: HPanel },
         { title: 'H3', subtitle: 'Horizontal 3', component: HPanel },
@@ -98,7 +105,8 @@ export default function Scroll() {
         { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },
       ]
     },
-    { title: 'Panel 6', subtitle: 'Subtitle 6', href: "#panel6", component: Panel6 },
+    { title: '4. Practice', subtitle: 'Subtitle 6', href: "#practice", component: Panel6 },
+    { title: '5. Archive', subtitle: 'Subtitle 6', href: "#archvie", component: Panel6 },
   ];
 
   useGSAP(
@@ -147,7 +155,7 @@ export default function Scroll() {
             end: "bottom bottom",
             scrub: true,
             onEnter: () => {
-              modelViewerRef.current.play({repetitions: 1}); // Play the animation
+              modelViewerRef.current.play({ repetitions: 1 }); // Play the animation
             },
             onUpdate: (self) => {
               const progress = self.progress;
@@ -164,6 +172,16 @@ export default function Scroll() {
             console.log(`Hotspot ID: ${hotspotId}`);
           }
         });
+
+        // Pin the header
+        gsap.to(headerRef.current, {
+          scrollTrigger: {
+            trigger: headerRef.current,
+            pin: true,
+            end: "bottom top",
+            pinSpacing: 'margin'
+          }
+        })
       }
     },
   )
@@ -179,6 +197,28 @@ export default function Scroll() {
       </nav>
 
       <div id="panels-container">
+        <header class="header-container" ref={headerRef}>
+          <div class="header-context">
+            <div class="h2">
+              <a class="fade" href="https://www.arch.columbia.edu/programs/15-m-s-computational-design-practices"
+                target="_blank">Columbia GSAPP</a>
+            </div>
+          </div>
+
+          <div class="header-title">
+            <div class="h1">
+              <a class="fade" href="/">Computational Design Practices</a>
+            </div>
+            <div class="h2">GSAPP CDP 2023-4 Colloquium I</div>
+          </div>
+
+          <div class="header-nav">
+            <div class="h2">
+              <a class="fade" href="/about">About</a>
+            </div>
+          </div>
+        </header>
+
         {panels.map((panel, index) => {
           const Component = panel.component;
           return (
