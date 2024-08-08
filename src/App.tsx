@@ -15,9 +15,24 @@ export default function Scroll() {
   const headerRef = useRef(null);
 
   const IntroPanel: React.FC = () => {
+    
+    useEffect(() => {
+      console.log('hallo')
+      gsap.to('.rotate-letter', {
+        rotation: 350,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'none'
+      });
+    }, []);
+
     return (
       <>
-        <h1>Inverting Spatial Interfaces</h1>
+        <h1>
+          {Array.from('Inverting').map((letter, index) => (
+            <span key={index} className="rotate-letter">{letter}</span>
+          ))} <span className="highlighted">Spatial</span> Interfaces
+        </h1>
         <h2>GSAPP CDP 2023-4 Colloquium I</h2>
         <h3>Sebastian Schloesser</h3>
       </>
@@ -83,21 +98,21 @@ export default function Scroll() {
         <br></br>
         <h3>A Data Manifesto</h3>
         <p>
-          Collecting data can be an immensely tedious task. Whenever possible, I believe it is essential to leverage automated, continuous collection. The data I’m using have been collected for years in the background without effort from my part. Of course, they afford a utilitarian view of myself as a commodity to be advertised to, but this doesn’t prevent the reclaiming of it for the gleaning of alternative insights.
+          Collecting data can be an immensely tedious task. Whenever possible, I believe it is essential to leverage automated, continuous collection. The data I'm using have been collected for years in the background without effort from my part. Of course, they afford a utilitarian view of myself as a commodity to be advertised to, but this doesn't prevent the reclaiming of it for the gleaning of alternative insights.
         </p>
         <br></br>
         <p>
-          When the hypothesis in question is too broad and complex, I believe taking an individual case perspective can help illuminate the key levers of the system. In this case, the environmental cost of online shopping vs. brick-and-mortar is impossible to calculate. The nature of this problem is collective at heart, and one person won’t influence the whole. However, we make decisions on a daily basis, that in aggregate do matter. How else can we guide our choices other than by analyzing our particular situation with the data at hand?
+          When the hypothesis in question is too broad and complex, I believe taking an individual case perspective can help illuminate the key levers of the system. In this case, the environmental cost of online shopping vs. brick-and-mortar is impossible to calculate. The nature of this problem is collective at heart, and one person won't influence the whole. However, we make decisions on a daily basis, that in aggregate do matter. How else can we guide our choices other than by analyzing our particular situation with the data at hand?
         </p>
       </div>
     )
   }
 
-  const MethodCPanel: React.FC = () => {
+  const ZinePanel: React.FC = () => {
     return (
       <div className="full">
         <h1>The Trolley Problem</h1>
-        <h2>Generative AI Zine</h2>
+        <h2>A Zine on Generative AI</h2>
         <a href="/zine.html" style={{ position: 'relative', display: 'inline-block' }}>
           <img src="TrainBG.png" style={{ transition: 'box-shadow 0.3s' }} alt="Train Background" />
           <span style={{
@@ -105,7 +120,7 @@ export default function Scroll() {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            fontSize: '4em',
+            fontSize: '3.1rem',
             color: 'rgb(255, 255, 255)',
             textShadow: '2px 2px 40px rgba(0, 0, 0, 0.9)',
             backgroundColor: 'black',
@@ -141,19 +156,17 @@ export default function Scroll() {
 
   const panels = [
     { title: '1. Intro', href: "#intro", component: IntroPanel },
-    { title: '2. The System', href: "#system", component: UrbanMetricPanel },
+    { title: '2. The System', href: "#system", component: SystemPanel },
     { title: '3. Methods', subtitle: 'Subtitle 3', href: "#methods", component: MethodsPanel },
     {
-      title: '3C. Interactive Reflection', subtitle: 'Subtitle 5', href: "#reflection", horizontal: [
-        { title: 'H1', subtitle: 'Horizontal 1', component: MethodCPanel },
-        { title: 'H2', subtitle: 'Horizontal 2', component: HPanel },
+      title: '3A. Interactive-Reflexive Experiences', subtitle: 'Subtitle 5', href: "#reflection", horizontal: [
+        { title: 'H1', subtitle: 'Horizontal 1', component: HPanel },
+        { title: 'H2', subtitle: 'Horizontal 2', component: ZinePanel },
         { title: 'H3', subtitle: 'Horizontal 3', component: HPanel },
-        { title: 'H4', subtitle: 'Horizontal 4', component: HPanel },
-        { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },
       ]
     },
     {
-      title: '3A. Reinventing the Row',
+      title: '3B. Design Computation',
       href: "#row",
       horizontal: [
         { title: 'H1', subtitle: 'Horizontal 1', component: MethodAPanel },
@@ -163,8 +176,7 @@ export default function Scroll() {
         { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },
       ]
     },
-    { title: '3B. Auto-Collection', subtitle: 'Subtitle 4', href: "#collection", component: MethodBPanel },
-
+    { title: '3B. Critial Data-Collection', subtitle: 'Subtitle 4', href: "#collection", component: MethodBPanel },
     { title: '4. Practice', subtitle: 'Subtitle 6', href: "#practice", component: PracticePanel },
     { title: '5. Archive', subtitle: 'Subtitle 6', href: "#archvie", component: UrbanMetricPanel },
   ];
@@ -194,6 +206,7 @@ export default function Scroll() {
       const horizontalContainers = gsap.utils.toArray(".carousel");
       horizontalContainers.forEach((container) => {
         const panels = gsap.utils.toArray(".panel", container)
+        console.log(panels.length)
         gsap.to(panels, {
           xPercent: -100 * (panels.length - 1),
           scrollTrigger: {
