@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/all';
@@ -78,8 +78,9 @@ export default function Scroll() {
     },
     { title: '3B. Critial Data-Collection', subtitle: 'Subtitle 4', href: "#collection", component: MethodDataPanel },
     { title: '4. Practice', subtitle: 'Subtitle 6', href: "#practice", component: PracticePanel },
-    { title: '5. Archive', subtitle: 'Subtitle 6', href: "#archvie", component: UrbanMetricPanel },
   ];
+
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useGSAP(
     () => {
@@ -95,6 +96,9 @@ export default function Scroll() {
             scrub: 1,
             end: () => "+=" + (container.offsetWidth),
             pinSpacing: true,
+            onUpdate: (self) => {
+              setScrollProgress(self.progress);
+            },
           }
         });
       });
@@ -170,7 +174,7 @@ export default function Scroll() {
                       return (
                         <article key={hIndex} className="panel">
                           <div className="content">
-                            <HComponent title={hPanel.title} />
+                            <HComponent title={hPanel.title} progress={scrollProgress} />
                           </div>
                         </article>
                       )

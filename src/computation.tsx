@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -24,10 +24,6 @@ export const MethodCompPanel: React.FC = () => {
           <img src="shaft_lighting.png" alt="Light Well Daylight" width="300" />
         </div>
         <div className="cont-half">
-
-          <br></br>
-
-          <br></br>
           <p>
             Most of New York's blocks are packed tight with row homes and buildings. They are constrained to relatively narrow parcels, resulting in little exposure to light and air.
           </p>
@@ -44,41 +40,19 @@ export const MethodCompPanel: React.FC = () => {
   )
 }
 
-export const UrbanMetricPanel: React.FC = () => {
+export const UrbanMetricPanel: React.FC<{ progress: number }> = ({ progress }) => {
   const modelViewerRef = useRef(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    if (modelViewerRef.current) {
-      const modelViewer = modelViewerRef.current as any;
-
-      gsap.to(modelViewer, {
-        scrollTrigger: {
-          trigger: modelViewer,
-          start: "top center",
-          end: "bottom bottom",
-          scrub: true,
-          onEnter: () => {
-            modelViewer.play({ repetitions: 1 });
-          },
-          onUpdate: (self) => {
-            const progress = self.progress;
-            const rotation = progress * 120;
-            modelViewer.setAttribute('camera-orbit', `${rotation}deg 20deg 3000m`);
-          }
-        }
-      });
-
-      modelViewer.addEventListener('click', (event: { clientX: number; clientY: number; }) => {
-        const hotspotId = modelViewer.surfaceFromPoint(event.clientX, event.clientY);
-        if (hotspotId) {
-          console.log(`Hotspot ID: ${hotspotId}`);
-        }
-      });
+    const modelViewer = modelViewerRef.current as any;
+    if (progress > 0.2) {
+      modelViewer.play({ repetitions: 1 });
     }
-  }, []);
+  });
 
   return (
-    <div className="model-viewer">
+    <div className="model-viewer" ref={containerRef}>
       <h1>Panel 1</h1>
       {/* @ts-ignore */}
       <model-viewer
@@ -88,7 +62,8 @@ export const UrbanMetricPanel: React.FC = () => {
         style={{ width: '100%', height: '100%' }}
         exposure="1"
         shadow-softness="0.5"
-        camera-orbit="-10deg 30deg 3000m"
+        // camera-orbit="-10deg 30deg 3000m"
+        camera-orbit={`${progress*360}deg 20deg 3000m`}
       >
         <div slot="hotspot-1" data-surface="1 0 130 133 138 0.489 0.306 0.204">
           <div className="hotspot">
