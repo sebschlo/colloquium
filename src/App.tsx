@@ -9,7 +9,7 @@ import { IntroPanel } from './intro';
 import { PracticePanel } from './practice';
 import { ZinePanel } from './interactive';
 import { MethodDataPanel } from './data';
-import { MethodCompPanel, UrbanMetricPanel } from './computation';
+import { MethodCompIntroPanel, MethodCompPanel, UrbanMetricPanel } from './computation';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
 
@@ -69,7 +69,7 @@ export default function Scroll() {
       title: '3B. Design Computation',
       href: "#computation",
       horizontal: [
-        { title: 'H4', subtitle: 'Horizontal 4', component: HPanel },
+        { title: 'H4', subtitle: 'Horizontal 4', component: MethodCompIntroPanel },
         { title: 'H1', subtitle: 'Horizontal 1', component: MethodCompPanel },
         { title: 'Developing an Urban Scale Metric', component: UrbanMetricPanel },
         { title: 'H5', subtitle: 'Horizontal 5', component: HPanel },

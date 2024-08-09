@@ -23,6 +23,19 @@ h6 {
   font-family: 'Geist Variable' !important;
 }
 
+
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 90%;  
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 150%;
+  margin: 10px;
+}
+
 .panel {
   display: block;
   width: 100%;
@@ -175,3 +188,9 @@ h6 {
   text-align: 'left';
   width: 50%;
 }
+
+#main-title {
+  text-align: center;
+  line-height: 3rem;
+}
+

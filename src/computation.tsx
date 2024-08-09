@@ -5,11 +5,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+export const MethodCompIntroPanel: React.FC<{ title: string }> = ({ title }) => {
+  return (
+    <div>
+      <h3 className="highlighted">Method B</h3>
+      <blockquote>Design Computation and Visual Storytelling</blockquote>
+    </div>
+  )
+}
+
 export const MethodCompPanel: React.FC = () => {
   return (
     <div>
-      <h1>Method B</h1>
-      <h2>Design Computation and Visual Storytelling</h2>
+      <h1>Reinventing the Row</h1>
       <hr></hr>
       <div className="cont-layout">
         <div className="cont-half">
@@ -18,7 +26,7 @@ export const MethodCompPanel: React.FC = () => {
         <div className="cont-half">
 
           <br></br>
-          <h3><strong>Reinventing the Row Home</strong></h3>
+
           <br></br>
           <p>
             Most of New York's blocks are packed tight with row homes and buildings. They are constrained to relatively narrow parcels, resulting in little exposure to light and air.
