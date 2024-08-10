@@ -6,17 +6,6 @@ import { Slider } from "@mui/material";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-export const MethodCompIntroPanel: React.FC<{ title: string }> = ({
-  title,
-}) => {
-  return (
-    <div>
-      <h3 className="highlighted">Method B</h3>
-      <blockquote>Design Computation and Visual Storytelling</blockquote>
-    </div>
-  );
-};
-
 export const MethodCompPanel: React.FC = () => {
   return (
     <div>
