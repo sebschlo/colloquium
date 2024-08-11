@@ -132,10 +132,9 @@ export default function Scroll() {
         {
           title: "Method C",
           subtitle: "Critial Automated Data-Collection",
-          component: HIntroPanel,
+          component: MethodDataPanel,
         },
       ],
-      component: MethodDataPanel,
     },
     {
       title: "4. Practice",
