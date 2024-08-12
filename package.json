@@ -4,9 +4,11 @@
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.4",
     "gsap": "^3.12.5",
+    "leaflet": "^1.9.4",
     "non.geist": "^1.0.3",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1"
   },
   "devDependencies": {
     "@types/node": "^20.14.11",

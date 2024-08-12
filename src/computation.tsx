@@ -3,6 +3,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Slider } from "@mui/material";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, GeoJSON, Tooltip } from "react-leaflet";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -147,5 +149,68 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
         studying large areas.
       </p>
     </div>
+  );
+};
+
+export const LightWellMap: React.FC<{ geoData: any }> = ({ geoData }) => {
+  return (
+    <div style={{ height: "100vh", width: "100vw" }}>
+      <iframe
+        src="/light_well_map.html"
+        style={{ border: "none", height: "100%", width: "100%" }}
+        title="Light Well Map"
+      ></iframe>
+    </div>
+  );
+};
+
+export const GrumpinessPanel: React.FC<{ geoData: any }> = ({ geoData }) => {
+  const [hoveredRegion, setHoveredRegion] = useState(null);
+
+  const onEachFeature = (feature, layer) => {
+    layer.on({
+      mouseover: (e) => {
+        setHoveredRegion(feature.properties);
+        e.target.setStyle({
+          weight: 5,
+          color: "#666",
+          fillOpacity: 0.7,
+        });
+      },
+      mouseout: (e) => {
+        setHoveredRegion(null);
+        e.target.setStyle({
+          weight: 2,
+          color: "#3388ff",
+          fillOpacity: 0.2,
+        });
+      },
+    });
+  };
+
+  return (
+    <MapContainer
+      style={{ height: "100vh", width: "100vw", cursor: "default" }}
+      center={[51.505, -0.09]}
+      zoom={13}
+      dragging={true}
+      zoomControl={true}
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      />
+      <GeoJSON data={geoData} onEachFeature={onEachFeature}>
+        {hoveredRegion && (
+          <Tooltip sticky>
+            <div>
+              <h4>{hoveredRegion.name}</h4>
+              <p>{hoveredRegion.description}</p>
+            </div>
+          </Tooltip>
+        )}
+      </GeoJSON>
+    </MapContainer>
   );
 };

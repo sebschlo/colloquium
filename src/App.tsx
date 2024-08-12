@@ -11,7 +11,8 @@ import { ZinePanel } from "./interactive";
 import { MethodDataPanel } from "./data";
 import {
   DesignSpaceExplorer,
-  MethodCompIntroPanel,
+  GrumpinessPanel,
+  LightWellMap,
   MethodCompPanel,
   UrbanMetricPanel,
 } from "./computation";
@@ -116,7 +117,7 @@ export default function Scroll() {
         {
           title: "Map",
           subtitle: "Luminance Metric vs. Grumpiness",
-          component: HIntroPanel,
+          component: LightWellMap,
         },
       ],
     },
