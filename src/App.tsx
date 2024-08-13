@@ -4,11 +4,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
-import { SystemPanel, MethodsPanel } from "./systems";
 import { IntroPanel } from "./intro";
+import { SystemPanel, MethodsPanel, FlowChart } from "./systems";
 import { PracticePanel } from "./practice";
-import { ZinePanel } from "./interactive";
-import { MethodDataPanel } from "./data";
+import { ZinePanel, PredictiveMap } from "./interactive";
+import { MethodDataPanel, BillboardMap, RouteMap } from "./data";
 import {
   DesignSpaceExplorer,
   GrumpinessPanel,
@@ -16,6 +16,7 @@ import {
   MethodCompPanel,
   UrbanMetricPanel,
 } from "./computation";
+import { stepButtonClasses } from "@mui/material";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
 
@@ -74,6 +75,12 @@ export default function Scroll() {
       component: MethodsPanel,
     },
     {
+      title: "3. Methods",
+      subtitle: "Subtitle 3",
+      href: "#flow",
+      component: FlowChart,
+    },
+    {
       title: "3A. Reflexive Experiences",
       subtitle: "Subtitle 5",
       href: "#reflection",
@@ -87,7 +94,7 @@ export default function Scroll() {
         {
           title: "Predictive Motion",
           subtitle: "what's my next move?",
-          component: HIntroPanel,
+          component: PredictiveMap,
         },
       ],
     },
@@ -122,18 +129,28 @@ export default function Scroll() {
       ],
     },
     {
-      title: "3C. Critial Data-Collection",
+      title: "3C. Speculative Data",
       href: "#collection",
       horizontal: [
         {
           title: "Method C",
-          subtitle: "Critial Automated Data-Collection",
+          subtitle: "Speculative Data Collection and Analysis",
           component: HIntroPanel,
         },
         {
           title: "Method C",
           subtitle: "Critial Automated Data-Collection",
           component: MethodDataPanel,
+        },
+        {
+          title: "MethodC Example",
+          subtitle: "Billboard Map",
+          component: BillboardMap,
+        },
+        {
+          title: "MethodC Route",
+          subtitle: "Church route",
+          component: RouteMap,
         },
       ],
     },
