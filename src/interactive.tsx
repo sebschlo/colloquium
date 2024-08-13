@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import "leaflet/dist/leaflet.css";
+import * as tf from "@tensorflow/tfjs";
+import L from "leaflet";
 
 export const ZinePanel: React.FC = () => {
   return (
     <div className="full">
-      <h1>The Trolley Problem</h1>
-      <h2>A Zine on Generative AI</h2>
+      <h2>The Trolley Problem</h2>
+      <h3>A Zine on Generative AI</h3>
       <a
         href="/zine.html"
         style={{ position: "relative", display: "inline-block" }}
@@ -32,4 +35,52 @@ export const ZinePanel: React.FC = () => {
       </a>
     </div>
   );
+};
+
+export const PredictiveMap = () => {
+  const [model, setModel] = useState(null);
+  const [startPoint, setStartPoint] = useState(null);
+  const [endPoint, setEndPoint] = useState(null);
+
+  useEffect(() => {
+    // Load the TensorFlow.js model
+    const loadModel = async () => {
+      const loadedModel = await tf.loadGraphModel("/tfjs_model/model.json");
+      setModel(loadedModel);
+    };
+    loadModel();
+  }, []);
+
+  const handleMapClick = async (e) => {
+    const { lat, lng } = e.latlng;
+    setStartPoint([lat, lng]);
+    console.log("clicked! this is model: ", lat, lng);
+    if (model) {
+      const inputTensor = tf.tensor2d([[lat, lng]]);
+      const prediction = model.predict(inputTensor);
+      const [endLat, endLon] = prediction.dataSync();
+      console.log("prediction", endLat, endLon);
+      setEndPoint([endLat, endLon]);
+    }
+  };
+
+  useEffect(() => {
+    const map = L.map("map").setView([40.7128, -74.006], 12);
+
+    L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      }
+    ).addTo(map);
+
+    map.on("click", handleMapClick);
+
+    return () => {
+      map.remove();
+    };
+  }, [model]);
+
+  return <div id="map" style={{ height: "100vh", width: "100%" }}></div>;
 };
