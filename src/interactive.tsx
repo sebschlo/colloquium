@@ -8,6 +8,7 @@ import {
   Polyline,
 } from "react-leaflet";
 import L from "leaflet";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const ZinePanel: React.FC = () => {
   return (
@@ -45,9 +46,11 @@ export const ZinePanel: React.FC = () => {
 
 export const PredictiveMap = () => {
   const [predictions, setPredictions] = useState([]);
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const handleMapClick = async (e) => {
     const { lat, lng } = e.latlng;
+    setLoading(true); // Set loading to true when fetch starts
     try {
       const response = await fetch(
         "https://cdp-ml-map-backend-2d3eda9f2236.herokuapp.com/predict",
@@ -68,6 +71,8 @@ export const PredictiveMap = () => {
       ]);
     } catch (error) {
       console.error("Error fetching prediction:", error);
+    } finally {
+      setLoading(false); // Set loading to false when fetch completes
     }
   };
 
@@ -80,6 +85,19 @@ export const PredictiveMap = () => {
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      {loading && ( // Show spinner when loading is true
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 1000,
+          }}
+        >
+          <CircularProgress />
+        </div>
+      )}
       <div
         style={{
           position: "absolute",
