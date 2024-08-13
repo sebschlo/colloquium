@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
-import * as tf from "@tensorflow/tfjs";
 import {
   MapContainer,
   TileLayer,
@@ -45,29 +44,30 @@ export const ZinePanel: React.FC = () => {
 };
 
 export const PredictiveMap = () => {
-  const [model, setModel] = useState(null);
   const [predictions, setPredictions] = useState([]);
-
-  useEffect(() => {
-    // Load the TensorFlow.js model
-    const loadModel = async () => {
-      const loadedModel = await tf.loadGraphModel("/tfjs_model/model.json");
-      setModel(loadedModel);
-    };
-    loadModel();
-  }, []);
 
   const handleMapClick = async (e) => {
     const { lat, lng } = e.latlng;
-    if (model) {
-      const inputTensor = tf.tensor2d([[lat, lng]]);
-      const prediction = model.predict(inputTensor);
-      const [endLat, endLon] = prediction.dataSync();
+    try {
+      const response = await fetch(
+        "https://cdp-ml-map-backend-2d3eda9f2236.herokuapp.com/predict",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ lat, lon: lng }),
+        }
+      );
+      const data = await response.json();
+      const { endLat, endLon } = data;
       console.log("prediction", endLat, endLon);
       setPredictions((prev) => [
         ...prev,
         { startPoint: [lat, lng], endPoint: [endLat, endLon] },
       ]);
+    } catch (error) {
+      console.error("Error fetching prediction:", error);
     }
   };
 
@@ -83,6 +83,9 @@ export const PredictiveMap = () => {
       center={[40.7128, -74.006]}
       zoom={12}
       style={{ height: "100vh", width: "100%" }}
+      dragging={true}
+      zoomControl={true}
+      scrollWheelZoom={false}
     >
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
