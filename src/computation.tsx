@@ -54,6 +54,10 @@ export const DesignSpaceExplorer: React.FC = () => {
       img: "public/lightWell1.png",
     },
     {
+      name: "Open Back",
+      img: "public/lightWell4.png",
+    },
+    {
       name: "Pyramidal",
       img: "public/lightWell2.png",
     },
@@ -61,17 +65,13 @@ export const DesignSpaceExplorer: React.FC = () => {
       name: "Funnel",
       img: "public/lightWell3.png",
     },
-    {
-      name: "Open Back",
-      img: "public/lightWell4.png",
-    },
   ];
 
   const [designOption, setDesignOption] = useState<number>(0);
 
   return (
     <div className="panel-content" id="design-option-container">
-      <h2>Parametric Well Design</h2>
+      <h2>Who said shafts walls need to be vertical?</h2>
       <img
         style={{
           flexGrow: 1,
@@ -111,7 +111,7 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
   });
 
   return (
-    <div className="panel-content" id="algo-panel-content" ref={containerRef}>
+    <div className="panel-content" ref={containerRef} id="urban-metric-panel">
       <h2>Creating an urban scale metric</h2>
       <div className="model-viewer-container">
         {/* @ts-ignore */}
@@ -130,24 +130,23 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
             data-surface="1 0 130 133 138 0.489 0.306 0.204"
           >
             <div className="hotspot">
-              <p>Algorithmically Comptued Light Well Areas</p>
+              <p>Algorithmically Computed Light Well Areas</p>
             </div>
           </div>
           {/* @ts-ignore */}
         </model-viewer>
       </div>
-      <p>
+      <h5>
         In order to draw correlations between the effects of poor lighting and
         other urban metrics, I created an algorithm in Grasshopper to compute
-        the ratio of light well area to building footprint area. This can serve
-        as a proxy of much light is available to its residents.
-      </p>
-      <p>
+        the ratio of light well area to building footprint area.
+      </h5>
+      <h5>
         Because it would be too computationally costly to perform the detailed
         luminance analysis, especially since window geometry is not readily
         available at the urban scale, proxies become an essential tool for
         studying large areas.
-      </p>
+      </h5>
     </div>
   );
 };

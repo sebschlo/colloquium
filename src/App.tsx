@@ -6,9 +6,7 @@ import { useGSAP } from "@gsap/react";
 
 import { IntroPanel } from "./intro";
 import { SystemPanel, MethodsPanel, FlowChart } from "./systems";
-import { PracticePanel } from "./practice";
 import { ZinePanel, PredictiveMap } from "./interactive";
-import { MethodDataPanel, BillboardMap, RouteMap } from "./data";
 import {
   DesignSpaceExplorer,
   GrumpinessPanel,
@@ -16,6 +14,8 @@ import {
   MethodCompPanel,
   UrbanMetricPanel,
 } from "./computation";
+import { MethodDataPanel, BillboardMap, RouteMap } from "./data";
+import { PracticePanel, EtcPanel } from "./practice";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -172,7 +172,7 @@ export default function Scroll() {
         {
           title: "Method B",
           subtitle:
-            "Questioning Quotidian Assumptions / Reimagining the World Through Design Computation",
+            "Questioning Quotidian Assumptions / Re-imagining the World Through Design Computation",
           component: HIntroPanel,
         },
         {
@@ -203,12 +203,12 @@ export default function Scroll() {
         {
           title: "Method C",
           subtitle:
-            "Speculative Data Collection and Analysis / Anticipatory Resistence",
+            "Anticipatory Resistance Through Speculative Data Collection and Intentional Subliminal Exposure",
           component: HIntroPanel,
         },
         {
           title: "Method C",
-          subtitle: "Critial Automated Data-Collection",
+          subtitle: "Critical Automated Data-Collection",
           component: MethodDataPanel,
         },
         {
@@ -230,10 +230,10 @@ export default function Scroll() {
       component: PracticePanel,
     },
     {
-      title: "Archive",
+      title: "Etc.",
       subtitle: "Other works from Colloquium",
       href: "#archive",
-      component: MethodDataPanel,
+      component: EtcPanel,
     },
   ];
 
@@ -306,6 +306,7 @@ export default function Scroll() {
                             title={hPanel.title}
                             subtitle={hPanel.subtitle}
                             timeline={timelineRef.current}
+                            progress={scrollProgress}
                           />
                         </article>
                       );
