@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const SystemPanel: React.FC = () => {
   return (
-    <div className="content">
+    <div className="panel-content">
       <Paper className="message-paper">
         <h1>Digital World mediating interactions with the Built Environment</h1>
       </Paper>
@@ -32,7 +32,7 @@ export const SystemPanel: React.FC = () => {
 
 export const MethodsPanel: React.FC = () => {
   return (
-    <div className="content">
+    <div className="panel-content">
       <h1>Developing Methods</h1>
       <br></br>
       <hr></hr>

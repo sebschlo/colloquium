@@ -21,7 +21,7 @@ export const IntroPanel: React.FC = () => {
   }, []);
 
   return (
-    <div className="content">
+    <div className="panel-content">
       <blockquote id="main-title">
         {Array.from("Inverting").map((letter, index) => (
           <span key={index} className="rotate-letter">

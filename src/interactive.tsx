@@ -11,7 +11,7 @@ import L from "leaflet";
 
 export const ZinePanel: React.FC = () => {
   return (
-    <div className="content">
+    <div className="panel-content">
       <h2>The Trolley Problem</h2>
       <h3>A Zine on Generative AI</h3>
       <a

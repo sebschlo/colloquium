@@ -10,14 +10,12 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export const MethodCompPanel: React.FC = () => {
   return (
-    <div>
-      <h1>Reinventing the Row</h1>
-      <hr></hr>
-      <div className="cont-layout">
-        <div className="cont-half">
-          <img src="shaft_lighting.png" alt="Light Well Daylight" width="300" />
-        </div>
-        <div className="cont-half ">
+    <div className="panel-content">
+      <h2>Reinventing the Row</h2>
+      <hr style={{ width: "100%" }}></hr>
+      <div className="reinventing-row-content">
+        <img src="shaft_lighting.png" alt="Light Well Daylight" width="300" />
+        <div className="">
           <p>
             Most of New York's blocks are packed tight with row homes and
             buildings. They are constrained to relatively narrow parcels,
@@ -72,27 +70,29 @@ export const DesignSpaceExplorer: React.FC = () => {
   const [designOption, setDesignOption] = useState<number>(0);
 
   return (
-    <div id="design-option-container">
+    <div className="panel-content" id="design-option-container">
       <h2>Parametric Well Design</h2>
       <img
-        style={{ marginTop: "50px" }}
+        style={{
+          flexGrow: 1,
+          flexShrink: 1,
+          maxHeight: "90%",
+        }}
         src={designOptions[designOption].img}
         alt={`Design Option ${designOption + 1}`}
       />
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Slider
-          id="design-option-slider"
-          value={designOption}
-          onChange={(e, newValue) => setDesignOption(newValue as number)}
-          min={0}
-          max={designOptions.length - 1}
-          step={1}
-          marks
-          valueLabelDisplay="auto"
-          valueLabelFormat={(value) => designOptions[value].name}
-        />
-      </div>
-      <h3>{designOptions[designOption].name}</h3>
+      <Slider
+        id="design-option-slider"
+        value={designOption}
+        onChange={(e, newValue) => setDesignOption(newValue as number)}
+        min={0}
+        max={designOptions.length - 1}
+        step={1}
+        marks
+        valueLabelDisplay="auto"
+        valueLabelFormat={(value) => designOptions[value].name}
+      />
+      <h4>{designOptions[designOption].name}</h4>
     </div>
   );
 };
@@ -111,7 +111,7 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
   });
 
   return (
-    <div id="algo-panel-content" ref={containerRef}>
+    <div className="panel-content" id="algo-panel-content" ref={containerRef}>
       <h2>Creating an urban scale metric</h2>
       <div className="model-viewer-container">
         {/* @ts-ignore */}
