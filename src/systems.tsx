@@ -3,12 +3,13 @@ import * as d3 from "d3";
 import { gsap } from "gsap";
 import LoopIcon from "@mui/icons-material/Loop";
 import Paper from "@mui/material/Paper";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const SystemPanel: React.FC = () => {
   return (
-    <div>
+    <div className="content">
       <Paper className="message-paper">
-        <h4>Digital World mediating interactions with the Built Environment</h4>
+        <h1>Digital World mediating interactions with the Built Environment</h1>
       </Paper>
 
       <br />
@@ -16,14 +17,14 @@ export const SystemPanel: React.FC = () => {
       <br />
       <br />
       <Paper className="message-paper">
-        <h4>Built environment mediating navigation and social interactions</h4>
+        <h2>Built environment mediating navigation and social interactions</h2>
       </Paper>
       <br />
       <LoopIcon className="center-icon" />
       <br />
       <br />
       <Paper className="message-paper">
-        <h4>Built environment mediating digital interactions</h4>
+        <h3>Built environment mediating digital interactions</h3>
       </Paper>
     </div>
   );
@@ -31,7 +32,7 @@ export const SystemPanel: React.FC = () => {
 
 export const MethodsPanel: React.FC = () => {
   return (
-    <div>
+    <div className="content">
       <h1>Developing Methods</h1>
       <br></br>
       <hr></hr>
@@ -57,16 +58,15 @@ export const FlowChart: React.FC = () => {
       .attr("height", 400);
 
     const data = [
-      { id: 1, text: "Start", x: 50, y: 50 },
-      { id: 2, text: "Step 1", x: 200, y: 50 },
-      { id: 3, text: "Step 2", x: 200, y: 150 },
-      { id: 4, text: "End", x: 350, y: 150 },
+      { id: 1, text: "Node 1", x: 100, y: 100 },
+      { id: 2, text: "Node 2", x: 300, y: 100 },
+      { id: 3, text: "Node 3", x: 200, y: 300 },
     ];
 
     const links = [
       { source: 1, target: 2 },
       { source: 2, target: 3 },
-      { source: 3, target: 4 },
+      { source: 3, target: 1 },
     ];
 
     const simulation = d3
@@ -76,7 +76,8 @@ export const FlowChart: React.FC = () => {
         d3
           .forceLink(links)
           .id((d) => d.id)
-          .distance(100)
+          .distance(150)
+          .strength(0.1) // Spring-like behavior
       )
       .force("charge", d3.forceManyBody().strength(-400))
       .force("center", d3.forceCenter(300, 200))
@@ -90,12 +91,10 @@ export const FlowChart: React.FC = () => {
       .attr("stroke", "black");
 
     const node = svg
-      .selectAll("circle")
+      .selectAll("g")
       .data(data)
       .enter()
-      .append("circle")
-      .attr("r", 20)
-      .attr("fill", "lightblue")
+      .append("g")
       .call(
         d3
           .drag()
@@ -104,10 +103,12 @@ export const FlowChart: React.FC = () => {
           .on("end", dragended)
       );
 
-    const label = svg
-      .selectAll("text")
-      .data(data)
-      .enter()
+    node
+      .append("circle")
+      .attr("r", 40) // Larger radius
+      .attr("fill", "lightblue");
+
+    node
       .append("text")
       .attr("dy", 5)
       .attr("text-anchor", "middle")
@@ -120,9 +121,7 @@ export const FlowChart: React.FC = () => {
         .attr("x2", (d) => d.target.x)
         .attr("y2", (d) => d.target.y);
 
-      node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
-
-      label.attr("x", (d) => d.x).attr("y", (d) => d.y);
+      node.attr("transform", (d) => `translate(${d.x},${d.y})`);
     }
 
     function dragstarted(event, d) {
@@ -142,14 +141,28 @@ export const FlowChart: React.FC = () => {
       d.fy = null;
     }
 
-    gsap.from(node.nodes(), { duration: 1, opacity: 0, stagger: 0.2 });
-    gsap.from(label.nodes(), {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.to(node.nodes(), {
+      y: -100,
       duration: 1,
-      opacity: 0,
-      stagger: 0.2,
-      delay: 0.5,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: chartRef.current,
+        start: "top center",
+        end: "bottom center",
+        scrub: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          data.forEach((d) => {
+            d.vx = (Math.random() - 0.5) * 10 * progress;
+            d.vy = (Math.random() - 0.5) * 10 * progress;
+          });
+          simulation.alpha(1).restart();
+        },
+      },
     });
   }, []);
 
-  return <svg ref={chartRef}></svg>;
+  return <svg className="fill-panel" ref={chartRef}></svg>;
 };

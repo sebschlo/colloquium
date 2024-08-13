@@ -16,12 +16,13 @@ import {
   MethodCompPanel,
   UrbanMetricPanel,
 } from "./computation";
-import { stepButtonClasses } from "@mui/material";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default function Scroll() {
   const headerRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
   const scrollToHash = (hash: string) => {
     if (hash) {
@@ -53,41 +54,107 @@ export default function Scroll() {
     };
   }, []);
 
-  const HIntroPanel: React.FC<{ title: string; subtitle: string }> = ({
-    title,
-    subtitle,
-  }) => {
+  useGSAP(() => {
+    /* Panels */
+    const horizontalContainers = gsap.utils.toArray<HTMLElement>(".carousel");
+    horizontalContainers.forEach((container) => {
+      const panels = gsap.utils.toArray<HTMLElement>(".panel", container);
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          pin: true,
+          scrub: 1,
+          end: () => "+=" + container.offsetWidth,
+          pinSpacing: true,
+          onUpdate: (self) => {
+            setScrollProgress(self.progress);
+          },
+        },
+      });
+
+      // Add the main horizontal scroll animation to the timeline
+      timeline.to(panels, {
+        xPercent: -100 * (panels.length - 1),
+        ease: "none",
+      });
+
+      // Store the timeline reference
+      timelineRef.current = timeline;
+    });
+
+    // Pin the header
+    gsap.to(headerRef.current, {
+      scrollTrigger: {
+        trigger: headerRef.current,
+        pin: true,
+        end: "bottom top",
+        pinSpacing: "margin",
+      },
+    });
+  });
+
+  const HIntroPanel: React.FC<{
+    title: string;
+    subtitle: string;
+    timeline: gsap.core.Timeline | null;
+  }> = ({ title, subtitle, timeline }) => {
+    const h3Ref = useRef<HTMLDivElement>(null);
+
+    // useEffect(() => {
+    //   if (h3Ref.current && timeline) {
+    //     timeline.to(h3Ref.current, {
+    //       scrollTrigger: {
+    //         onUpdate: (self) => {
+    //           if (self.progress > 0.15 && h3Ref.current) {
+    //             h3Ref.current.style.position = "fixed";
+    //             h3Ref.current.style.top = `${
+    //               h3Ref.current.getBoundingClientRect().top
+    //             }px`;
+    //           }
+    //         },
+    //       },
+    //     });
+    //   }
+    // }, [timeline]);
+
     return (
-      <div>
-        <h3 className="highlighted">{title}</h3>
+      <div className="hintro">
+        <h3 ref={h3Ref} className="highlighted">
+          {title}
+        </h3>
         <blockquote>{subtitle}</blockquote>
       </div>
     );
   };
 
   const panels = [
-    { title: "1. Intro", href: "#intro", component: IntroPanel },
-    { title: "2. The System", href: "#system", component: SystemPanel },
+    { title: "Intro", href: "#intro", component: IntroPanel },
     {
-      title: "3. Methods",
+      title: "The System",
+      href: "#system",
+      component: SystemPanel,
+    },
+    {
+      title: "Inversion",
       subtitle: "Subtitle 3",
       href: "#methods",
       component: MethodsPanel,
     },
     {
-      title: "3. Methods",
+      title: "Methods",
       subtitle: "Subtitle 3",
       href: "#flow",
       component: FlowChart,
     },
     {
-      title: "3A. Reflexive Experiences",
+      title: "Ethical Predictions",
       subtitle: "Subtitle 5",
       href: "#reflection",
       horizontal: [
         {
           title: "Method A",
-          subtitle: "Reflexive Interactive Experiences",
+          subtitle:
+            "Examining bias and ethical dilemmas in predictive models through interactive web experiences",
           component: HIntroPanel,
         },
         { title: "H2", subtitle: "Horizontal 2", component: ZinePanel },
@@ -99,12 +166,13 @@ export default function Scroll() {
       ],
     },
     {
-      title: "3B. Design Computation",
+      title: "Quotidian Assumptions",
       href: "#computation",
       horizontal: [
         {
-          title: "Method A",
-          subtitle: "Design Computation and Visual Storytelling",
+          title: "Method B",
+          subtitle:
+            "Questioning Quotidian Assumptions / Reimagining the World Through Design Computation",
           component: HIntroPanel,
         },
         {
@@ -129,12 +197,13 @@ export default function Scroll() {
       ],
     },
     {
-      title: "3C. Speculative Data",
+      title: "Speculative Data",
       href: "#collection",
       horizontal: [
         {
           title: "Method C",
-          subtitle: "Speculative Data Collection and Analysis",
+          subtitle:
+            "Speculative Data Collection and Analysis / Anticipatory Resistence",
           component: HIntroPanel,
         },
         {
@@ -155,52 +224,18 @@ export default function Scroll() {
       ],
     },
     {
-      title: "4. Practice",
+      title: "Practice",
       subtitle: "Subtitle 6",
       href: "#practice",
       component: PracticePanel,
     },
     {
-      title: "5. Archive",
+      title: "Archive",
       subtitle: "Other works from Colloquium",
       href: "#archive",
       component: MethodDataPanel,
     },
   ];
-
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useGSAP(() => {
-    /* Panels */
-    const horizontalContainers = gsap.utils.toArray<HTMLElement>(".carousel");
-    horizontalContainers.forEach((container) => {
-      const panels = gsap.utils.toArray<HTMLElement>(".panel", container);
-      gsap.to(panels, {
-        xPercent: -100 * (panels.length - 1),
-        scrollTrigger: {
-          trigger: container,
-          pin: true,
-          scrub: 1,
-          end: () => "+=" + container.offsetWidth,
-          pinSpacing: true,
-          onUpdate: (self) => {
-            setScrollProgress(self.progress);
-          },
-        },
-      });
-    });
-
-    // Pin the header
-    gsap.to(headerRef.current, {
-      scrollTrigger: {
-        trigger: headerRef.current,
-        pin: true,
-        end: "bottom top",
-        pinSpacing: "margin",
-        // markers: true
-      },
-    });
-  });
 
   return (
     <div>
@@ -256,9 +291,7 @@ export default function Scroll() {
           const Component = panel.component;
           return (
             <section key={index} className="panel" id={panel.href.substring(1)}>
-              {!panel.horizontal && (
-                <div className="content">{Component && <Component />}</div>
-              )}
+              {!panel.horizontal && <>{Component && <Component />}</>}
               {panel.horizontal && (
                 <div
                   className="carousel"
@@ -269,13 +302,11 @@ export default function Scroll() {
                       const HComponent = hPanel.component;
                       return (
                         <article key={hIndex} className="panel">
-                          <div className="content">
-                            <HComponent
-                              title={hPanel.title}
-                              subtitle={hPanel.subtitle}
-                              progress={scrollProgress}
-                            />
-                          </div>
+                          <HComponent
+                            title={hPanel.title}
+                            subtitle={hPanel.subtitle}
+                            timeline={timelineRef.current}
+                          />
                         </article>
                       );
                     })}
