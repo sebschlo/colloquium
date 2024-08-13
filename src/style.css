@@ -47,6 +47,12 @@ h4 {
   font-weight: 300;
 }
 
+h5 {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: black;
+}
+
 p + p {
   margin-top: 1em;
 }
@@ -77,6 +83,7 @@ hr {
 
 .content > * {
 }
+
 
 .carousel {
   height: 100vh;

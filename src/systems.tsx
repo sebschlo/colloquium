@@ -5,27 +5,136 @@ import LoopIcon from "@mui/icons-material/Loop";
 import Paper from "@mui/material/Paper";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export const SystemPanel: React.FC = () => {
-  return (
-    <div className="panel-content">
-      <Paper className="message-paper">
-        <h1>Digital World mediating interactions with the Built Environment</h1>
-      </Paper>
+gsap.registerPlugin(ScrollTrigger);
 
-      <br />
-      <LoopIcon className="center-icon" />
-      <br />
-      <br />
-      <Paper className="message-paper">
-        <h2>Built environment mediating navigation and social interactions</h2>
-      </Paper>
-      <br />
-      <LoopIcon className="center-icon" />
-      <br />
-      <br />
-      <Paper className="message-paper">
-        <h3>Built environment mediating digital interactions</h3>
-      </Paper>
+export const SystemPanel: React.FC = () => {
+  const paperRefs = useRef<HTMLDivElement[]>([]);
+  const textRefs = useRef<HTMLDivElement[]>([]);
+
+  const useGSAP = (
+    paperRefs: React.RefObject<HTMLDivElement[]>,
+    textRefs: React.RefObject<HTMLDivElement[]>
+  ) => {
+    useEffect(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#system-panel-pin",
+          start: "top top",
+          end: "+=2000", // Adjust this value to control the pin duration
+          pin: true,
+          scrub: true,
+          //   markers: true,
+        },
+      });
+      tl.fromTo(".center-icon", { opacity: 0 }, { opacity: 1, duration: 1 });
+      paperRefs.current.forEach((paper, index) => {
+        tl.fromTo(
+          paper,
+          { y: 100, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 2, // Extended duration
+            ease: "power1.inOut",
+          },
+          index * 2 // Stagger the animations
+        );
+      });
+
+      tl.fromTo(
+        ".center-icon",
+        { opacity: 1 },
+        {
+          opacity: 0,
+          duration: 1,
+          onComplete: () => {
+            // document.querySelector(".center-icon")?.remove();
+          },
+        }
+      );
+
+      tl.to(paperRefs.current, {
+        scale: 0.6,
+        // x: (index) => index * 200 - 200,
+        // y: (index) => index * -100,
+        duration: 2,
+        ease: "power1.inOut",
+        stagger: 0.5,
+      });
+
+      // Animate additional text elements
+      textRefs.current.forEach((text, index) => {
+        tl.fromTo(
+          text,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 1,
+            ease: "power1.inOut",
+          },
+          "-=1" // Start the text animation slightly before the previous animation ends
+        );
+      });
+    }, [paperRefs, textRefs]);
+  };
+
+  useGSAP(paperRefs, textRefs);
+
+  return (
+    <div id="system-panel-pin">
+      <div className="panel-content" id="system-panel-content">
+        <Paper
+          className="message-paper"
+          ref={(el) => (paperRefs.current[0] = el!)}
+        >
+          <h2>Digital mediating interactions with the built environment</h2>
+        </Paper>
+        <div ref={(el) => (textRefs.current[0] = el!)}>
+          <h5>
+            <ul>
+              <li>maps and nav</li>
+              <li>reviews</li>
+              <li>rfID</li>
+            </ul>
+          </h5>
+        </div>
+
+        <LoopIcon className="center-icon" />
+        <Paper
+          className="message-paper"
+          ref={(el) => (paperRefs.current[1] = el!)}
+        >
+          <h2>Built environment mediating social and spatial interactions</h2>
+        </Paper>
+        <div ref={(el) => (textRefs.current[1] = el!)}>
+          <h5>
+            <ul>
+              <li>intuition and affordances</li>
+              <li>signage</li>
+              <li>environmental comfort (loudness, temp, bright)</li>
+            </ul>
+          </h5>
+        </div>
+
+        <LoopIcon className="center-icon" />
+        <Paper
+          className="message-paper"
+          ref={(el) => (paperRefs.current[2] = el!)}
+        >
+          <h2>Built environment mediating digital interactions</h2>
+        </Paper>
+        <div ref={(el) => (textRefs.current[2] = el!)}>
+          <h5>
+            <ul>
+              <li>iot + phone</li>
+              <li>ads</li>
+              <li>availability of wifi</li>
+              <li>qr codes</li>
+              <li>???</li>
+            </ul>
+          </h5>
+        </div>
+      </div>
     </div>
   );
 };
