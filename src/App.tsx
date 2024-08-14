@@ -204,7 +204,7 @@ export default function Scroll() {
         {
           title: "Map",
           subtitle: "Luminance Metric vs. Grumpiness",
-          component: LightWellMap,
+          component: GrumpinessPanel,
         },
       ],
     },

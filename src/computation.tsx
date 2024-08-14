@@ -152,47 +152,107 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
   );
 };
 
-export const LightWellMap: React.FC<{ geoData: any }> = ({ geoData }) => {
-  return (
-    <div style={{ height: "100vh", width: "100vw" }}>
-      <iframe
-        src="/light_well_map.html"
-        style={{ border: "none", height: "100%", width: "100%" }}
-        title="Light Well Map"
-      ></iframe>
-    </div>
-  );
-};
+// export const LightWellMap: React.FC = () => {
+//   const [geoData, setGeoData] = useState(null);
 
-export const GrumpinessPanel: React.FC<{ geoData: any }> = ({ geoData }) => {
+//   useEffect(() => {
+//     fetch("/path/to/geoData.json")
+//       .then((response) => response.json())
+//       .then((data) => setGeoData(data))
+//       .catch((error) => console.error("Error loading geoData:", error));
+//   }, []);
+
+//   if (!geoData) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <div style={{ height: "100vh", width: "100vw" }}>
+//       <iframe
+//         src="/light_well_map.html"
+//         style={{ border: "none", height: "100%", width: "100%" }}
+//         title="Light Well Map"
+//       ></iframe>
+//     </div>
+//   );
+// };
+
+export const GrumpinessPanel: React.FC = () => {
+  const [geoData, setGeoData] = useState(null);
   const [hoveredRegion, setHoveredRegion] = useState(null);
 
+  useEffect(() => {
+    fetch("/light_wells.geojson")
+      .then((response) => response.json())
+      .then((data) => setGeoData(data))
+      .catch((error) => console.error("Error loading geoData:", error));
+  }, []);
+
+  const interpolateColor = (ratio) => {
+    const startColor = [201, 221, 189]; // c9ddbd
+    const endColor = [71, 249, 255]; // 47f9ff
+    const interpolatedColor = startColor.map((start, index) =>
+      Math.round(start + (endColor[index] - start) * ratio)
+    );
+    return `rgb(${interpolatedColor.join(",")})`;
+  };
+
   const onEachFeature = (feature, layer) => {
+    const ratio = feature.properties["Well to Building Ratio"];
+    const color = interpolateColor(ratio);
+
+    layer.setStyle({
+      weight: 2,
+      color: color,
+      fillOpacity: 0.2,
+    });
+
     layer.on({
       mouseover: (e) => {
         setHoveredRegion(feature.properties);
         e.target.setStyle({
           weight: 5,
-          color: "#666",
+          color: "#47f9ff",
           fillOpacity: 0.7,
         });
+        const tooltip = L.tooltip({
+          sticky: true,
+        })
+          .setContent(
+            `
+            <div>
+              <h3>BBL: ${feature.properties.BBL}</h3>
+              <h4>Num Floors: ${feature.properties.NumFloors}</h4>
+              <h5>Well to Building Ratio: ${(
+                feature.properties["Well to Building Ratio"] * 100
+              ).toFixed(2)}%</h5>
+            </div>
+          `
+          )
+          .setLatLng(e.latlng);
+        e.target.bindTooltip(tooltip).openTooltip();
       },
       mouseout: (e) => {
         setHoveredRegion(null);
         e.target.setStyle({
           weight: 2,
-          color: "#3388ff",
+          color: color,
           fillOpacity: 0.2,
         });
+        e.target.unbindTooltip();
       },
     });
   };
 
+  if (!geoData) {
+    return <div>Loading...</div>;
+  }
+  console.log(geoData);
   return (
     <MapContainer
       style={{ height: "100vh", width: "100vw", cursor: "default" }}
-      center={[51.505, -0.09]}
-      zoom={13}
+      center={[40.7, -73.9]} // Coordinates for Ridgewood, New York
+      zoom={15}
       dragging={true}
       zoomControl={true}
       scrollWheelZoom={false}
@@ -201,16 +261,7 @@ export const GrumpinessPanel: React.FC<{ geoData: any }> = ({ geoData }) => {
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
-      <GeoJSON data={geoData} onEachFeature={onEachFeature}>
-        {hoveredRegion && (
-          <Tooltip sticky>
-            <div>
-              <h4>{hoveredRegion.name}</h4>
-              <p>{hoveredRegion.description}</p>
-            </div>
-          </Tooltip>
-        )}
-      </GeoJSON>
+      <GeoJSON data={geoData} onEachFeature={onEachFeature} />
     </MapContainer>
   );
 };
