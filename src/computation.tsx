@@ -228,7 +228,6 @@ export const GrumpinessPanel: React.FC = () => {
   if (!geoData) {
     return <div>Loading...</div>;
   }
-  console.log(geoData);
   return (
     <MapContainer
       style={{ height: "100vh", width: "100vw", cursor: "default" }}

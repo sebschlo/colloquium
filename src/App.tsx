@@ -116,23 +116,6 @@ export default function Scroll() {
   }> = ({ title, subtitle, timeline }) => {
     const h3Ref = useRef<HTMLDivElement>(null);
 
-    // useEffect(() => {
-    //   if (h3Ref.current && timeline) {
-    //     timeline.to(h3Ref.current, {
-    //       scrollTrigger: {
-    //         onUpdate: (self) => {
-    //           if (self.progress > 0.15 && h3Ref.current) {
-    //             h3Ref.current.style.position = "fixed";
-    //             h3Ref.current.style.top = `${
-    //               h3Ref.current.getBoundingClientRect().top
-    //             }px`;
-    //           }
-    //         },
-    //       },
-    //     });
-    //   }
-    // }, [timeline]);
-
     return (
       <div className="hintro">
         <h3 ref={h3Ref} className="highlighted">
