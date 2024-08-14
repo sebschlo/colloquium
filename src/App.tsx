@@ -146,12 +146,12 @@ export default function Scroll() {
       href: "#system",
       component: SystemPanel,
     },
-    {
-      title: "Inversion",
-      subtitle: "Subtitle 3",
-      href: "#inversion",
-      component: FlowChart,
-    },
+    // {
+    //   title: "Inversion",
+    //   subtitle: "Subtitle 3",
+    //   href: "#inversion",
+    //   component: FlowChart,
+    // },
     {
       title: "Methods",
       subtitle: "Subtitle 3",

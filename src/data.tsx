@@ -17,12 +17,12 @@ export const MethodDataPanel: React.FC = () => {
       <br></br>
       <h3>
         As Catherine D'Ignazio and Lauren Klein assert in <b>Data Feminism</b>,
-        “data are not neutral or objective.” The way they are collected tells a
-        story. Forcefully approaching a particular data set with a specific
-        question can lead to confirmation bias. In my explorations to answer the
-        impossible, I allow myself to be guided by the affordances the data and
-        tools at hand, remaining open to serendipitous insights and allowing the
-        answers to (re)formulate the questions.
+        “data are not neutral or objective.” [5] The way they are collected
+        tells a story. Forcefully approaching a particular data set with a
+        specific question can lead to confirmation bias. In my explorations to
+        answer the impossible, I allow myself to be guided by the affordances
+        the data and tools at hand, remaining open to serendipitous insights and
+        allowing the answers to (re)formulate the questions.
       </h3>
     </div>
   );
@@ -45,12 +45,12 @@ export const BillboardMap: React.FC = () => {
       </div>
       <br></br>
       <h4 style={{ width: "90%" }}>
-        This is a dataset of billboards and signage, geolocated and annotated.
-        It was created so that one day augmented reality ad-blockers may be
-        developed. I am using it to explore the subconscious messaging that
-        lingers in the mind after driving by all these impressions. I then
-        merged this data with a navigation network such that routes can be
-        optimized for a particular set of imagery.
+        This is a dataset of billboards and signage I found, geolocated and
+        annotated [6]. It was created so that one day augmented reality
+        ad-blockers may be developed. I am using it to explore the subconscious
+        messaging that lingers in the mind after driving by all these
+        impressions. I then merged this data with a navigation network such that
+        routes can be optimized for a particular set of imagery.
       </h4>
     </div>
   );

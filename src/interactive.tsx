@@ -14,7 +14,7 @@ export const ZinePanel: React.FC = () => {
   return (
     <div className="panel-content">
       <h2>The Trolley Problem</h2>
-      <h3>A Zine on Generative AI</h3>
+      <h3>A Zine on Generative AI [1]</h3>
       <a
         href="/zine.html"
         style={{ position: "relative", display: "inline-block" }}
@@ -30,15 +30,22 @@ export const ZinePanel: React.FC = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            fontSize: "3.1rem",
+            fontSize: "2.6rem",
             color: "rgb(255, 255, 255)",
-            textShadow: "2px 2px 40px rgba(0, 0, 0, 0.9)",
+            textShadow: "6px 6px 40px rgba(0, 0, 0, 0.9)",
             backgroundColor: "black",
             padding: "10px",
           }}
         >
           Click to Play
         </span>
+        <br></br>
+        <br></br>
+        <h4>
+          "In front of the screen, one is, first of all, looked at; one becomes
+          the spectacle of the gaze of the other. We are, Lacan says, being
+          watched in the spectacle of the world." [2]
+        </h4>
       </a>
     </div>
   );

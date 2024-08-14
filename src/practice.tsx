@@ -38,11 +38,59 @@ export const EtcPanel: React.FC = () => {
       <hr></hr>
       <br></br>
       <h3>References</h3>
-      <h5>[1] bla bla lba</h5>
-      <h5>[2] bla bla lba</h5>
-      <h5>[3] bla bla lba</h5>
-      <h5>[4] bla bla lba</h5>
-      <h5>[5] bla bla lba</h5>
+      <h5>
+        <a href="bla bla lba" target="_blank" rel="noopener noreferrer">
+          [1] https://platform.openai.com/docs/api-reference/introduction
+        </a>
+      </h5>
+      <h5>
+        <a
+          href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2021.578277/full"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          [2]
+          https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2021.578277/full
+        </a>
+      </h5>
+      <h5>
+        <a
+          href="https://oldstructures.com/2019/03/18/dumbbells/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          [3] https://oldstructures.com/2019/03/18/dumbbells/
+        </a>
+      </h5>
+      <h5>
+        <a
+          href="https://www.nyc.gov/site/planning/data-maps/open-data/dwn-nyc-3d-model-download.page"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          [4]
+          https://www.nyc.gov/site/planning/data-maps/open-data/dwn-nyc-3d-model-download.page
+        </a>
+      </h5>
+      <h5>
+        <a
+          href="https://data-feminism.mitpress.mit.edu/pub/czq9dfs5/release/2"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          [5] https://data-feminism.mitpress.mit.edu/pub/czq9dfs5/release/2
+        </a>
+      </h5>
+      <h5>
+        <a
+          href="https://www.kaggle.com/datasets/mekabytes/billboards-signs-and-branding/data"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          [6]
+          https://www.kaggle.com/datasets/mekabytes/billboards-signs-and-branding/data
+        </a>
+      </h5>
     </div>
   );
 };

@@ -28,7 +28,7 @@ export const MethodCompPanel: React.FC = () => {
             were ambitiously called "light courts." This idea was enshrined in
             1879 in what has become known as the Old Tenement Law, which
             required that every room have a window to the outside, even if it
-            was only in one of those narrow shafts." [1]
+            was only in one of those narrow shafts." [3]
           </strong>
           <br></br>
           <br></br>
@@ -139,7 +139,8 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
       <h5>
         In order to draw correlations between the effects of poor lighting and
         other urban metrics, I created an algorithm in Grasshopper to compute
-        the ratio of light well area to building footprint area.
+        the ratio of light well area to building footprint area using NYC Open
+        Data [4].
       </h5>
       <h5>
         Because it would be too computationally costly to perform the detailed
