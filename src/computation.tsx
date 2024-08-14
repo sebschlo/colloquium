@@ -158,31 +158,6 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
   );
 };
 
-// export const LightWellMap: React.FC = () => {
-//   const [geoData, setGeoData] = useState(null);
-
-//   useEffect(() => {
-//     fetch("/path/to/geoData.json")
-//       .then((response) => response.json())
-//       .then((data) => setGeoData(data))
-//       .catch((error) => console.error("Error loading geoData:", error));
-//   }, []);
-
-//   if (!geoData) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div style={{ height: "100vh", width: "100vw" }}>
-//       <iframe
-//         src="/light_well_map.html"
-//         style={{ border: "none", height: "100%", width: "100%" }}
-//         title="Light Well Map"
-//       ></iframe>
-//     </div>
-//   );
-// };
-
 export const GrumpinessPanel: React.FC = () => {
   const [geoData, setGeoData] = useState(null);
   const [hoveredRegion, setHoveredRegion] = useState(null);

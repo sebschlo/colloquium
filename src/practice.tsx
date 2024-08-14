@@ -8,12 +8,11 @@ export const PracticePanel: React.FC = () => {
       <br></br>
       <hr></hr>
       <br></br>
-      <h4>
-        These methods will form the basis for my practice, which will consist in
-        applying them to the problem of inverting spatial interfaces, and
-        inventing ways for the built environment to mediate social and digital
+      <h1>
+        These methods will form the basis for my practice, which will explore
+        ways for the built environment to mediate social and digital
         interactions.
-      </h4>
+      </h1>
       <br></br>
       <h4></h4>
     </div>

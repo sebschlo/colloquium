@@ -10,7 +10,6 @@ import { ZinePanel, PredictiveMap } from "./interactive";
 import {
   DesignSpaceExplorer,
   GrumpinessPanel,
-  LightWellMap,
   MethodCompPanel,
   UrbanMetricPanel,
 } from "./computation";
@@ -67,6 +66,11 @@ export default function Scroll() {
           scrub: 1,
           end: () => "+=" + container.offsetWidth,
           pinSpacing: true,
+          snap: {
+            snapTo: 1 / (panels.length - 1), // Snap to each panel
+            duration: { min: 0.2, max: 0.5 }, // Duration of the snap
+            ease: "power1.inOut", // Easing function
+          },
           onUpdate: (self) => {
             setScrollProgress(self.progress);
           },
