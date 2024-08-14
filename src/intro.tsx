@@ -22,14 +22,14 @@ export const IntroPanel: React.FC = () => {
 
   return (
     <div className="panel-content">
-      <blockquote id="main-title">
+      <h1 id="main-title">
         {Array.from("Inverting").map((letter, index) => (
           <span key={index} className="rotate-letter">
             {letter}
           </span>
         ))}{" "}
         <span className="highlighted">Spatial</span> Interfaces
-      </blockquote>
+      </h1>
       <h3>GSAPP CDP 2023-4 Colloquium I</h3>
       <h5>Sebastian Schloesser</h5>
     </div>

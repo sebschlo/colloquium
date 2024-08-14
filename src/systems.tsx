@@ -30,14 +30,14 @@ export const SystemPanel: React.FC = () => {
       paperRefs.current.forEach((paper, index) => {
         tl.fromTo(
           paper,
-          { y: 100, opacity: 0 },
+          { y: 50, opacity: 0 }, // Adjusted y value
           {
             y: 0,
             opacity: 1,
-            duration: 2, // Extended duration
+            duration: 1.5, // Adjusted duration
             ease: "power1.inOut",
           },
-          index * 2 // Stagger the animations
+          index * 1.5 // Adjusted stagger
         );
       });
 
@@ -48,7 +48,7 @@ export const SystemPanel: React.FC = () => {
           opacity: 0,
           duration: 1,
           onComplete: () => {
-            // document.querySelector(".center-icon")?.remove();
+            document.querySelector(".center-icon")?.remove();
           },
         }
       );
@@ -98,7 +98,6 @@ export const SystemPanel: React.FC = () => {
             </ul>
           </h5>
         </div>
-
         <LoopIcon className="center-icon" />
         <Paper
           className="message-paper"
@@ -115,7 +114,6 @@ export const SystemPanel: React.FC = () => {
             </ul>
           </h5>
         </div>
-
         <LoopIcon className="center-icon" />
         <Paper
           className="message-paper"

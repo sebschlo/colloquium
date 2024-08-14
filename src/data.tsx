@@ -2,7 +2,7 @@ import React from "react";
 
 export const MethodDataPanel: React.FC = () => {
   return (
-    <div className="panel-content">
+    <div className="panel-content" id="manifesto-panel">
       <h2>Thoughts on Data...</h2>
       <br></br>
       <hr></hr>
@@ -62,11 +62,11 @@ export const RouteMap: React.FC = () => {
       <h2>Optimizing Routes for Intentional Subliminal Exposure</h2>
       <br></br>
       <img src="/church_route.png" width="50%" height="100%" />
-      <h3>
+      <h4>
         This network was weighted to optimize routes that pass through signage
         alluding to the label 'Church'. You can see the route deviates to pass
         through the relevant nodes.
-      </h3>
+      </h4>
     </div>
   );
 };

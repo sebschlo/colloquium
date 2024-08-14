@@ -122,7 +122,7 @@ export default function Scroll() {
         <h3 ref={h3Ref} className="highlighted">
           {title}
         </h3>
-        <blockquote>{subtitle}</blockquote>
+        <h1>{subtitle}</h1>
       </div>
     );
   };
