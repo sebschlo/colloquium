@@ -53,23 +53,23 @@ export const DesignSpaceExplorer: React.FC = () => {
   const designOptions = [
     {
       name: "Standard",
-      img: "public/lightWell0.png",
+      img: "/lightWell0.png",
     },
     {
       name: "Trapezoid",
-      img: "public/lightWell1.png",
+      img: "/lightWell1.png",
     },
     {
       name: "Open Back",
-      img: "public/lightWell4.png",
+      img: "/lightWell4.png",
     },
     {
       name: "Pyramidal",
-      img: "public/lightWell2.png",
+      img: "/lightWell2.png",
     },
     {
       name: "Funnel",
-      img: "public/lightWell3.png",
+      img: "/lightWell3.png",
     },
   ];
 
@@ -124,7 +124,7 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
         <model-viewer
           ref={modelViewerRef}
           alt="Buildings"
-          src="public/light_wells.gltf"
+          src="/light_wells.gltf"
           style={{ width: "100%", height: "100%" }}
           exposure="1"
           shadow-softness="0.5"
