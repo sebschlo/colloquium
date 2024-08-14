@@ -23,7 +23,7 @@ export const EtcPanel: React.FC = () => {
   return (
     <div className="panel-content" id="etc-panel">
       <h3>Links</h3>
-      <a href="/archive.html">
+      <a href="archive.html">
         <LinkIcon /> Additional Colloquium Work Archive
       </a>
       <a href="https://github.com/sebschlo/colloquium">

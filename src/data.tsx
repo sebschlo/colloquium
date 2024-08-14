@@ -41,7 +41,7 @@ export const BillboardMap: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <iframe src="/billboard_map.html" width="100%" height="100%"></iframe>
+        <iframe src="billboard_map.html" width="100%" height="100%"></iframe>
       </div>
       <br></br>
       <h4 style={{ width: "90%" }}>
@@ -61,7 +61,7 @@ export const RouteMap: React.FC = () => {
     <div className="panel-content">
       <h2>Optimizing Routes for Intentional Subliminal Exposure</h2>
       <br></br>
-      <img src="/church_route.png" width="50%" height="100%" />
+      <img src="church_route.png" width="50%" height="100%" />
       <h4>
         This network was weighted to optimize routes that pass through signage
         alluding to the label 'Church'. You can see the route deviates to pass

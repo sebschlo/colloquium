@@ -18,10 +18,10 @@ export const SystemPanel: React.FC = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#system-panel-pin",
-          start: "top bottom",
-          //   end: "+=4000px", // Adjust this value to control the pin duration
-          end: "top top",
-          pin: false,
+          start: "top top",
+          end: "+=2000", // Adjust this value to control the pin duration
+          //   end: "top top",
+          pin: true,
           scrub: true,
           //   markers: true,
         },

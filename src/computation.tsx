@@ -124,7 +124,7 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
         <model-viewer
           ref={modelViewerRef}
           alt="Buildings"
-          src="/light_wells.gltf"
+          src="light_wells.gltf"
           style={{ width: "100%", height: "100%" }}
           exposure="1"
           shadow-softness="0.5"

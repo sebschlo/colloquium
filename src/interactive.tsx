@@ -16,7 +16,7 @@ export const ZinePanel: React.FC = () => {
       <h2>The Trolley Problem</h2>
       <h3>A Zine on Generative AI [1]</h3>
       <a
-        href="/zine.html"
+        href="zine.html"
         style={{ position: "relative", display: "inline-block" }}
       >
         <img
