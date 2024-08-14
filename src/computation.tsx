@@ -12,9 +12,15 @@ export const MethodCompPanel: React.FC = () => {
   return (
     <div className="panel-content">
       <h2>Reinventing the Row</h2>
-      <hr style={{ width: "100%" }}></hr>
+      <hr></hr>
       <div className="reinventing-row-content">
+        <img
+          src="daylight_legend.png"
+          alt="Daylight Legend"
+          id="daylight-legend"
+        />
         <img src="shaft_lighting.png" alt="Light Well Daylight" width="300" />
+
         <div className="">
           <p>
             Most of New York's blocks are packed tight with row homes and
