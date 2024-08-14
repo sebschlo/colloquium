@@ -5,7 +5,6 @@
     "@gsap/react": "^2.1.1",
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.7",
-    "d3": "^7.9.0",
     "gsap": "^3.12.5",
     "leaflet": "^1.9.4",
     "non.geist": "^1.0.3",
