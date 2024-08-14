@@ -87,7 +87,10 @@ export const SystemPanel: React.FC = () => {
           className="message-paper"
           ref={(el) => (paperRefs.current[0] = el!)}
         >
-          <h2>Digital mediating interactions with the built environment</h2>
+          <h2>
+            <strong>Digital</strong> mediating interactions with the{" "}
+            <strong>built environment</strong>
+          </h2>
         </Paper>
         <div ref={(el) => (textRefs.current[0] = el!)}>
           <h5>
@@ -103,7 +106,10 @@ export const SystemPanel: React.FC = () => {
           className="message-paper"
           ref={(el) => (paperRefs.current[1] = el!)}
         >
-          <h2>Built environment mediating social and spatial interactions</h2>
+          <h2>
+            <strong>Built environment</strong> mediating <strong>social</strong>{" "}
+            and <strong>spatial interactions</strong>
+          </h2>
         </Paper>
         <div ref={(el) => (textRefs.current[1] = el!)}>
           <h5>
@@ -119,7 +125,10 @@ export const SystemPanel: React.FC = () => {
           className="message-paper"
           ref={(el) => (paperRefs.current[2] = el!)}
         >
-          <h2>Built environment mediating digital interactions</h2>
+          <h2>
+            <strong>Built environment</strong> mediating{" "}
+            <strong>digital interactions</strong>
+          </h2>
         </Paper>
         <div ref={(el) => (textRefs.current[2] = el!)}>
           <h5>
@@ -144,13 +153,13 @@ export const MethodsPanel: React.FC = () => {
       <br></br>
       <hr></hr>
       <br></br>
-      <p>
-        In order to tackle this problem space in the Fall and Spring, I
+      <h4>
+        In order to tackle this problem space in the subsequent colloquia, I
         dedicated this term to exploring new methods in order to build a
-        foundation. My aim was to learn new tools specifically focused on
-        spatial design and analysis, to learn visual communication, and to build
-        the conceptual foundation of my practice.
-      </p>
+        technical foundation. My aim was to learn new tools specifically focused
+        on spatial design and analysis, to improve my visual communication
+        skills, and to begin developing the conceptual basis of my practice.
+      </h4>
     </div>
   );
 };
@@ -271,5 +280,14 @@ export const FlowChart: React.FC = () => {
     });
   }, []);
 
-  return <svg className="fill-panel" ref={chartRef}></svg>;
+  return (
+    <div
+      className="fill-panel"
+      id="example-panel"
+      style={{ position: "relative" }}
+    >
+      <h2>Example Interface Inversion</h2>
+      <svg ref={chartRef}></svg>
+    </div>
+  );
 };

@@ -61,6 +61,35 @@ hr {
   width: 100%;
 }
 
+a {
+  color: black;
+  font-weight: 700;
+}
+
+a {
+  color: black;
+  font-weight: 700;
+  position: relative;
+  text-decoration: none;
+}
+
+#etc-panel a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  display: block;
+  background: black;
+  transition: width 0.3s;
+  left: 0;
+  bottom: -2px;
+}
+
+#etc-panel a:hover::after {
+  width: 100%;
+}
+
+
 .panel {
   display: block;
   width: 100%;
@@ -156,30 +185,13 @@ hr {
 .anchor.active {
   color: #333;
   background-color: #47f9ff;
-  animation: background-slide-in 0.3s ease forwards;
+  animation: background-slide-in 1s ease forwards;
 }
 
 .anchor.active {
-  animation: background-slide-out 0.3s ease forwards;
+  animation: background-slide-out 1s ease forwards;
 }
 
-@keyframes background-slide-in {
-  from {
-    background-position: 100% 0;
-  }
-  to {
-    background-position: 0 0;
-  }
-}
-
-@keyframes background-slide-out {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 100% 0;
-  }
-}
 
 .highlighted {
   background-color: #47f9ff;
@@ -337,4 +349,21 @@ blockquote {
   #manifesto-panel h3 {
     font-size: 0.8rem;
   }
+}
+
+#example-panel {
+  height: 100vh;
+}
+
+#example-panel h2 {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+#example-panel svg {
+  width: 100%;
+  height: 100%;
 }

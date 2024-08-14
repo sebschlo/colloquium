@@ -22,6 +22,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 export default function Scroll() {
   const headerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [currentSection, setCurrentSection] = useState<string | null>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
   const scrollToHash = (hash: string) => {
@@ -91,6 +92,17 @@ export default function Scroll() {
         pinSpacing: "margin",
       },
     });
+
+    // Highlight the current section in the menu
+    panels.forEach((panel) => {
+      ScrollTrigger.create({
+        trigger: `#${panel.href.substring(1)}`,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => setCurrentSection(panel.href),
+        onEnterBack: () => setCurrentSection(panel.href),
+      });
+    });
   });
 
   const HIntroPanel: React.FC<{
@@ -137,19 +149,19 @@ export default function Scroll() {
     {
       title: "Inversion",
       subtitle: "Subtitle 3",
-      href: "#methods",
-      component: MethodsPanel,
+      href: "#inversion",
+      component: FlowChart,
     },
     {
       title: "Methods",
       subtitle: "Subtitle 3",
-      href: "#flow",
-      component: FlowChart,
+      href: "#methods",
+      component: MethodsPanel,
     },
     {
       title: "Ethical Predictions",
       subtitle: "Subtitle 5",
-      href: "#reflection",
+      href: "#ethical-predictions",
       horizontal: [
         {
           title: "Method A",
@@ -167,7 +179,7 @@ export default function Scroll() {
     },
     {
       title: "Quotidian Assumptions",
-      href: "#computation",
+      href: "#questioning-assumptions",
       horizontal: [
         {
           title: "Method B",
@@ -198,7 +210,7 @@ export default function Scroll() {
     },
     {
       title: "Speculative Data",
-      href: "#collection",
+      href: "#speculative-data",
       horizontal: [
         {
           title: "Method C",
@@ -232,7 +244,7 @@ export default function Scroll() {
     {
       title: "Etc.",
       subtitle: "Other works from Colloquium",
-      href: "#archive",
+      href: "#etc",
       component: EtcPanel,
     },
   ];
@@ -244,7 +256,9 @@ export default function Scroll() {
           <a
             href={panel.href}
             key={panel.href}
-            className="anchor"
+            className={`anchor ${
+              currentSection === panel.href ? "active" : ""
+            }`}
             onClick={(e) => {
               e.preventDefault();
               scrollToHash(panel.href);
