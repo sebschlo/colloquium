@@ -18,10 +18,11 @@ export const SystemPanel: React.FC = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#system-panel-pin",
-          start: "top top",
-          end: "+=2000", // Adjust this value to control the pin duration
-          //   end: "top top",
-          pin: true,
+        //   start: "top top",
+          start: "top center",
+          end: "bottom bottom",
+        //   end: "+=2000", // Adjust this value to control the pin duration
+          pin: false,
           scrub: true,
           //   markers: true,
         },
@@ -34,7 +35,7 @@ export const SystemPanel: React.FC = () => {
           {
             y: 0,
             opacity: 1,
-            duration: 1.5, // Adjusted duration
+            // duration: 1.5, // Adjusted duration
             ease: "power1.inOut",
           },
           index * 1.5 // Adjusted stagger
@@ -46,7 +47,7 @@ export const SystemPanel: React.FC = () => {
         { opacity: 1 },
         {
           opacity: 0,
-          duration: 1,
+        //   duration: 1,
           onComplete: () => {
             document.querySelector(".center-icon")?.remove();
           },
@@ -57,7 +58,7 @@ export const SystemPanel: React.FC = () => {
         scale: 0.6,
         // x: (index) => index * 200 - 200,
         // y: (index) => index * -100,
-        duration: 2,
+        // duration: 2,
         ease: "power1.inOut",
         stagger: 0.5,
       });

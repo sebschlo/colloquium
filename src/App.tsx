@@ -269,7 +269,7 @@ export default function Scroll() {
               M.S. Computational Design Practices
             </a>
             <br></br>
-            Home → Student Work → Sebastian Schloesser
+            <p>Home → Student Work → Sebastian Schloesser</p>
           </div>
 
           <nav>

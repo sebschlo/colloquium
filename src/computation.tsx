@@ -164,8 +164,14 @@ export const GrumpinessPanel: React.FC = () => {
 
   useEffect(() => {
     fetch("light_wells.geojson")
-      .then((response) => response.json())
-      .then((data) => setGeoData(data))
+      .then((response) => {
+        console.log(response);
+        response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setGeoData(data);
+      })
       .catch((error) => console.error("Error loading geoData:", error));
   }, []);
 

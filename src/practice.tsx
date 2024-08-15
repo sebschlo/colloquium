@@ -90,6 +90,11 @@ export const EtcPanel: React.FC = () => {
           https://www.kaggle.com/datasets/mekabytes/billboards-signs-and-branding/data
         </a>
       </h5>
+      <br></br>
+      <br></br>
+      <footer>
+        <p>&copy; 2024 Sebastian Schloesser. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
