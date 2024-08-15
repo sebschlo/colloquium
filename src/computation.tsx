@@ -163,7 +163,7 @@ export const GrumpinessPanel: React.FC = () => {
   const [hoveredRegion, setHoveredRegion] = useState(null);
 
   useEffect(() => {
-    fetch("https://gsapp-cdp.github.io/colloquium-1-2024/work/sebastian-schloesser/light_wells.geojson")
+    fetch("light_wells.geojson")
       .then((response) => response.json())
       .then((data) => setGeoData(data))
       .catch((error) => console.error("Error loading geoData:", error));
