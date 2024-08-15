@@ -258,34 +258,31 @@ export default function Scroll() {
 
       <div id="panels-container">
         <header className="header-container" ref={headerRef}>
-          <div className="header-context">
-            <div className="h2">
-              <a
-                className="fade"
-                href="https://www.arch.columbia.edu/programs/15-m-s-computational-design-practices"
-                target="_blank"
-              >
-                Columbia GSAPP
-              </a>
-            </div>
+          <div className="h1">
+            <a href="https://www.arch.columbia.edu/" target="_blank">
+              Columbia GSAPP
+            </a>
           </div>
 
-          <div className="header-title">
-            <div className="h1">
-              <a className="fade" href="/">
-                Computational Design Practices
-              </a>
-            </div>
-            <div className="h2">GSAPP CDP 2023-4 Colloquium I</div>
+          <div className="h2" style={{ gridColumn: "span 2" }}>
+            <a href="https://www.arch.columbia.edu/programs/15-m-s-computational-design-practices">
+              M.S. Computational Design Practices
+            </a>
+            <br></br>
+            Home → Student Work → Sebastian Schloesser
           </div>
 
-          <div className="header-nav">
-            <div className="h2">
-              <a className="fade" href="/about">
-                About
-              </a>
-            </div>
-          </div>
+          <nav>
+            <a href="/colloquium-1-2024/">Home</a>
+            <a href="/colloquium-1-2024/work">Student&nbsp;Work</a>
+            <a
+              href="https://docs.google.com/document/d/1Qo6nrXenc5JgFhbh6s3mjOBXv6vVZ-D5daYAWId5BBY/edit?usp=drive_link"
+              target="_blank"
+            >
+              Syllabus
+            </a>
+            <a href="/colloquium-1-2024/about">About</a>
+          </nav>
         </header>
 
         {panels.map((panel, index) => {

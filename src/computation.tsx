@@ -53,23 +53,23 @@ export const DesignSpaceExplorer: React.FC = () => {
   const designOptions = [
     {
       name: "Standard",
-      img: "/lightWell0.png",
+      img: "lightWell0.png",
     },
     {
       name: "Trapezoid",
-      img: "/lightWell1.png",
+      img: "lightWell1.png",
     },
     {
       name: "Open Back",
-      img: "/lightWell4.png",
+      img: "lightWell4.png",
     },
     {
       name: "Pyramidal",
-      img: "/lightWell2.png",
+      img: "lightWell2.png",
     },
     {
       name: "Funnel",
-      img: "/lightWell3.png",
+      img: "lightWell3.png",
     },
   ];
 
@@ -163,7 +163,7 @@ export const GrumpinessPanel: React.FC = () => {
   const [hoveredRegion, setHoveredRegion] = useState(null);
 
   useEffect(() => {
-    fetch("/light_wells.geojson")
+    fetch("light_wells.geojson")
       .then((response) => response.json())
       .then((data) => setGeoData(data))
       .catch((error) => console.error("Error loading geoData:", error));
