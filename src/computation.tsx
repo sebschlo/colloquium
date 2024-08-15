@@ -163,7 +163,7 @@ export const GrumpinessPanel: React.FC = () => {
   const [hoveredRegion, setHoveredRegion] = useState(null);
 
   useEffect(() => {
-    fetch("light_wells.geojson")
+    fetch("https://gsapp-cdp.github.io/colloquium-1-2024/work/sebastian-schloesser/light_wells.geojson")
       .then((response) => {
         console.log(response);
         response.json();
@@ -231,9 +231,6 @@ export const GrumpinessPanel: React.FC = () => {
     });
   };
 
-  if (!geoData) {
-    return <div>Loading...</div>;
-  }
   return (
     <MapContainer
       style={{ height: "100vh", width: "100vw", cursor: "default" }}
