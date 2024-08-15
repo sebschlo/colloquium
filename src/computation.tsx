@@ -164,10 +164,20 @@ export const GrumpinessPanel: React.FC = () => {
 
   useEffect(() => {
     fetch("https://gsapp-cdp.github.io/colloquium-1-2024/work/sebastian-schloesser/light_wells.geojson")
-      .then((response) => response.json())
-      .then((data) => setGeoData(data))
+      .then((response) => {
+        console.log("Fetch successful, response received:", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data parsed from JSON:", data);
+        setGeoData(data);
+      })
       .catch((error) => console.error("Error loading geoData:", error));
   }, []);
+
+  useEffect(() => {
+    console.log('geoData updated:', geoData);
+  }, [geoData]);
 
   const interpolateColor = (ratio) => {
     const startColor = [201, 221, 189]; // c9ddbd
@@ -238,7 +248,7 @@ export const GrumpinessPanel: React.FC = () => {
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
-      <GeoJSON data={geoData} onEachFeature={onEachFeature} />
+      {geoData && <GeoJSON key={JSON.stringify(geoData)} data={geoData} onEachFeature={onEachFeature} />}
     </MapContainer>
   );
 };
