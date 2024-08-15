@@ -124,7 +124,7 @@ export const UrbanMetricPanel: React.FC<{ progress: number }> = ({
         <model-viewer
           ref={modelViewerRef}
           alt="Buildings"
-          src={new URL('../light_wells.gltf', import.meta.url).href}
+          src="https://sebschlo.github.io/colloquium/light_wells.gltf"
           style={{ width: "100%", height: "100%" }}
           exposure="1"
           shadow-softness="0.5"
@@ -163,8 +163,7 @@ export const GrumpinessPanel: React.FC = () => {
   const [hoveredRegion, setHoveredRegion] = useState(null);
 
   useEffect(() => {
-    const geoJsonUrl = new URL('../light_wells.geojson', import.meta.url).href;
-    fetch(geoJsonUrl)
+    fetch("https://sebschlo.github.io/colloquium/light_wells.geojson")
       .then((response) => response.json())
       .then((data) => setGeoData(data))
       .catch((error) => console.error("Error loading geoData:", error));
